@@ -1,2 +1,2 @@
-# EthanReimann.com
-The source-code for my website
+# EthanReimann.com - My Slice of the Internet
+Hello and welcome to the repo that powers the entirety of my new website. Whilst, I am still in the building process of it, if you've stumbled upon this repo, maybe there is something here you will find of interest. For the most part, it will just feature page files and data, blog post data, and the Bootstrap code for the website. Thanks for stopping by.
