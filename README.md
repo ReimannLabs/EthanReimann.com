@@ -1,2 +1,6 @@
 # EthanReimann.com - My Slice of the Internet
 Hello and welcome to the repo that powers the entirety of my new website. Whilst, I am still in the building process of it, if you've stumbled upon this repo, maybe there is something here you will find of interest. For the most part, it will just feature page files and data, blog post data, and the Bootstrap code for the website. Thanks for stopping by.
+## Current Site Infrastructure
+Currently, my domain landing page is pointing to a simple WordPress site hosted on a Hostinger VPS, proxied through Cloudflare. The VPS is owned and managed through my company, Reimann Labs, and provides the adequate resources to host a small WordPress site. For my new site though, I will be hosting it locally in my HomeLab, and proxying it to the internet through Reimann Labs cloud services. I will have a more detailed plan and outline come launch day.
+## Why Not Keep Using WordPress?
+I have been an avid WordPress user for years, and I have no plans of leaving it behind just yet. However, as part of a primary goal for 2025, I want to become more familiar with other coding languages and HTML itself, and what better way to learn than through building my own website from scratch. Thus concludes my reasoning.
