@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Reimann | Terminal</title>
+    <title>Retro Computers | Random Reimann Terminal</title>
     <style>
         @keyframes flicker {
             0% { opacity: 0.97; }
@@ -70,19 +70,17 @@
             position: relative;
         }
 
-        .updates {
+        .computer {
             border: 1px dashed #33ff33;
-            padding: 0.5rem;
+            padding: 1rem;
             margin: 1rem 0;
         }
 
-        .construction {
-            text-align: center;
-            border: 2px solid #ff3333;
-            color: #ff3333;
-            margin: 1rem 0;
-            text-shadow: 0 0 2px #ff3333;
-            padding: 0.5rem;
+        .specs {
+            font-family: "Courier New", monospace;
+            background: #0a1f0a;
+            padding: 1rem;
+            margin: 0.5rem 0;
         }
 
         footer {
@@ -101,47 +99,80 @@
             background: #33ff33;
             color: #000;
         }
+
+        .ascii-art {
+            white-space: pre;
+            font-family: monospace;
+            margin: 1rem 0;
+            line-height: 1.2;
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>> Random_Reimann</h1>
-        <h2>$ whoami: Ethan Reimann</h2>
+        <h1>> Retro_Computer_Collection</h1>
+        <h2>$ cat /home/collections/vintage/*</h2>
     </header>
 
     <nav>
         <a href="index.html">[HOME]</a>
+        <a href="software.html">[SOFTWARE]</a>
+        <a href="retro.html">[RETRO]</a>
         <a href="blog.html">[BLOG]</a>
-        <a href="projects.html">[PROJECTS]</a>
-        <a href="links.html">[LINKS]</a>
+        <a href="resume.html">[RESUME]</a>
     </nav>
 
     <div class="content">
-        <div class="updates">
-            <h3>[SYSTEM] Latest Updates</h3>
-            <p>> 2025-10-02: System initialized. Running startup sequence...</p>
+        <div class="computer">
+            <h3>> Commodore_64.info</h3>
+            <div class="ascii-art">
+    _________________
+    |                |
+    |    C64        |
+    |________________|
+            </div>
+            <div class="specs">
+                <p>CPU: MOS 6510</p>
+                <p>RAM: 64KB</p>
+                <p>Year: 1982</p>
+                <p>Status: Fully operational</p>
+            </div>
+            <p>Notes: My first vintage computer acquisition. Currently running classic games and BASIC programs.</p>
         </div>
 
-        <h3>> WELCOME.txt</h3>
-        <p>Greetings, user. I'm Ethan, and you've accessed my digital terminal. 
-           This system contains my thoughts, projects, and various computational experiments.</p>
-
-        <div class="construction">
-            [WARNING] SYSTEM COMPONENTS UNDER MAINTENANCE
-            ---------------------------------------------
-            Some sections still require initialization...
+        <div class="computer">
+            <h3>> Apple_II.info</h3>
+            <div class="ascii-art">
+    _______________
+    |  [=====]    |
+    |  Apple ][   |
+    |_____________|
+            </div>
+            <div class="specs">
+                <p>CPU: MOS 6502</p>
+                <p>RAM: 48KB</p>
+                <p>Year: 1977</p>
+                <p>Status: Under restoration</p>
+            </div>
+            <p>Notes: Currently restoring the power supply and keyboard. A piece of computing history.</p>
         </div>
 
-        <h3>> STATUS.txt</h3>
-        <p>The web wasn't meant to be a walled garden. This terminal exists as a 
-           testament to the indie web, where personal sites are laboratories for 
-           ideas and experimentation.</p>
+        <div class="computer">
+            <h3>> IBM_PC.info</h3>
+            <div class="specs">
+                <p>CPU: Intel 8088</p>
+                <p>RAM: 640KB</p>
+                <p>Year: 1981</p>
+                <p>Status: In collection</p>
+            </div>
+            <p>Notes: Complete with original CGA monitor and DOS 2.0</p>
+        </div>
     </div>
 
     <footer>
-        <p>SYSTEM: Powered by Reimann Labs</p>
+        <p>SYSTEM: Built with pure HTML & CSS protocols</p>
         <p>Last system update: 2025-10-02</p>
-        <p><a href="mailto:ethan@ethanreimann.com">[INITIATE CONTACT SEQUENCE]</a></p>
+        <p><a href="mailto:your@email.com">[INITIATE CONTACT SEQUENCE]</a></p>
     </footer>
 </body>
 </html>

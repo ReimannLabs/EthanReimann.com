@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Reimann | Terminal</title>
+    <title>Software | Random Reimann Terminal</title>
     <style>
         @keyframes flicker {
             0% { opacity: 0.97; }
@@ -70,19 +70,10 @@
             position: relative;
         }
 
-        .updates {
+        .project {
             border: 1px dashed #33ff33;
-            padding: 0.5rem;
+            padding: 1rem;
             margin: 1rem 0;
-        }
-
-        .construction {
-            text-align: center;
-            border: 2px solid #ff3333;
-            color: #ff3333;
-            margin: 1rem 0;
-            text-shadow: 0 0 2px #ff3333;
-            padding: 0.5rem;
         }
 
         footer {
@@ -101,47 +92,66 @@
             background: #33ff33;
             color: #000;
         }
+
+        .tag {
+            display: inline-block;
+            background: #1a3f1a;
+            padding: 0.2rem 0.5rem;
+            margin: 0.2rem;
+            border: 1px solid #33ff33;
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>> Random_Reimann</h1>
-        <h2>$ whoami: Ethan Reimann</h2>
+        <h1>> Software_Projects</h1>
+        <h2>$ ls ~/projects/</h2>
     </header>
 
     <nav>
         <a href="index.html">[HOME]</a>
+        <a href="software.html">[SOFTWARE]</a>
+        <a href="retro.html">[RETRO]</a>
         <a href="blog.html">[BLOG]</a>
-        <a href="projects.html">[PROJECTS]</a>
-        <a href="links.html">[LINKS]</a>
+        <a href="resume.html">[RESUME]</a>
     </nav>
 
     <div class="content">
-        <div class="updates">
-            <h3>[SYSTEM] Latest Updates</h3>
-            <p>> 2025-10-02: System initialized. Running startup sequence...</p>
+        <div class="project">
+            <h3>> Project_1.exe</h3>
+            <div class="tags">
+                <span class="tag">Python</span>
+                <span class="tag">Machine Learning</span>
+            </div>
+            <p>Description: A cutting-edge machine learning project that does something amazing...</p>
+            <p><a href="#">[VIEW_SOURCE]</a> <a href="#">[LIVE_DEMO]</a></p>
         </div>
 
-        <h3>> WELCOME.txt</h3>
-        <p>Greetings, user. I'm Ethan, and you've accessed my digital terminal. 
-           This system contains my thoughts, projects, and various computational experiments.</p>
-
-        <div class="construction">
-            [WARNING] SYSTEM COMPONENTS UNDER MAINTENANCE
-            ---------------------------------------------
-            Some sections still require initialization...
+        <div class="project">
+            <h3>> Project_2.sh</h3>
+            <div class="tags">
+                <span class="tag">Bash</span>
+                <span class="tag">Linux</span>
+            </div>
+            <p>Description: A collection of utility scripts for system administration...</p>
+            <p><a href="#">[VIEW_SOURCE]</a></p>
         </div>
 
-        <h3>> STATUS.txt</h3>
-        <p>The web wasn't meant to be a walled garden. This terminal exists as a 
-           testament to the indie web, where personal sites are laboratories for 
-           ideas and experimentation.</p>
+        <div class="project">
+            <h3>> Project_3.js</h3>
+            <div class="tags">
+                <span class="tag">JavaScript</span>
+                <span class="tag">Web</span>
+            </div>
+            <p>Description: An interactive web application demonstrating modern JavaScript...</p>
+            <p><a href="#">[VIEW_SOURCE]</a> <a href="#">[LIVE_DEMO]</a></p>
+        </div>
     </div>
 
     <footer>
-        <p>SYSTEM: Powered by Reimann Labs</p>
+        <p>SYSTEM: Built with pure HTML & CSS protocols</p>
         <p>Last system update: 2025-10-02</p>
-        <p><a href="mailto:ethan@ethanreimann.com">[INITIATE CONTACT SEQUENCE]</a></p>
+        <p><a href="mailto:your@email.com">[INITIATE CONTACT SEQUENCE]</a></p>
     </footer>
 </body>
 </html>
