@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume | Random Reimann Terminal</title>
+    <style>
+        @keyframes flicker {
+            0% { opacity: 0.97; }
+            50% { opacity: 0.95; }
+            100% { opacity: 0.97; }
+        }
+
+        body {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            font-family: "VT323", "Courier New", monospace;
+            line-height: 1.6;
+            background-color: #0a0a0a;
+            color: #33ff33;
+            text-shadow: 0 0 2px #33ff33;
+            animation: flicker 0.15s infinite;
+            position: relative;
+        }
+        
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+            background-size: 100% 4px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid #33ff33;
+            padding-bottom: 1rem;
+        }
+
+        nav {
+            text-align: center;
+            margin: 1rem 0;
+            padding: 0.5rem;
+            background-color: #0f1f0f;
+            border: 1px solid #33ff33;
+        }
+
+        nav a {
+            margin: 0 1rem;
+            color: #33ff33;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            text-shadow: 0 0 8px #33ff33;
+            background-color: #1a3f1a;
+        }
+
+        .content {
+            background: #0f1f0f;
+            padding: 1rem;
+            border: 1px solid #33ff33;
+            position: relative;
+        }
+
+        .section {
+            border: 1px dashed #33ff33;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .experience-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dotted #33ff33;
+        }
+
+        .skill-category {
+            margin: 1rem 0;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.9em;
+            color: #2a2;
+        }
+
+        h1, h2, h3 {
+            color: #55ff55;
+            text-shadow: 0 0 4px #33ff33;
+        }
+
+        ::selection {
+            background: #33ff33;
+            color: #000;
+        }
+
+        .skill-tag {
+            display: inline-block;
+            background: #1a3f1a;
+            padding: 0.2rem 0.5rem;
+            margin: 0.2rem;
+            border: 1px solid #33ff33;
+        }
+
+        .date {
+            color: #2a2;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>> Resume.exe</h1>
+        <h2>$ cat ~/documents/career/resume.txt</h2>
+    </header>
+
+    <nav>
+        <a href="index.html">[HOME]</a>
+        <a href="software.html">[SOFTWARE]</a>
+        <a href="retro.html">[RETRO]</a>
+        <a href="blog.html">[BLOG]</a>
+        <a href="resume.html">[RESUME]</a>
+    </nav>
+
+    <div class="content">
+        <div class="section">
+            <h3>> CONTACT_INFO</h3>
+            <p>Name: Ethan Reimann</p>
+            <p>Location: [LOCATION]</p>
+            <p>Email: <a href="mailto:your@email.com">your@email.com</a></p>
+            <p>GitHub: <a href="#">github.com/username</a></p>
+        </div>
+
+        <div class="section">
+            <h3>> PROFESSIONAL_EXPERIENCE</h3>
+            
+            <div class="experience-item">
+                <h4>Senior Software Engineer @ Tech Corp</h4>
+                <p class="date">2023 - Present</p>
+                <p>- Architected and implemented scalable backend solutions</p>
+                <p>- Led team of 5 developers on critical projects</p>
+                <p>- Reduced system latency by 40% through optimization</p>
+            </div>
+
+            <div class="experience-item">
+                <h4>Software Developer @ Startup Inc</h4>
+                <p class="date">2021 - 2023</p>
+                <p>- Developed full-stack web applications</p>
+                <p>- Implemented CI/CD pipelines</p>
+                <p>- Mentored junior developers</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>> TECHNICAL_SKILLS</h3>
+            
+            <div class="skill-category">
+                <h4>Languages:</h4>
+                <div class="skill-list">
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">TypeScript</span>
+                    <span class="skill-tag">Java</span>
+                    <span class="skill-tag">SQL</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h4>Technologies:</h4>
+                <div class="skill-list">
+                    <span class="skill-tag">React</span>
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">Docker</span>
+                    <span class="skill-tag">AWS</span>
+                    <span class="skill-tag">Git</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>> EDUCATION</h3>
+            <h4>B.S. Computer Science</h4>
+            <p class="date">2017 - 2021</p>
+            <p>University Name</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>SYSTEM: Built with pure HTML & CSS protocols</p>
+        <p>Last system update: 2025-10-02</p>
+        <p><a href="mailto:your@email.com">[INITIATE CONTACT SEQUENCE]</a></p>
+    </footer>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Reimann | Terminal</title>
+    <title>Blog | Random Reimann Terminal</title>
     <style>
         @keyframes flicker {
             0% { opacity: 0.97; }
@@ -70,19 +70,17 @@
             position: relative;
         }
 
-        .updates {
+        .post {
             border: 1px dashed #33ff33;
-            padding: 0.5rem;
+            padding: 1rem;
             margin: 1rem 0;
         }
 
-        .construction {
-            text-align: center;
-            border: 2px solid #ff3333;
-            color: #ff3333;
-            margin: 1rem 0;
-            text-shadow: 0 0 2px #ff3333;
-            padding: 0.5rem;
+        .post-date {
+            color: #2a2;
+            border-bottom: 1px solid #33ff33;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
         }
 
         footer {
@@ -101,12 +99,20 @@
             background: #33ff33;
             color: #000;
         }
+
+        .tag {
+            display: inline-block;
+            background: #1a3f1a;
+            padding: 0.2rem 0.5rem;
+            margin: 0.2rem;
+            border: 1px solid #33ff33;
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>> Random_Reimann</h1>
-        <h2>$ whoami: Ethan Reimann</h2>
+        <h1>> Blog_Archive</h1>
+        <h2>$ cat /var/log/thoughts/*</h2>
     </header>
 
     <nav>
@@ -118,31 +124,52 @@
     </nav>
 
     <div class="content">
-        <div class="updates">
-            <h3>[SYSTEM] Latest Updates</h3>
-            <p>> 2025-10-02: System initialized. Running startup sequence...</p>
+        <div class="post">
+            <h3>> The_Return_of_Personal_Websites.txt</h3>
+            <div class="post-date">
+                <p>System Time: 2025-10-02 21:45:32</p>
+            </div>
+            <p>In an era of algorithmic feeds and walled gardens, personal websites represent 
+               digital sovereignty. They're our corner of the internet where we control the 
+               interface, the content, and the experience...</p>
+            <div class="tags">
+                <span class="tag">Web</span>
+                <span class="tag">Philosophy</span>
+            </div>
         </div>
 
-        <h3>> WELCOME.txt</h3>
-        <p>Greetings, user. I'm Ethan, and you've accessed my digital terminal. 
-           This system contains my thoughts, projects, and various computational experiments.</p>
-
-        <div class="construction">
-            [WARNING] SYSTEM COMPONENTS UNDER MAINTENANCE
-            ---------------------------------------------
-            Some sections still require initialization...
+        <div class="post">
+            <h3>> Retro_Computing_in_2025.txt</h3>
+            <div class="post-date">
+                <p>System Time: 2025-09-28 15:22:17</p>
+            </div>
+            <p>Why do we still find ourselves drawn to older computers? Perhaps it's the 
+               tangible nature of the hardware, the simplicity of the interfaces, or the 
+               creative constraints they imposed...</p>
+            <div class="tags">
+                <span class="tag">Retro</span>
+                <span class="tag">Hardware</span>
+            </div>
         </div>
 
-        <h3>> STATUS.txt</h3>
-        <p>The web wasn't meant to be a walled garden. This terminal exists as a 
-           testament to the indie web, where personal sites are laboratories for 
-           ideas and experimentation.</p>
+        <div class="post">
+            <h3>> Learning_Assembly_Notes.txt</h3>
+            <div class="post-date">
+                <p>System Time: 2025-09-15 09:17:03</p>
+            </div>
+            <p>Documentation of my journey learning 6502 assembly programming. From basic 
+               concepts to writing my first working program...</p>
+            <div class="tags">
+                <span class="tag">Programming</span>
+                <span class="tag">Assembly</span>
+            </div>
+        </div>
     </div>
 
     <footer>
-        <p>SYSTEM: Powered by Reimann Labs</p>
+        <p>SYSTEM: Built with pure HTML & CSS protocols</p>
         <p>Last system update: 2025-10-02</p>
-        <p><a href="mailto:ethan@ethanreimann.com">[INITIATE CONTACT SEQUENCE]</a></p>
+        <p><a href="mailto:your@email.com">[INITIATE CONTACT SEQUENCE]</a></p>
     </footer>
 </body>
 </html>
