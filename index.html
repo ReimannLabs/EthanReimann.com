@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Reimann | Terminal</title>
+    <style>
+        @keyframes flicker {
+            0% { opacity: 0.97; }
+            50% { opacity: 0.95; }
+            100% { opacity: 0.97; }
+        }
+
+        body {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            font-family: "VT323", "Courier New", monospace;
+            line-height: 1.6;
+            background-color: #0a0a0a;
+            color: #33ff33;
+            text-shadow: 0 0 2px #33ff33;
+            animation: flicker 0.15s infinite;
+            position: relative;
+        }
+        
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+            background-size: 100% 4px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid #33ff33;
+            padding-bottom: 1rem;
+        }
+
+        nav {
+            text-align: center;
+            margin: 1rem 0;
+            padding: 0.5rem;
+            background-color: #0f1f0f;
+            border: 1px solid #33ff33;
+        }
+
+        nav a {
+            margin: 0 1rem;
+            color: #33ff33;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            text-shadow: 0 0 8px #33ff33;
+            background-color: #1a3f1a;
+        }
+
+        .content {
+            background: #0f1f0f;
+            padding: 1rem;
+            border: 1px solid #33ff33;
+            position: relative;
+        }
+
+        .updates {
+            border: 1px dashed #33ff33;
+            padding: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .construction {
+            text-align: center;
+            border: 2px solid #ff3333;
+            color: #ff3333;
+            margin: 1rem 0;
+            text-shadow: 0 0 2px #ff3333;
+            padding: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.9em;
+            color: #2a2;
+        }
+
+        h1, h2, h3 {
+            color: #55ff55;
+            text-shadow: 0 0 4px #33ff33;
+        }
+
+        ::selection {
+            background: #33ff33;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>> Random_Reimann</h1>
+        <h2>$ whoami: Ethan Reimann</h2>
+    </header>
+
+    <nav>
+        <a href="index.html">[HOME]</a>
+        <a href="blog.html">[BLOG]</a>
+        <a href="projects.html">[PROJECTS]</a>
+        <a href="links.html">[LINKS]</a>
+    </nav>
+
+    <div class="content">
+        <div class="updates">
+            <h3>[SYSTEM] Latest Updates</h3>
+            <p>> 2025-10-02: System initialized. Running startup sequence...</p>
+        </div>
+
+        <h3>> WELCOME.txt</h3>
+        <p>Greetings, user. I'm Ethan, and you've accessed my digital terminal. 
+           This system contains my thoughts, projects, and various computational experiments.</p>
+
+        <div class="construction">
+            [WARNING] SYSTEM COMPONENTS UNDER MAINTENANCE
+            ---------------------------------------------
+            Some sections still require initialization...
+        </div>
+
+        <h3>> STATUS.txt</h3>
+        <p>The web wasn't meant to be a walled garden. This terminal exists as a 
+           testament to the indie web, where personal sites are laboratories for 
+           ideas and experimentation.</p>
+    </div>
+
+    <footer>
+        <p>SYSTEM: Powered by </p>
+        <p>Last system update: 2025-10-02</p>
+        <p><a href="mailto:ethan@ethanreimann.com">[INITIATE CONTACT SEQUENCE]</a></p>
+    </footer>
+</body>
+</html>
