@@ -7,19 +7,15 @@ pagination:
 permalink: "/index.html"
 ---
 
-<header class="bg-light py-5">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-md-8">
-        <h1 class="display-5">Thoughts, experiments, and tutorials</h1>
-        <p class="lead">A personal blog by Ethan Reimann — coding, design, and life on the web.</p>
-      </div>
-      <div class="col-md-4 text-md-end mt-4 mt-md-0">
-        <a href="#" class="btn btn-primary btn-lg">Subscribe</a>
-      </div>
+<section class="site-hero site-hero--fullwidth py-7">
+  <div class="site-hero__inner container-limited text-center">
+    <h1 class="hero-title">Thoughts, experiments, and tutorials</h1>
+    <p class="lead hero-lead">A personal blog by Ethan Reimann — coding, design, and life on the web.</p>
+    <div class="mt-3">
+      <a href="#" class="btn btn-primary btn-lg">Subscribe</a>
     </div>
   </div>
-</header>
+</section>
 
 <div class="row">
   <div class="col-lg-8">
@@ -38,7 +34,7 @@ permalink: "/index.html"
             {% if post.data.tags and post.data.tags | length > 0 %}
             <p class="mt-2">
               {% for t in post.data.tags %}
-              <a class="badge bg-secondary text-decoration-none me-1" href="/tags/{{ t | slug }}/">{{ t }}</a>
+              <a class="badge custom-tag text-decoration-none me-1" href="/tags/{{ t | slug }}/">{{ t }}</a>
               {% endfor %}
             </p>
             {% endif %}
