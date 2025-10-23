@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% if title %}{{ title }} — {% endif %}Ethan Reimann</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="/">Ethan Reimann</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navMain">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/about/">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Projects</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container my-5">
+      {{ content | safe }}
+    </main>
+
+    <footer class="bg-dark text-white py-4 mt-5">
+      <div class="container d-flex justify-content-between align-items-center">
+        <div>© 2025 Ethan Reimann</div>
+        <div>
+          <a href="#" class="text-white me-3">Twitter</a>
+          <a href="#" class="text-white">GitHub</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

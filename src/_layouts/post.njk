@@ -1,0 +1,24 @@
+---
+layout: base.njk
+---
+
+<article class="mx-auto" style="max-width:900px;">
+  <header class="mb-4">
+    <h1>{{ title }}</h1>
+    <p class="text-muted">{{ date | date("MMM d, yyyy") }} · {{ readingTime }}</p>
+  </header>
+
+  {% if heroImage %}
+  <img src="{{ heroImage }}" class="post-hero rounded mb-4" alt="{{ title }}">
+  {% endif %}
+
+  <section>
+    {{ content | safe }}
+  </section>
+
+  <hr>
+  <nav class="d-flex justify-content-between">
+    <a href="#" class="btn btn-outline-secondary">← Older</a>
+    <a href="/" class="btn btn-outline-primary">Back to home</a>
+  </nav>
+</article>

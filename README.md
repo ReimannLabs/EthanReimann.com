@@ -1,27 +1,49 @@
 Personal Blog template using Bootstrap 5.3.8 (CDN)
 
-Files added:
+This repository now includes a minimal Eleventy starter that builds the Bootstrap-based layout in `src/` and outputs the site to `_site/`.
 
-- index.html — Blog home with cards, sidebar, and header
-- post.html — Sample single post layout
-- css/style.css — Minimal custom styles
+Files added/updated
 
-How to preview
+- `package.json` — dev script and Eleventy dependency
+- `.eleventy.js` — Eleventy config (passthrough for `css/`)
+- `src/_layouts/base.njk` — base HTML layout using Bootstrap and your styles
+- `src/index.njk` — home list mapped to `collections.posts`
+- `src/_layouts/post.njk` — single-post layout
+- `src/posts/2025-10-23-building-fast-sites.md` — example post
+- `css/style.css` — passthrough custom styles (existing)
 
-Open `index.html` in your browser (double-click or serve with a static server). Example using Python:
+Quick start (Eleventy)
+
+1. Install dependencies:
 
 ```bash
-python3 -m http.server 8000
-# then open http://localhost:8000
+npm install
+```
+
+2. Run the dev server with live reloading:
+
+```bash
+npm start
+# opens a local dev server (usually http://localhost:8080)
+```
+
+3. Build for production (output goes to `_site/`):
+
+```bash
+npm run build
 ```
 
 Notes
 
-- Bootstrap links use version 5.3.8 via jsDelivr CDN. Replace the integrity attributes with real SRI hashes if you want stricter security.
-- Images use `picsum.photos` placeholder images.
+- The Eleventy starter uses CDN-hosted Bootstrap in the layouts. If you prefer SRI, add the correct hashes in the layout files.
+- `css/style.css` is passthrough-copied to the output so your custom styles are preserved.
+- Images in the example use `picsum.photos`. For production, replace these with optimized images or add `eleventy-img` for responsive image generation.
 
 Next steps (suggested)
 
-- Replace placeholder images and content with your real posts
-- Add templating or a static site generator (Hugo, Jekyll, Eleventy) if desired
-- Add analytics, RSS, and SEO meta tags
+- Add pagination and tag/category pages.
+- Add an RSS feed and SEO metadata.
+- Add `eleventy-img` to generate responsive images at build time.
+- Create a simple GitHub Actions or Netlify workflow to build and publish `_site/` on push.
+
+If you want, I can add any of the above (pagination, RSS, image optimization, CI) next and wire up a sample GitHub Actions workflow.
