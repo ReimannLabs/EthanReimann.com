@@ -1,0 +1,42 @@
+---
+layout: base.njk
+pagination:
+  data: collections.posts
+  size: 6
+  alias: posts
+permalink: "/page/{{ pagination.pageNumber + 1 }}/index.html"
+---
+
+<header class="mb-4">
+  <h1>All posts</h1>
+</header>
+
+<div class="row g-4">
+  {% for post in posts %}
+  <article class="col-12">
+    <div class="card">
+      {% if post.data.heroImage %}
+      <img src="{{ post.data.heroImage }}" class="card-img-top" alt="{{ post.data.title }}">
+      {% endif %}
+      <div class="card-body">
+        <h2 class="card-title">{{ post.data.title }}</h2>
+        <p class="text-muted small">{{ post.date | date("MMM d, yyyy") }} · {{ post.data.readingTime | default("") }}</p>
+        <p class="card-text">{{ post.data.description }}</p>
+        <a href="{{ post.url }}" class="btn btn-outline-primary">Read more</a>
+      </div>
+    </div>
+  </article>
+  {% endfor %}
+</div>
+
+<nav class="mt-4 d-flex justify-content-between">
+  {% if pagination.href.previous %}
+  <a class="btn btn-outline-secondary" href="{{ pagination.href.previous }}">← Prev</a>
+  {% else %}
+  <span></span>
+  {% endif %}
+
+  {% if pagination.href.next %}
+  <a class="btn btn-outline-primary" href="{{ pagination.href.next }}">Next →</a>
+  {% endif %}
+</nav>

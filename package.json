@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "eleventy --serve",
+    "dev": "eleventy --serve",
+    "start": "npm run dev",
     "build": "eleventy --quiet"
   },
   "devDependencies": {
