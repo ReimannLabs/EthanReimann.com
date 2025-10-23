@@ -25,6 +25,17 @@ module.exports = function(eleventyConfig) {
     return String(str).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
   });
 
+  // Simple date filter for Nunjucks templates: formats to 'Oct 23, 2025'
+  eleventyConfig.addFilter("date", function(dateObj) {
+    if(!dateObj) return "";
+    let d = new Date(dateObj);
+    try {
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    } catch (e) {
+      return d.toDateString();
+    }
+  });
+
   return {
     dir: {
       input: "src",

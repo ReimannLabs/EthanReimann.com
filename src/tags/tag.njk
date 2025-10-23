@@ -9,7 +9,7 @@ pagination:
 permalink: "/tags/{{ tagName | slug }}/page/{{ pagination.pageNumber + 1 }}/index.html"
 ---
 
-{% set tagName = pagination.items[0] ? pagination.items[0].data.tags[0] : "" %}
+{% set tagName = (pagination.items and pagination.items[0] and pagination.items[0].data and pagination.items[0].data.tags and pagination.items[0].data.tags[0]) or "" %}
 
 <article class="mx-auto" style="max-width:900px;">
   <header class="mb-4">

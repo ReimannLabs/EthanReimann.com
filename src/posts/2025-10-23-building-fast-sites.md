@@ -5,7 +5,7 @@ date: 2025-10-23
 tags:
   - performance
   - tooling
-heroImage: "https://picsum.photos/1200/400?random=1"
+heroImage: "https://ethanreimann.com/wp-content/uploads/2025/08/cropped-57-Any-Subject-5x7-1-scaled-1.jpg"
 readingTime: "8 min read"
 ---
 
