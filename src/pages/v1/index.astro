@@ -1,8 +1,38 @@
 ---
 /**
- * V1: TERMINAL — CRT/Hacker aesthetic
- * Scanlines, phosphor glow, monospace everything, markdown syntax decorators
+ * V1: ATELIER — Gallery / Digital Home
+ * A clean, airy space with prominent navigation to Photography, Projects, Files.
+ * Feels like walking into a well-lit studio. Generous whitespace, refined grid,
+ * large nav tiles that invite exploration. Classic modern with warmth.
  */
+
+const rooms = [
+  { name: 'Photography', href: '/photography/', icon: '&#9634;', desc: 'Moments captured through the lens' },
+  { name: 'Projects', href: '/projects/', icon: '&#9648;', desc: 'Things I\'ve built and contributed to' },
+  { name: 'The Blog', href: '#blog', icon: '&#9998;', desc: 'A digital public journal' },
+  { name: 'GitHub', href: 'https://github.com/ReimannLabs', icon: '&#10070;', desc: 'Open source work and code' },
+];
+
+const books = [
+  { title: 'The Brothers Karamazov', author: 'Fyodor Dostoevsky', active: true },
+  { title: 'The Giver', author: 'Lois Lowry' },
+  { title: 'We Who Wrestle with God', author: 'Jordan Peterson' },
+  { title: 'Welcome to the Universe', author: 'Neil DeGrasse Tyson, Et al.' },
+  { title: 'Ghost Town Living', author: 'Brent Underwood' },
+  { title: 'Too Big to Fail', author: 'Andrew Sorkin' },
+  { title: 'The Order of Time', author: 'Carlo Rovelli' },
+];
+
+const albums = [
+  { title: "I'm The Problem", artist: 'Morgan Wallen' },
+  { title: 'From A Room: Volume 2', artist: 'Chris Stapleton' },
+  { title: 'Chief', artist: 'Eric Church' },
+  { title: 'Leather', artist: 'Cody Johnson' },
+  { title: 'From Elvis in Memphis', artist: 'Elvis Presley' },
+  { title: 'What Are We Waiting For?', artist: 'For King & Country' },
+  { title: 'Jars of Clay', artist: 'Jars of Clay' },
+  { title: 'Summertime Blues', artist: 'Zach Bryan' },
+];
 ---
 
 <html lang="en">
@@ -10,349 +40,355 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <title>Ethan Reimann – Terminal</title>
+  <title>Ethan Reimann — Atelier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400&family=Karla:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400&display=swap');
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0a0e14;
-      --fg: #b3b1ad;
-      --green: #7fd962;
-      --cyan: #39bae6;
-      --amber: #e6b450;
-      --red: #f07178;
-      --dim: #454b54;
-      --glow: 0 0 8px rgba(127, 217, 98, 0.3);
+      --bg: #fafaf8;
+      --surface: #ffffff;
+      --ink: #1c1917;
+      --muted: #78716c;
+      --border: #e7e5e0;
+      --warm: #b45309;
+      --warm-light: rgba(180, 83, 9, 0.06);
     }
-
-    html { scroll-behavior: smooth; }
 
     body {
       background: var(--bg);
-      color: var(--fg);
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: clamp(0.85rem, 0.75rem + 0.5vw, 1.05rem);
-      line-height: 1.8;
-      padding: 0;
-      min-height: 100vh;
-      overflow-x: hidden;
+      color: var(--ink);
+      font-family: 'Karla', sans-serif;
+      font-size: clamp(0.9rem, 0.8rem + 0.4vw, 1.05rem);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* CRT Scanlines */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 10000;
-      background:
-        repeating-linear-gradient(
-          0deg,
-          transparent,
-          transparent 1px,
-          rgba(0, 0, 0, 0.15) 1px,
-          rgba(0, 0, 0, 0.15) 2px
-        );
-    }
+    ::selection { background: var(--warm); color: white; }
 
-    /* CRT vignette */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 9999;
-      background: radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, 0.6) 100%);
-    }
+    .page { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
 
-    ::selection { background: var(--green); color: var(--bg); }
-
-    .wrapper {
-      max-width: 72ch;
-      margin: 0 auto;
-      padding: 0 2ch;
-      position: relative;
-    }
-
-    /* Header */
+    /* Header — minimal, confident */
     .header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      padding: 2em 0;
-      border-bottom: 1px solid var(--dim);
+      align-items: baseline;
+      padding: 2.5rem 0;
     }
-    .site-title {
-      font-size: 1em;
+    .logo {
+      font-family: 'Fraunces', serif;
       font-weight: 700;
-      color: var(--green);
-      text-shadow: var(--glow);
+      font-size: 1.1rem;
+      letter-spacing: -0.01em;
     }
-    .site-title a { color: inherit; text-decoration: none; }
-    .nav { display: flex; gap: 2ch; list-style: none; }
-    .nav a {
-      color: var(--cyan);
+    .logo a { color: var(--ink); text-decoration: none; }
+    .header-nav { display: flex; gap: 1.5rem; list-style: none; }
+    .header-nav a {
+      color: var(--muted);
       text-decoration: none;
-      position: relative;
+      font-size: 0.85rem;
+      font-weight: 400;
+      transition: color 0.2s;
     }
-    .nav a::before { content: '['; color: var(--dim); }
-    .nav a::after { content: ']'; color: var(--dim); }
-    .nav a:hover { color: var(--green); text-shadow: var(--glow); }
+    .header-nav a:hover { color: var(--ink); }
 
-    /* Prompt line */
-    .prompt { color: var(--dim); }
-    .prompt-user { color: var(--green); text-shadow: var(--glow); }
-    .prompt-path { color: var(--cyan); }
-    .prompt-symbol { color: var(--amber); }
-
-    /* Hero */
+    /* Hero — large, warm, inviting */
     .hero {
-      padding: 3em 0 2em;
-      border-bottom: 1px solid var(--dim);
+      padding: 4rem 0;
+      border-bottom: 1px solid var(--border);
     }
-    .hero-ascii {
-      color: var(--green);
-      text-shadow: var(--glow);
-      font-size: clamp(0.45rem, 0.3rem + 0.8vw, 0.85rem);
-      line-height: 1.15;
-      white-space: pre;
-      overflow: hidden;
-      letter-spacing: 0.05em;
-    }
-    .hero-sub {
-      margin-top: 1em;
-      color: var(--dim);
-    }
-    .hero-sub span { color: var(--amber); }
-
-    /* Sections */
-    section { padding: 2em 0; border-bottom: 1px solid var(--dim); }
-    section:last-child { border-bottom: none; }
-
-    h2 {
-      font-size: 1em;
-      font-weight: 700;
-      color: var(--amber);
+    .hero-greeting {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--warm);
       margin-bottom: 1em;
     }
-    h2::before { content: '## '; color: var(--dim); }
+    .hero-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: clamp(2.2rem, 4vw + 0.8rem, 3.8rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      max-width: 600px;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--warm);
+    }
 
-    /* About */
-    .about-grid {
+    /* About with portrait */
+    .intro {
       display: grid;
       grid-template-columns: 1fr 200px;
-      gap: 3ch;
+      gap: 3rem;
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--border);
       align-items: start;
     }
     @media (max-width: 640px) {
-      .about-grid { grid-template-columns: 1fr; }
+      .intro { grid-template-columns: 1fr; }
+      .portrait { max-width: 180px; }
     }
-    .about-text .comment { color: var(--dim); }
+    .intro p { color: var(--ink); margin-bottom: 1em; }
+    .intro p:last-child { margin-bottom: 0; }
     .portrait {
       width: 100%;
       aspect-ratio: 3/4;
-      background: var(--dim);
-      border: 1px solid var(--dim);
-      filter: grayscale(1) contrast(1.2) brightness(0.8);
       object-fit: cover;
+      border-radius: 6px;
+      filter: grayscale(15%);
     }
 
-    /* GitHub */
-    .github-link {
-      display: inline-block;
-      padding: 0.6em 2em;
-      border: 1px solid var(--green);
-      color: var(--green);
-      text-decoration: none;
-      font-weight: 700;
-      text-shadow: var(--glow);
-      position: relative;
+    /* Room tiles — the "digital home" navigation */
+    .rooms {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
       overflow: hidden;
-      transition: all 0.15s;
+      margin: 3rem 0;
     }
-    .github-link:hover {
-      background: var(--green);
-      color: var(--bg);
-      text-shadow: none;
-      box-shadow: 0 0 20px rgba(127, 217, 98, 0.3);
+    @media (max-width: 520px) {
+      .rooms { grid-template-columns: 1fr; }
+    }
+    .room {
+      background: var(--surface);
+      padding: 2rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+      transition: background 0.2s;
+    }
+    .room:hover { background: var(--warm-light); }
+    .room-icon {
+      font-size: 1.5rem;
+      color: var(--warm);
+      line-height: 1;
+    }
+    .room-name {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+    .room-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.5;
     }
 
     /* Callout */
     .callout {
-      background: rgba(127, 217, 98, 0.05);
-      border-left: 3px solid var(--green);
-      padding: 1.5em 2ch;
-      color: var(--fg);
+      background: var(--warm-light);
+      border-left: 3px solid var(--warm);
+      padding: 1.5rem 2rem;
+      margin: 3rem 0;
+      border-radius: 0 6px 6px 0;
     }
-    .callout strong { color: var(--green); }
+    .callout strong {
+      font-family: 'Fraunces', serif;
+      display: block;
+      margin-bottom: 0.3em;
+      font-size: 0.95rem;
+    }
+    .callout p { color: var(--muted); font-size: 0.9rem; }
 
-    /* Lists */
-    ul { list-style: none; padding: 0; }
-    li { padding-left: 3ch; position: relative; }
-    li::before { content: '> '; position: absolute; left: 0; color: var(--dim); }
-    li em { color: var(--amber); font-style: italic; }
+    /* Lists — side by side */
+    .lists {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    @media (max-width: 640px) { .lists { grid-template-columns: 1fr; gap: 2rem; } }
+    .list-section h2 {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 1em;
+      padding-bottom: 0.5em;
+      border-bottom: 1px solid var(--border);
+    }
+    .list-section ul { list-style: none; }
+    .list-section li {
+      padding: 0.4em 0;
+      font-size: 0.9rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 1em;
+      border-bottom: 1px solid var(--bg);
+    }
+    .list-section li:last-child { border-bottom: none; }
+    .list-title { color: var(--ink); }
+    .list-meta { color: var(--muted); font-size: 0.82em; text-align: right; white-space: nowrap; }
+    .badge {
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--warm);
+      background: var(--warm-light);
+      padding: 0.15em 0.6em;
+      border-radius: 3px;
+    }
 
     /* Blog */
-    .blog-entry {
-      display: flex;
-      gap: 2ch;
-      align-items: baseline;
+    .blog { padding: 3rem 0; }
+    .blog h2 {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 1em;
+      padding-bottom: 0.5em;
+      border-bottom: 1px solid var(--border);
     }
-    .blog-date { color: var(--dim); flex-shrink: 0; white-space: nowrap; }
-    .blog-title a { color: var(--cyan); text-decoration: none; }
-    .blog-title a:hover { color: var(--green); text-shadow: var(--glow); }
+    .blog-note {
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-style: italic;
+      margin-bottom: 1em;
+    }
+    .blog-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.6em 0;
+    }
+    .blog-item a {
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .blog-item a:hover { color: var(--warm); }
+    .blog-item time { color: var(--muted); font-size: 0.82rem; }
 
     /* Footer */
     .footer {
-      padding: 2em 0;
-      border-top: 1px solid var(--dim);
-      color: var(--dim);
-      text-align: right;
+      padding: 2rem 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
     }
-    .footer a { color: var(--cyan); text-decoration: none; }
-    .footer a:hover { color: var(--green); }
+    .footer a { color: var(--warm); text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
 
-    /* Cursor blink */
-    .cursor {
-      display: inline-block;
-      width: 0.6em;
-      height: 1.1em;
-      background: var(--green);
-      vertical-align: text-bottom;
-      animation: blink 1s step-end infinite;
-    }
-    @keyframes blink { 50% { opacity: 0; } }
+    /* Back */
+    .back { position: fixed; top: 1.2em; right: 2em; z-index: 1000; font-size: 0.8rem; }
+    .back a { color: var(--muted); text-decoration: none; }
+    .back a:hover { color: var(--warm); }
 
-    /* Back link */
-    .back { position: fixed; top: 1em; right: 2em; z-index: 100000; }
-    .back a {
-      color: var(--dim);
-      text-decoration: none;
-      font-size: 0.85em;
-      font-family: 'IBM Plex Mono', monospace;
-    }
-    .back a:hover { color: var(--green); }
-
-    /* Fade in */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(8px); }
+      from { opacity: 0; transform: translateY(14px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    .fade { animation: fadeUp 0.5s ease both; }
-    .fade-1 { animation-delay: 0.1s; }
-    .fade-2 { animation-delay: 0.2s; }
-    .fade-3 { animation-delay: 0.3s; }
-    .fade-4 { animation-delay: 0.4s; }
-    .fade-5 { animation-delay: 0.5s; }
-    .fade-6 { animation-delay: 0.6s; }
-    .fade-7 { animation-delay: 0.7s; }
-    .fade-8 { animation-delay: 0.8s; }
+    .f { animation: fadeUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .f1 { animation-delay: 0.05s; } .f2 { animation-delay: 0.1s; }
+    .f3 { animation-delay: 0.18s; } .f4 { animation-delay: 0.26s; }
+    .f5 { animation-delay: 0.34s; } .f6 { animation-delay: 0.42s; }
+    .f7 { animation-delay: 0.5s; }
   </style>
 </head>
 <body>
-  <div class="back"><a href="/">← versions</a></div>
-  <div class="wrapper">
-    <header class="header fade">
-      <h1 class="site-title"><a href="/v1/">ethan_reimann</a></h1>
+  <div class="back"><a href="/">&larr; versions</a></div>
+  <div class="page">
+    <header class="header f f1">
+      <div class="logo"><a href="/v1/">Ethan Reimann</a></div>
       <nav>
-        <ul class="nav">
-          <li><a href="/photography/">photography</a></li>
-          <li><a href="/projects/">projects</a></li>
+        <ul class="header-nav">
+          <li><a href="/photography/">Photography</a></li>
+          <li><a href="/projects/">Projects</a></li>
         </ul>
       </nav>
     </header>
 
-    <section class="hero fade fade-1">
-      <div class="hero-ascii" aria-label="EthanReimann.com">
- _____ _   _                 ____      _
-| ____| |_| |__   __ _ _ __ |  _ \ ___(_)_ __ ___   __ _ _ __  _ __    ___ ___  _ __ ___
-|  _| | __| '_ \ / _` | '_ \| |_) / _ \ | '_ ` _ \ / _` | '_ \| '_ \  / __/ _ \| '_ ` _ \
-| |___| |_| | | | (_| | | | |  _ &lt;  __/ | | | | | | (_| | | | | | | || (_| (_) | | | | | |
-|_____|\__|_| |_|\__,_|_| |_|_| \_\___|_|_| |_| |_|\__,_|_| |_|_| |_(_)___\___/|_| |_| |_|</div>
-      <p class="hero-sub">
-        <span class="prompt-user">ethan</span><span class="prompt">@</span><span class="prompt-path">web</span>
-        <span class="prompt-symbol"> $ </span>
-        cat about.txt<span class="cursor"></span>
-      </p>
+    <section class="hero f f2">
+      <p class="hero-greeting">Welcome to my corner of the internet</p>
+      <h1 class="hero-title">This is <em>my digital home</em> — come on in.</h1>
     </section>
 
-    <section class="about-grid fade fade-2" style="padding: 2em 0; border-bottom: 1px solid var(--dim);">
-      <div class="about-text">
-        <p class="comment">// Hello World!</p>
-        <br />
+    <section class="intro f f3">
+      <div>
         <p>
-          This is one of my many attempts at a website in this modern world
-          where personal websites are very uncommon. My name is none other than
-          Ethan Reimann, a 10th grade student in the United States. You can find
-          me and my work all across the internet, everything from YouTube videos
-          to contributions to various GitHub projects.
+          Hello World! I'm Ethan Reimann, a 10th grade student in the United
+          States. This is one of my many attempts at a website in this modern
+          world where personal websites are very uncommon.
         </p>
-        <br />
-        <p style="text-align: center;">
-          <a class="github-link" href="https://github.com/ReimannLabs">~/github</a>
+        <p>
+          You can find me and my work all across the internet — everything from
+          YouTube videos to contributions to various GitHub projects. This site
+          is the home base for all of it.
         </p>
       </div>
       <img class="portrait" src="/portrait.jpg" alt="Ethan Reimann" width="200" height="267" />
     </section>
 
-    <section class="fade fade-3">
-      <div class="callout">
-        <strong>Why Have a Personal Website in the 2020s?</strong><br />
-        Personal websites have always felt like a lost art to me. This site shall
-        grow with time, as I find the time. In all honesty, I would rather my
-        work be on a website owned by me rather than some billionaire social
-        media platform.
+    <div class="rooms f f4">
+      {rooms.map((room) => (
+        <a class="room" href={room.href}>
+          <span class="room-icon" set:html={room.icon} />
+          <span class="room-name">{room.name}</span>
+          <span class="room-desc">{room.desc}</span>
+        </a>
+      ))}
+    </div>
+
+    <div class="callout f f5">
+      <strong>Why Have a Personal Website in the 2020s?</strong>
+      <p>
+        Personal websites have always felt like a lost art. I would rather my work
+        be on a website owned by me rather than some billionaire social media platform.
+        This site shall grow with time.
+      </p>
+    </div>
+
+    <div class="lists f f5">
+      <div class="list-section">
+        <h2>Recent Books</h2>
+        <ul>
+          {books.map((b) => (
+            <li>
+              <span class="list-title">{b.title}</span>
+              {b.active ? <span class="badge">Reading</span> : <span class="list-meta">{b.author}</span>}
+            </li>
+          ))}
+        </ul>
       </div>
-    </section>
-
-    <section class="fade fade-4">
-      <h2>Recent Books I've Read</h2>
-      <ul>
-        <li>The Brothers Karamazov — Fyodor Dostoevsky — <em>Currently Reading</em></li>
-        <li>The Giver — Lois Lowry</li>
-        <li>We Who Wrestle with God — Jordan Peterson</li>
-        <li>Welcome to the Universe — Neil DeGrasse Tyson, Et al.</li>
-        <li>Ghost Town Living — Brent Underwood</li>
-        <li>Too Big to Fail — Andrew Sorkin</li>
-        <li>The Order of Time — Carlo Rovelli</li>
-      </ul>
-    </section>
-
-    <section class="fade fade-5">
-      <h2>(Some of) My Favorite Albums</h2>
-      <ul>
-        <li>I'm The Problem — Morgan Wallen</li>
-        <li>From A Room: Volume 2 — Chris Stapleton</li>
-        <li>Chief — Eric Church</li>
-        <li>Leather — Cody Johnson</li>
-        <li>From Elvis in Memphis — Elvis Presley</li>
-        <li>What Are We Waiting For? — For King &amp; Country</li>
-        <li>Jars of Clay — Jars of Clay</li>
-        <li>Summertime Blues — Zach Bryan</li>
-      </ul>
-    </section>
-
-    <section class="fade fade-6">
-      <div class="callout">
-        <strong>What I Write About on "The Blog"</strong><br />
-        There is no set purpose for my blog, I will likely treat it as a digital
-        public journal. Posts will be written at random, and topics will be,
-        well, also, random.
+      <div class="list-section">
+        <h2>Favorite Albums</h2>
+        <ul>
+          {albums.map((a) => (
+            <li>
+              <span class="list-title">{a.title}</span>
+              <span class="list-meta">{a.artist}</span>
+            </li>
+          ))}
+        </ul>
       </div>
-    </section>
+    </div>
 
-    <section class="fade fade-7">
+    <section class="blog f f6" id="blog">
       <h2>The Blog</h2>
-      <div class="blog-entry">
-        <time class="blog-date" datetime="2025-10-25">2025-10-25</time>
-        <div class="blog-title"><a href="/a-new-start/">A New Start</a></div>
+      <p class="blog-note">
+        No set purpose — a digital public journal. Random posts, random topics.
+      </p>
+      <div class="blog-item">
+        <a href="/a-new-start/">A New Start</a>
+        <time datetime="2025-10-25">Oct 25, 2025</time>
       </div>
     </section>
 
-    <footer class="footer fade fade-8">
-      <p>Powered by <a href="https://reimannlabs.com/">Reimann Labs</a></p>
+    <footer class="footer f f7">
+      Powered by <a href="https://reimannlabs.com/">Reimann Labs</a>
     </footer>
   </div>
 </body>

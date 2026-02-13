@@ -1,8 +1,9 @@
 ---
 /**
- * V3: PARCHMENT — Warm Analog / Literary aesthetic
- * Handwritten feel, warm cream tones, paper texture, ink styling,
- * organic layout with literary sensibility
+ * V3: DOSSIER — Modern utilitarian / Filing system
+ * A structured, grid-based digital home that feels like opening a well-organized
+ * desk. Bold type, clear hierarchy, tabular data, thick borders. Sections are
+ * clearly delineated "files" for different parts of life.
  */
 ---
 
@@ -11,440 +12,412 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <title>Ethan Reimann – Parchment</title>
+  <title>Ethan Reimann — Dossier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,600;0,800;0,900;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --parchment: #f5efe0;
-      --ink: #2c2416;
-      --brown: #6b5744;
-      --rust: #8b4513;
-      --faded: #a89880;
-      --stain: rgba(139, 69, 19, 0.06);
+      --bg: #f0eeea;
+      --surface: #faf9f6;
+      --ink: #111111;
+      --mid: #666660;
+      --border: #111111;
+      --thin-border: #ccc8c0;
+      --red: #d12e1e;
+      --blue: #1a5fb4;
     }
-
-    html { scroll-behavior: smooth; }
 
     body {
-      background: var(--parchment);
+      background: var(--bg);
       color: var(--ink);
-      font-family: 'EB Garamond', Georgia, serif;
-      font-size: clamp(1rem, 0.9rem + 0.4vw, 1.2rem);
-      line-height: 1.8;
-      min-height: 100vh;
-      /* Paper texture via CSS */
-      background-image:
-        radial-gradient(ellipse at 20% 50%, var(--stain) 0%, transparent 70%),
-        radial-gradient(ellipse at 80% 20%, var(--stain) 0%, transparent 60%),
-        radial-gradient(ellipse at 60% 80%, rgba(139, 69, 19, 0.03) 0%, transparent 50%);
+      font-family: 'Archivo', Helvetica, Arial, sans-serif;
+      font-size: clamp(0.85rem, 0.75rem + 0.4vw, 1rem);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
 
-    ::selection { background: var(--rust); color: var(--parchment); }
+    ::selection { background: var(--ink); color: var(--bg); }
 
-    .page {
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 3rem 2rem 4rem;
-      position: relative;
-    }
+    .page { max-width: 920px; margin: 0 auto; padding: 0 1.5rem 3rem; }
 
-    /* Torn edge top decoration */
-    .page::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 2px;
-      background: var(--faded);
-    }
-
-    /* Header */
+    /* Header strip */
     .header {
-      text-align: center;
-      padding-bottom: 2rem;
-      margin-bottom: 2rem;
-      border-bottom: 1px solid var(--faded);
-      position: relative;
-    }
-    .header::after {
-      content: '~';
-      position: absolute;
-      bottom: -0.6em;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--parchment);
-      padding: 0 1em;
-      color: var(--faded);
-      font-size: 1.2em;
-    }
-
-    .site-name {
-      font-family: 'Caveat', cursive;
-      font-size: clamp(2.5rem, 5vw + 1rem, 4rem);
-      font-weight: 700;
-      color: var(--ink);
-      line-height: 1.1;
-      letter-spacing: -0.01em;
-    }
-    .site-name a {
-      color: inherit;
-      text-decoration: none;
-    }
-    .tagline {
-      font-family: 'EB Garamond', serif;
-      font-style: italic;
-      color: var(--brown);
-      margin-top: 0.3em;
-      font-size: 1rem;
-    }
-    .nav-links {
       display: flex;
-      justify-content: center;
-      gap: 2em;
-      margin-top: 1em;
-      list-style: none;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 3px solid var(--border);
+      margin-bottom: 0;
     }
-    .nav-links a {
-      color: var(--rust);
+    .logo {
+      font-weight: 900;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .logo a { color: var(--ink); text-decoration: none; }
+    .header-nav { display: flex; gap: 1rem; list-style: none; }
+    .header-nav a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--mid);
       text-decoration: none;
-      font-style: italic;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      transition: color 0.15s;
     }
-    .nav-links a:hover {
-      border-bottom-color: var(--rust);
+    .header-nav a:hover { color: var(--red); }
+
+    /* Hero strip */
+    .hero-strip {
+      background: var(--ink);
+      color: var(--bg);
+      margin: 0 -1.5rem;
+      padding: 3rem 1.5rem;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .hero-title {
+      font-weight: 900;
+      font-size: clamp(2.5rem, 5vw + 0.5rem, 4.5rem);
+      line-height: 0.95;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+    }
+    .hero-title span { color: var(--red); }
+    .hero-meta {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      color: #888;
+      text-align: right;
+      line-height: 1.6;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
     }
 
-    /* Handwritten annotation style */
-    .margin-note {
-      font-family: 'Caveat', cursive;
-      color: var(--rust);
-      font-size: 1.1em;
-      transform: rotate(-2deg);
-      display: inline-block;
-      margin: 0.5em 0;
-    }
-
-    /* About section */
-    .about {
+    /* Section directory — the "file tabs" */
+    .directory {
       display: grid;
-      grid-template-columns: 1fr 180px;
-      gap: 2em;
+      grid-template-columns: repeat(4, 1fr);
+      border: 2px solid var(--border);
+      border-top: none;
+      margin: 0 -1.5rem;
+    }
+    @media (max-width: 640px) { .directory { grid-template-columns: repeat(2, 1fr); } }
+    .dir-item {
+      padding: 1.2rem 1.5rem;
+      border-right: 1px solid var(--thin-border);
+      border-top: 2px solid var(--border);
+      text-decoration: none;
+      color: var(--ink);
+      display: flex;
+      flex-direction: column;
+      gap: 0.3em;
+      background: var(--surface);
+      transition: background 0.15s;
+    }
+    .dir-item:last-child { border-right: none; }
+    .dir-item:hover { background: var(--bg); }
+    .dir-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--mid);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .dir-name {
+      font-weight: 800;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+    .dir-count {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--mid);
+    }
+
+    /* Card blocks */
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      margin-top: 2rem;
+      border: 2px solid var(--border);
+    }
+    @media (max-width: 640px) { .cards { grid-template-columns: 1fr; } }
+    .card {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--thin-border);
+      border-right: 1px solid var(--thin-border);
+      background: var(--surface);
+    }
+    .card:nth-child(2n) { border-right: none; }
+    .card-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--red);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.5em;
+      font-weight: 500;
+    }
+    .card h2 {
+      font-weight: 800;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.5em;
+    }
+    .card p { color: var(--mid); font-size: 0.88rem; }
+
+    /* Full-width card */
+    .card-full {
+      grid-column: 1 / -1;
+      border-right: none;
+    }
+
+    /* About row */
+    .about-row {
+      display: grid;
+      grid-template-columns: 1fr 150px;
+      gap: 2rem;
       align-items: start;
-      margin-bottom: 2.5em;
     }
     @media (max-width: 560px) {
-      .about { grid-template-columns: 1fr; }
-      .portrait-frame { max-width: 200px; margin: 0 auto; }
+      .about-row { grid-template-columns: 1fr; }
+      .portrait { max-width: 140px; }
     }
-    .about-text p {
-      text-align: justify;
-      hyphens: auto;
-      text-indent: 2em;
-    }
-    .about-text p:first-child { text-indent: 0; }
-
-    .portrait-frame {
-      position: relative;
-      padding: 8px;
-      background: var(--parchment);
-      border: 1px solid var(--faded);
-      box-shadow: 2px 3px 8px rgba(44, 36, 22, 0.1);
-      transform: rotate(1.5deg);
-    }
-    .portrait-frame img {
+    .portrait {
       width: 100%;
-      height: auto;
-      display: block;
-      filter: sepia(30%) contrast(1.05);
-    }
-    .portrait-frame .caption {
-      font-family: 'Caveat', cursive;
-      text-align: center;
-      color: var(--brown);
-      margin-top: 0.4em;
-      font-size: 0.95em;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      filter: grayscale(1) contrast(1.15);
+      border: 2px solid var(--border);
     }
 
-    /* GitHub link */
-    .github-section {
-      text-align: center;
-      margin: 2em 0;
-    }
-    .ink-btn {
-      display: inline-block;
-      font-family: 'EB Garamond', serif;
-      font-size: 1rem;
-      color: var(--parchment);
-      background: var(--ink);
-      padding: 0.6em 2.5em;
-      text-decoration: none;
-      border-radius: 2px;
-      box-shadow: 1px 2px 4px rgba(44, 36, 22, 0.2);
-      transition: all 0.25s;
-    }
-    .ink-btn:hover {
-      background: var(--rust);
-      box-shadow: 2px 3px 8px rgba(139, 69, 19, 0.3);
-      transform: translateY(-1px);
-    }
-
-    /* Callout / Aside */
-    .aside-box {
-      background: rgba(139, 69, 19, 0.04);
-      border: 1px solid var(--faded);
-      padding: 1.5em 2em;
-      margin: 2.5em 0;
-      position: relative;
-      font-style: italic;
-    }
-    .aside-box::before {
-      content: '"';
-      font-family: 'Caveat', cursive;
-      font-size: 4em;
-      color: var(--faded);
-      position: absolute;
-      top: -0.1em;
-      left: 0.2em;
-      line-height: 1;
-    }
-    .aside-box p {
-      padding-left: 1em;
-    }
-    .aside-box strong {
-      font-style: normal;
-      color: var(--rust);
-    }
-
-    /* Section dividers */
-    .divider {
-      text-align: center;
-      margin: 2.5em 0;
-      color: var(--faded);
-      font-size: 1.2em;
-      letter-spacing: 0.5em;
-    }
-
-    /* Lists */
-    .reading-section { margin: 2em 0; }
-    .reading-section h2 {
-      font-family: 'Caveat', cursive;
-      font-size: 1.6em;
-      color: var(--ink);
-      margin-bottom: 0.5em;
-      font-weight: 700;
-    }
-    .reading-list {
-      list-style: none;
-      padding: 0;
-    }
-    .reading-list li {
-      padding: 0.4em 0;
-      padding-left: 1.5em;
-      position: relative;
-      border-bottom: 1px dotted var(--faded);
-    }
-    .reading-list li:last-child { border-bottom: none; }
-    .reading-list li::before {
-      content: '•';
-      position: absolute;
-      left: 0;
-      color: var(--rust);
-    }
-    .reading-list .note {
-      font-family: 'Caveat', cursive;
-      color: var(--rust);
-      font-size: 1em;
-    }
-    .reading-list .author {
-      color: var(--brown);
-      font-style: italic;
-    }
-
-    /* Blog section */
-    .blog-section {
-      margin: 2em 0;
-    }
-    .blog-section h2 {
-      font-family: 'Caveat', cursive;
-      font-size: 1.6em;
-      color: var(--ink);
-      margin-bottom: 0.5em;
-      font-weight: 700;
-    }
-    .blog-entry {
+    /* Table lists */
+    .table-list { list-style: none; }
+    .table-list li {
       display: flex;
+      justify-content: space-between;
       align-items: baseline;
+      padding: 0.3em 0;
+      border-bottom: 1px solid var(--thin-border);
+      font-size: 0.88rem;
       gap: 1em;
+    }
+    .table-list li:last-child { border-bottom: none; }
+    .tl-name { font-weight: 600; }
+    .tl-meta {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--mid);
+      white-space: nowrap;
+    }
+    .tl-badge {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.55rem;
+      font-weight: 500;
+      background: var(--red);
+      color: white;
+      padding: 0.15em 0.5em;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* CTA */
+    .cta { text-align: center; padding: 0.5em 0; }
+    .block-btn {
+      display: inline-block;
+      font-weight: 800;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--bg);
+      background: var(--ink);
+      padding: 0.9em 2.5em;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .block-btn:hover { background: var(--red); }
+
+    /* Blog */
+    .blog-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
       padding: 0.4em 0;
     }
-    .blog-entry time {
-      color: var(--faded);
-      font-size: 0.85em;
-      flex-shrink: 0;
-      font-style: italic;
-    }
-    .blog-entry a {
-      color: var(--rust);
+    .blog-item a {
+      color: var(--ink);
       text-decoration: none;
       font-weight: 600;
     }
-    .blog-entry a:hover {
-      border-bottom: 1px solid var(--rust);
+    .blog-item a:hover { color: var(--red); }
+    .blog-item time {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--mid);
     }
 
     /* Footer */
     .footer {
-      margin-top: 3em;
-      padding-top: 1.5em;
-      border-top: 1px solid var(--faded);
-      text-align: center;
-      color: var(--faded);
-      font-style: italic;
-      font-size: 0.9em;
-      position: relative;
+      margin-top: 2rem;
+      padding: 1rem 0;
+      border-top: 3px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--mid);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
-    .footer::before {
-      content: '~';
-      position: absolute;
-      top: -0.6em;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--parchment);
-      padding: 0 1em;
-      color: var(--faded);
-    }
-    .footer a { color: var(--rust); text-decoration: none; }
-    .footer a:hover { border-bottom: 1px solid var(--rust); }
+    .footer a { color: var(--red); text-decoration: none; }
 
-    /* Back link */
-    .back {
-      position: fixed;
-      top: 1em;
-      right: 2em;
-      z-index: 1000;
-      font-family: 'Caveat', cursive;
-      font-size: 1rem;
-    }
-    .back a { color: var(--faded); text-decoration: none; }
-    .back a:hover { color: var(--rust); }
+    .back { position: fixed; top: 1em; right: 2em; z-index: 1000; font-size: 0.75rem; }
+    .back a { color: var(--mid); text-decoration: none; font-family: 'IBM Plex Mono', monospace; }
+    .back a:hover { color: var(--red); }
 
-    /* Animations */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(12px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    .fin { animation: fadeIn 0.7s ease both; }
-    .d1 { animation-delay: 0.1s; }
-    .d2 { animation-delay: 0.2s; }
-    .d3 { animation-delay: 0.3s; }
-    .d4 { animation-delay: 0.4s; }
-    .d5 { animation-delay: 0.5s; }
-    .d6 { animation-delay: 0.6s; }
-    .d7 { animation-delay: 0.7s; }
+    .s { animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .s1 { animation-delay: 0.04s; } .s2 { animation-delay: 0.1s; }
+    .s3 { animation-delay: 0.18s; } .s4 { animation-delay: 0.26s; }
+    .s5 { animation-delay: 0.34s; }
   </style>
 </head>
 <body>
-  <div class="back"><a href="/">&#8592; versions</a></div>
+  <div class="back"><a href="/">&larr; VERSIONS</a></div>
   <div class="page">
-    <header class="header fin">
-      <h1 class="site-name"><a href="/v3/">Ethan Reimann</a></h1>
-      <p class="tagline">A personal notebook on the world wide web</p>
-      <ul class="nav-links">
+    <header class="header s s1">
+      <div class="logo"><a href="/v3/">Ethan Reimann</a></div>
+      <nav><ul class="header-nav">
         <li><a href="/photography/">Photography</a></li>
         <li><a href="/projects/">Projects</a></li>
-      </ul>
+      </ul></nav>
     </header>
 
-    <section class="about fin d1">
-      <div class="about-text">
-        <p class="margin-note">Hello World!</p>
+    <div class="hero-strip s s2">
+      <h1 class="hero-title">Ethan<br />Reimann<span>.</span></h1>
+      <div class="hero-meta">
+        Personal Website<br />
+        Est. 2025<br />
+        United States
+      </div>
+    </div>
+
+    <nav class="directory s s3">
+      <a class="dir-item" href="/photography/">
+        <span class="dir-label">Section 01</span>
+        <span class="dir-name">Photography</span>
+        <span class="dir-count">Photo gallery &rarr;</span>
+      </a>
+      <a class="dir-item" href="/projects/">
+        <span class="dir-label">Section 02</span>
+        <span class="dir-name">Projects</span>
+        <span class="dir-count">Portfolio &rarr;</span>
+      </a>
+      <a class="dir-item" href="#blog">
+        <span class="dir-label">Section 03</span>
+        <span class="dir-name">Blog</span>
+        <span class="dir-count">1 entry &rarr;</span>
+      </a>
+      <a class="dir-item" href="https://github.com/ReimannLabs">
+        <span class="dir-label">External</span>
+        <span class="dir-name">GitHub</span>
+        <span class="dir-count">ReimannLabs &rarr;</span>
+      </a>
+    </nav>
+
+    <div class="cards s s4">
+      <div class="card card-full">
+        <span class="card-label">File: About</span>
+        <div class="about-row">
+          <div>
+            <p>
+              Hello World! This is one of my many attempts at a website in this
+              modern world where personal websites are very uncommon. My name is
+              none other than Ethan Reimann, a 10th grade student in the United
+              States. You can find me and my work all across the internet,
+              everything from YouTube videos to contributions to various GitHub
+              projects.
+            </p>
+            <br />
+            <div class="cta">
+              <a class="block-btn" href="https://github.com/ReimannLabs">View GitHub</a>
+            </div>
+          </div>
+          <img class="portrait" src="/portrait.jpg" alt="Ethan Reimann" width="150" height="200" />
+        </div>
+      </div>
+
+      <div class="card card-full">
+        <span class="card-label">Memo</span>
+        <h2>Why a Personal Website?</h2>
         <p>
-          This is one of my many attempts at a website in this modern world
-          where personal websites are very uncommon. My name is none other
-          than Ethan Reimann, a 10th grade student in the United States.
-        </p>
-        <p>
-          You can find me and my work all across the internet, everything
-          from YouTube videos to contributions to various GitHub projects.
+          Personal websites have always felt like a lost art. I would rather my
+          work be on a website owned by me rather than some billionaire social
+          media platform. This site shall grow with time.
         </p>
       </div>
-      <div class="portrait-frame">
-        <img src="/portrait.jpg" alt="Ethan Reimann" width="180" height="240" />
-        <p class="caption">— self, 2025</p>
+
+      <div class="card">
+        <span class="card-label">File: Reading</span>
+        <h2>Recent Books</h2>
+        <ul class="table-list">
+          <li><span class="tl-name">The Brothers Karamazov</span> <span class="tl-badge">Active</span></li>
+          <li><span class="tl-name">The Giver</span> <span class="tl-meta">Lowry</span></li>
+          <li><span class="tl-name">We Who Wrestle with God</span> <span class="tl-meta">Peterson</span></li>
+          <li><span class="tl-name">Welcome to the Universe</span> <span class="tl-meta">Tyson</span></li>
+          <li><span class="tl-name">Ghost Town Living</span> <span class="tl-meta">Underwood</span></li>
+          <li><span class="tl-name">Too Big to Fail</span> <span class="tl-meta">Sorkin</span></li>
+          <li><span class="tl-name">The Order of Time</span> <span class="tl-meta">Rovelli</span></li>
+        </ul>
       </div>
-    </section>
 
-    <div class="github-section fin d2">
-      <a class="ink-btn" href="https://github.com/ReimannLabs">Visit GitHub</a>
-    </div>
-
-    <div class="aside-box fin d3">
-      <p>
-        <strong>Why Have a Personal Website in the 2020s?</strong><br />
-        Personal websites have always felt like a lost art to me. This site
-        shall grow with time, as I find the time. In all honesty, I would
-        rather my work be on a website owned by me rather than some
-        billionaire social media platform.
-      </p>
-    </div>
-
-    <div class="divider fin d4">* * *</div>
-
-    <section class="reading-section fin d4">
-      <h2>Books I've Been Reading</h2>
-      <ul class="reading-list">
-        <li>The Brothers Karamazov — <span class="author">Fyodor Dostoevsky</span> <span class="note">— currently reading</span></li>
-        <li>The Giver — <span class="author">Lois Lowry</span></li>
-        <li>We Who Wrestle with God — <span class="author">Jordan Peterson</span></li>
-        <li>Welcome to the Universe — <span class="author">Neil DeGrasse Tyson, Et al.</span></li>
-        <li>Ghost Town Living — <span class="author">Brent Underwood</span></li>
-        <li>Too Big to Fail — <span class="author">Andrew Sorkin</span></li>
-        <li>The Order of Time — <span class="author">Carlo Rovelli</span></li>
-      </ul>
-    </section>
-
-    <div class="divider fin d5">* * *</div>
-
-    <section class="reading-section fin d5">
-      <h2>Albums I Keep Returning To</h2>
-      <ul class="reading-list">
-        <li>I'm The Problem — <span class="author">Morgan Wallen</span></li>
-        <li>From A Room: Volume 2 — <span class="author">Chris Stapleton</span></li>
-        <li>Chief — <span class="author">Eric Church</span></li>
-        <li>Leather — <span class="author">Cody Johnson</span></li>
-        <li>From Elvis in Memphis — <span class="author">Elvis Presley</span></li>
-        <li>What Are We Waiting For? — <span class="author">For King & Country</span></li>
-        <li>Jars of Clay — <span class="author">Jars of Clay</span></li>
-        <li>Summertime Blues — <span class="author">Zach Bryan</span></li>
-      </ul>
-    </section>
-
-    <div class="aside-box fin d6">
-      <p>
-        <strong>On "The Blog"</strong><br />
-        There is no set purpose for my blog, I will likely treat it as a
-        digital public journal. Posts will be written at random, and topics
-        will be, well, also, random.
-      </p>
-    </div>
-
-    <section class="blog-section fin d6">
-      <h2>Recent Entries</h2>
-      <div class="blog-entry">
-        <time datetime="2025-10-25">October 25, 2025</time>
-        <a href="/a-new-start/">A New Start</a>
+      <div class="card">
+        <span class="card-label">File: Listening</span>
+        <h2>Favorite Albums</h2>
+        <ul class="table-list">
+          <li><span class="tl-name">I'm The Problem</span> <span class="tl-meta">Wallen</span></li>
+          <li><span class="tl-name">From A Room: Vol. 2</span> <span class="tl-meta">Stapleton</span></li>
+          <li><span class="tl-name">Chief</span> <span class="tl-meta">Church</span></li>
+          <li><span class="tl-name">Leather</span> <span class="tl-meta">Johnson</span></li>
+          <li><span class="tl-name">From Elvis in Memphis</span> <span class="tl-meta">Presley</span></li>
+          <li><span class="tl-name">What Are We Waiting For?</span> <span class="tl-meta">FK&amp;C</span></li>
+          <li><span class="tl-name">Jars of Clay</span> <span class="tl-meta">Jars of Clay</span></li>
+          <li><span class="tl-name">Summertime Blues</span> <span class="tl-meta">Bryan</span></li>
+        </ul>
       </div>
-    </section>
 
-    <footer class="footer fin d7">
-      <p>Powered by <a href="https://reimannlabs.com/">Reimann Labs</a></p>
+      <div class="card card-full" id="blog">
+        <span class="card-label">File: Journal</span>
+        <h2>The Blog</h2>
+        <p style="color: var(--mid); font-size: 0.85rem; margin-bottom: 0.8em;">
+          A digital public journal. Random posts, random topics.
+        </p>
+        <div class="blog-item">
+          <a href="/a-new-start/">A New Start</a>
+          <time datetime="2025-10-25">2025-10-25</time>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer s s5">
+      <span>Powered by <a href="https://reimannlabs.com/">Reimann Labs</a></span>
+      <span>Document Ref: ER-2025</span>
     </footer>
   </div>
 </body>
