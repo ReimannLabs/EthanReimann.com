@@ -1,0 +1,549 @@
+---
+/**
+ * V5: BLUEPRINT — Technical Drawing aesthetic
+ * Graph paper background, engineering annotation style, cyan/white on dark navy,
+ * dimension lines, technical labels, drafting precision
+ */
+---
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <title>Ethan Reimann – Blueprint</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0a1628;
+      --blue: #142540;
+      --grid: rgba(60, 130, 200, 0.08);
+      --grid-major: rgba(60, 130, 200, 0.15);
+      --cyan: #4fc3f7;
+      --white: #e3edf7;
+      --dim: #3a5a7a;
+      --red-mark: #ef5350;
+      --yellow: #ffd54f;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'Azeret Mono', monospace;
+      font-size: clamp(0.8rem, 0.7rem + 0.4vw, 0.95rem);
+      line-height: 1.8;
+      min-height: 100vh;
+      /* Blueprint grid background */
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+        linear-gradient(var(--grid-major) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-major) 1px, transparent 1px);
+      background-size: 20px 20px, 20px 20px, 100px 100px, 100px 100px;
+      background-position: -1px -1px, -1px -1px, -1px -1px, -1px -1px;
+    }
+
+    ::selection { background: var(--cyan); color: var(--navy); }
+
+    .page {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+    }
+
+    /* Left margin line — like technical drawing border */
+    .page::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: max(calc((100vw - 780px) / 2 - 0.5rem), 1rem);
+      width: 1px;
+      height: 100%;
+      background: var(--grid-major);
+    }
+
+    /* Header / Title block */
+    .title-block {
+      border: 1px solid var(--dim);
+      padding: 1.5rem 2rem;
+      margin-top: 2rem;
+      position: relative;
+    }
+    .title-block::before {
+      content: 'TITLE BLOCK';
+      position: absolute;
+      top: -0.6em;
+      left: 1em;
+      background: var(--navy);
+      padding: 0 0.5em;
+      font-size: 0.6rem;
+      color: var(--dim);
+      letter-spacing: 0.15em;
+    }
+    .title-block-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1em;
+    }
+    .site-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--cyan);
+      letter-spacing: 0.02em;
+    }
+    .site-title a { color: inherit; text-decoration: none; }
+    .title-meta {
+      text-align: right;
+      font-size: 0.65rem;
+      color: var(--dim);
+      line-height: 1.6;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .nav-row {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1rem;
+      padding-top: 0.8rem;
+      border-top: 1px dashed var(--dim);
+      list-style: none;
+    }
+    .nav-row a {
+      color: var(--cyan);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+    .nav-row a:hover { color: var(--yellow); }
+
+    /* Annotation labels */
+    .label {
+      font-size: 0.6rem;
+      color: var(--dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.5em;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+    }
+    .label::before {
+      content: '';
+      width: 12px;
+      height: 1px;
+      background: var(--dim);
+    }
+
+    /* Dimension line */
+    .dim-line {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      color: var(--dim);
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      margin: 2rem 0 0.5rem;
+    }
+    .dim-line::before,
+    .dim-line::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--dim), transparent);
+    }
+    .dim-line::after {
+      background: linear-gradient(90deg, transparent, var(--dim));
+    }
+
+    /* Hero */
+    .hero {
+      padding: 4rem 0 3rem;
+      position: relative;
+    }
+    .hero-name {
+      font-family: 'Instrument Serif', serif;
+      font-weight: 400;
+      font-size: clamp(3rem, 6vw + 1rem, 6rem);
+      line-height: 0.95;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      position: relative;
+    }
+    .hero-name .outline {
+      -webkit-text-stroke: 1px var(--cyan);
+      color: transparent;
+    }
+    .hero-suffix {
+      font-family: 'Azeret Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--cyan);
+      margin-top: 1em;
+      letter-spacing: 0.08em;
+    }
+    /* Coordinate annotation */
+    .coord {
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: 0.6rem;
+      color: var(--dim);
+      text-align: right;
+      line-height: 1.5;
+    }
+
+    /* About section */
+    .about-section {
+      display: grid;
+      grid-template-columns: 1fr 200px;
+      gap: 2.5rem;
+      align-items: start;
+      padding: 2rem 0;
+      border-top: 1px solid var(--dim);
+      border-bottom: 1px solid var(--dim);
+      position: relative;
+    }
+    @media (max-width: 640px) {
+      .about-section { grid-template-columns: 1fr; }
+      .portrait-tech { max-width: 200px; }
+    }
+    .about-text p { color: var(--white); margin-bottom: 1em; }
+
+    .portrait-tech {
+      position: relative;
+    }
+    .portrait-tech img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: grayscale(1) brightness(0.9) contrast(1.2);
+      border: 1px solid var(--dim);
+    }
+    /* Dimension annotations on image */
+    .portrait-tech::after {
+      content: '↕ 267px';
+      position: absolute;
+      right: -3em;
+      top: 50%;
+      transform: rotate(90deg) translateX(-50%);
+      font-size: 0.55rem;
+      color: var(--dim);
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+    .portrait-tech::before {
+      content: '↔ 200px';
+      position: absolute;
+      bottom: -1.8em;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.55rem;
+      color: var(--dim);
+      letter-spacing: 0.05em;
+    }
+
+    /* GitHub button */
+    .cta-center {
+      text-align: center;
+      padding: 2rem 0;
+    }
+    .blueprint-btn {
+      display: inline-block;
+      font-family: 'Azeret Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: var(--cyan);
+      border: 1px solid var(--cyan);
+      padding: 0.8em 2.5em;
+      text-decoration: none;
+      position: relative;
+      transition: all 0.25s;
+    }
+    .blueprint-btn:hover {
+      background: var(--cyan);
+      color: var(--navy);
+      box-shadow: 0 0 20px rgba(79, 195, 247, 0.2);
+    }
+    /* Corner marks */
+    .blueprint-btn::before { content: '┌'; position: absolute; top: -4px; left: -4px; font-size: 0.7em; color: var(--cyan); }
+    .blueprint-btn::after { content: '┘'; position: absolute; bottom: -4px; right: -4px; font-size: 0.7em; color: var(--cyan); }
+
+    /* Callout */
+    .note-block {
+      background: rgba(79, 195, 247, 0.04);
+      border: 1px dashed var(--dim);
+      padding: 1.5rem 2rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+    .note-block::before {
+      content: 'NOTE';
+      position: absolute;
+      top: -0.6em;
+      left: 1em;
+      background: var(--navy);
+      padding: 0 0.5em;
+      font-size: 0.55rem;
+      color: var(--red-mark);
+      letter-spacing: 0.2em;
+      font-weight: 700;
+    }
+    .note-block strong { color: var(--cyan); font-weight: 500; }
+    .note-block p { color: var(--white); }
+
+    /* Lists */
+    .spec-table {
+      margin: 2rem 0;
+    }
+    .spec-table h2 {
+      font-family: 'Instrument Serif', serif;
+      font-weight: 400;
+      font-size: 1.1rem;
+      color: var(--cyan);
+      margin-bottom: 0.8em;
+      padding-bottom: 0.4em;
+      border-bottom: 1px solid var(--dim);
+    }
+    .spec-table ul { list-style: none; padding: 0; }
+    .spec-table li {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.4em 0;
+      border-bottom: 1px dotted rgba(60, 130, 200, 0.1);
+      gap: 1em;
+    }
+    .spec-table li:last-child { border-bottom: none; }
+    .spec-table .item-name { color: var(--white); }
+    .spec-table .item-meta { color: var(--dim); font-size: 0.85em; text-align: right; white-space: nowrap; }
+    .spec-table .item-badge {
+      font-size: 0.6rem;
+      color: var(--yellow);
+      border: 1px solid var(--yellow);
+      padding: 0.1em 0.5em;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .lists-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+    @media (max-width: 640px) {
+      .lists-row { grid-template-columns: 1fr; }
+    }
+
+    /* Blog */
+    .blog-section {
+      margin: 2rem 0;
+    }
+    .blog-section h2 {
+      font-family: 'Instrument Serif', serif;
+      font-weight: 400;
+      font-size: 1.1rem;
+      color: var(--cyan);
+      margin-bottom: 0.8em;
+      padding-bottom: 0.4em;
+      border-bottom: 1px solid var(--dim);
+    }
+    .blog-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.5em 0;
+    }
+    .blog-row a { color: var(--white); text-decoration: none; }
+    .blog-row a:hover { color: var(--cyan); }
+    .blog-row time { color: var(--dim); font-size: 0.8em; }
+
+    /* Footer */
+    .footer-block {
+      border: 1px solid var(--dim);
+      padding: 1rem 2rem;
+      margin: 3rem 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--dim);
+      position: relative;
+    }
+    .footer-block::before {
+      content: 'REV. A';
+      position: absolute;
+      top: -0.6em;
+      right: 1em;
+      background: var(--navy);
+      padding: 0 0.5em;
+      font-size: 0.55rem;
+      letter-spacing: 0.15em;
+      color: var(--dim);
+    }
+    .footer-block a { color: var(--cyan); text-decoration: none; }
+    .footer-block a:hover { text-decoration: underline; }
+
+    /* Back */
+    .back {
+      position: fixed;
+      top: 1em;
+      right: 2em;
+      z-index: 100000;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+    }
+    .back a { color: var(--dim); text-decoration: none; }
+    .back a:hover { color: var(--cyan); }
+
+    /* Animations */
+    @keyframes draw {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .dr { animation: draw 0.6s ease both; }
+    .dr1 { animation-delay: 0.08s; }
+    .dr2 { animation-delay: 0.16s; }
+    .dr3 { animation-delay: 0.24s; }
+    .dr4 { animation-delay: 0.32s; }
+    .dr5 { animation-delay: 0.40s; }
+    .dr6 { animation-delay: 0.48s; }
+    .dr7 { animation-delay: 0.56s; }
+    .dr8 { animation-delay: 0.64s; }
+  </style>
+</head>
+<body>
+  <div class="back"><a href="/">&#8592; VERSIONS</a></div>
+  <div class="page">
+    <div class="title-block dr">
+      <div class="title-block-inner">
+        <div>
+          <h1 class="site-title"><a href="/v5/">Ethan Reimann</a></h1>
+          <ul class="nav-row">
+            <li><a href="/photography/">Photography</a></li>
+            <li><a href="/projects/">Projects</a></li>
+          </ul>
+        </div>
+        <div class="title-meta">
+          Drawing No. ER-2025-001<br />
+          Scale: 1:1<br />
+          Date: 2025-10-25
+        </div>
+      </div>
+    </div>
+
+    <section class="hero dr dr1">
+      <div class="coord">
+        x: 0.00<br />
+        y: 0.00<br />
+        z: ∞
+      </div>
+      <p class="label">Subject</p>
+      <h2 class="hero-name">
+        Ethan<br />
+        <span class="outline">Reimann</span><span style="color: var(--cyan);">.com</span>
+      </h2>
+      <p class="hero-suffix">// personal website — rev. 2025</p>
+    </section>
+
+    <div class="dim-line dr dr2">SECTION A — ABOUT</div>
+
+    <section class="about-section dr dr2">
+      <div class="about-text">
+        <p class="label">Description</p>
+        <p>
+          Hello World! This is one of my many attempts at a website in this
+          modern world where personal websites are very uncommon. My name is
+          none other than Ethan Reimann, a 10th grade student in the United
+          States. You can find me and my work all across the internet,
+          everything from YouTube videos to contributions to various GitHub
+          projects.
+        </p>
+      </div>
+      <div class="portrait-tech">
+        <img src="/portrait.jpg" alt="Ethan Reimann" width="200" height="267" />
+      </div>
+    </section>
+
+    <div class="cta-center dr dr3">
+      <a class="blueprint-btn" href="https://github.com/ReimannLabs">GITHUB</a>
+    </div>
+
+    <div class="note-block dr dr4">
+      <strong>Why Have a Personal Website in the 2020s?</strong><br />
+      <p>
+        Personal websites have always felt like a lost art to me. This site
+        shall grow with time, as I find the time. In all honesty, I would rather
+        my work be on a website owned by me rather than some billionaire social
+        media platform.
+      </p>
+    </div>
+
+    <div class="dim-line dr dr5">SECTION B — SPECIFICATIONS</div>
+
+    <div class="lists-row dr dr5">
+      <div class="spec-table">
+        <h2>Recent Books</h2>
+        <ul>
+          <li>
+            <span class="item-name">The Brothers Karamazov</span>
+            <span class="item-badge">Active</span>
+          </li>
+          <li><span class="item-name">The Giver</span> <span class="item-meta">Lowry</span></li>
+          <li><span class="item-name">We Who Wrestle with God</span> <span class="item-meta">Peterson</span></li>
+          <li><span class="item-name">Welcome to the Universe</span> <span class="item-meta">Tyson</span></li>
+          <li><span class="item-name">Ghost Town Living</span> <span class="item-meta">Underwood</span></li>
+          <li><span class="item-name">Too Big to Fail</span> <span class="item-meta">Sorkin</span></li>
+          <li><span class="item-name">The Order of Time</span> <span class="item-meta">Rovelli</span></li>
+        </ul>
+      </div>
+      <div class="spec-table">
+        <h2>Favorite Albums</h2>
+        <ul>
+          <li><span class="item-name">I'm The Problem</span> <span class="item-meta">Wallen</span></li>
+          <li><span class="item-name">From A Room: Vol. 2</span> <span class="item-meta">Stapleton</span></li>
+          <li><span class="item-name">Chief</span> <span class="item-meta">Church</span></li>
+          <li><span class="item-name">Leather</span> <span class="item-meta">Johnson</span></li>
+          <li><span class="item-name">From Elvis in Memphis</span> <span class="item-meta">Presley</span></li>
+          <li><span class="item-name">What Are We Waiting For?</span> <span class="item-meta">FK&C</span></li>
+          <li><span class="item-name">Jars of Clay</span> <span class="item-meta">Jars of Clay</span></li>
+          <li><span class="item-name">Summertime Blues</span> <span class="item-meta">Bryan</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note-block dr dr6">
+      <strong>What I Write About on "The Blog"</strong><br />
+      <p>
+        There is no set purpose for my blog, I will likely treat it as a digital
+        public journal. Posts will be written at random, and topics will be,
+        well, also, random.
+      </p>
+    </div>
+
+    <div class="dim-line dr dr7">SECTION C — LOG</div>
+
+    <section class="blog-section dr dr7">
+      <h2>The Blog</h2>
+      <div class="blog-row">
+        <a href="/a-new-start/">A New Start</a>
+        <time datetime="2025-10-25">2025-10-25</time>
+      </div>
+    </section>
+
+    <div class="footer-block dr dr8">
+      <span>Powered by <a href="https://reimannlabs.com/">Reimann Labs</a></span>
+      <span>Sheet 1 of 1</span>
+    </div>
+  </div>
+</body>
+</html>

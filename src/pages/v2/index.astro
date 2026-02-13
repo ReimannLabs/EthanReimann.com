@@ -1,0 +1,428 @@
+---
+/**
+ * V2: BROADSHEET — Editorial / Newspaper aesthetic
+ * Serif typography, multi-column layouts, rules, drop caps, datelines
+ * Inspired by NYT, The Guardian, classic broadsheet newspapers
+ */
+---
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <title>Ethan Reimann – Broadsheet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Courier+Prime&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #faf8f4;
+      --ink: #1a1712;
+      --rule: #c4b9a8;
+      --red: #8b1a1a;
+      --gray: #6b6560;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: clamp(0.95rem, 0.85rem + 0.4vw, 1.1rem);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection { background: var(--red); color: var(--cream); }
+
+    .page {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Masthead */
+    .masthead {
+      text-align: center;
+      padding: 2.5rem 0 0.5rem;
+      border-bottom: 4px double var(--ink);
+    }
+    .masthead-date {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--gray);
+    }
+    .masthead-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(2.5rem, 4vw + 1rem, 5rem);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin: 0.2em 0;
+    }
+    .masthead-subtitle {
+      font-style: italic;
+      color: var(--gray);
+      font-size: 0.9rem;
+      padding-bottom: 0.3em;
+    }
+    .masthead-rule {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin-top: 0.5rem;
+    }
+
+    /* Nav */
+    .nav-bar {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--rule);
+      font-family: 'Playfair Display', serif;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+    .nav-bar a {
+      color: var(--ink);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-bar a:hover { color: var(--red); }
+
+    /* Hero banner */
+    .headline-section {
+      padding: 2.5rem 0 2rem;
+      border-bottom: 2px solid var(--ink);
+    }
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(1.8rem, 3vw + 0.5rem, 3.2rem);
+      line-height: 1.15;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .headline-deck {
+      text-align: center;
+      font-style: italic;
+      color: var(--gray);
+      margin-top: 0.5em;
+      font-size: 1.05rem;
+    }
+    .byline {
+      text-align: center;
+      margin-top: 1em;
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gray);
+    }
+
+    /* Multi-column article */
+    .article-body {
+      padding: 2rem 0;
+      column-count: 2;
+      column-gap: 2.5rem;
+      column-rule: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+    @media (max-width: 640px) {
+      .article-body { column-count: 1; }
+    }
+    .article-body p { margin-bottom: 1em; text-align: justify; hyphens: auto; }
+
+    .drop-cap::first-letter {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      float: left;
+      font-size: 4.2em;
+      line-height: 0.8;
+      margin-right: 0.08em;
+      margin-top: 0.05em;
+      color: var(--red);
+    }
+
+    /* Portrait in article */
+    .portrait-float {
+      float: right;
+      width: 200px;
+      margin: 0 0 1em 1.5em;
+      break-inside: avoid;
+    }
+    .portrait-float img {
+      width: 100%;
+      height: auto;
+      filter: grayscale(1) contrast(1.1);
+      border: 1px solid var(--rule);
+    }
+    .portrait-float figcaption {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.7rem;
+      color: var(--gray);
+      text-align: center;
+      margin-top: 0.3em;
+      font-style: italic;
+    }
+
+    /* Callout / Pull quote */
+    .pull-quote {
+      border-top: 3px solid var(--ink);
+      border-bottom: 3px solid var(--ink);
+      padding: 1.2em 0;
+      margin: 2rem 0;
+      text-align: center;
+    }
+    .pull-quote p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      line-height: 1.5;
+      color: var(--ink);
+    }
+
+    /* Section headers */
+    .section-header {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 0.3em;
+      margin-bottom: 1em;
+      margin-top: 2rem;
+    }
+
+    /* Lists as columns */
+    .list-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 2.5rem;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 2rem;
+    }
+    @media (max-width: 640px) {
+      .list-columns { grid-template-columns: 1fr; }
+    }
+    .list-col h3 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 0.3em;
+      margin-bottom: 0.7em;
+    }
+    .list-col ul {
+      list-style: none;
+      padding: 0;
+    }
+    .list-col li {
+      padding: 0.3em 0;
+      border-bottom: 1px dotted var(--rule);
+      font-size: 0.92rem;
+    }
+    .list-col li:last-child { border-bottom: none; }
+    .list-col li em {
+      color: var(--red);
+      font-size: 0.8em;
+    }
+    .list-col li span.artist {
+      color: var(--gray);
+      font-style: italic;
+    }
+
+    /* Blog section */
+    .blog-section { padding: 2rem 0; }
+    .blog-item {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      padding: 0.5em 0;
+      border-bottom: 1px dotted var(--rule);
+    }
+    .blog-item time {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.75rem;
+      color: var(--gray);
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .blog-item a {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 1.05rem;
+    }
+    .blog-item a:hover { color: var(--red); }
+
+    /* CTA */
+    .cta-center {
+      text-align: center;
+      padding: 1.5rem 0;
+    }
+    .cta-btn {
+      display: inline-block;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--cream);
+      background: var(--ink);
+      padding: 0.8em 2.5em;
+      text-decoration: none;
+      border: 2px solid var(--ink);
+      transition: all 0.2s;
+    }
+    .cta-btn:hover {
+      background: transparent;
+      color: var(--ink);
+    }
+
+    /* Footer */
+    .footer-bar {
+      border-top: 4px double var(--ink);
+      padding: 1.5rem 0;
+      text-align: center;
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.75rem;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .footer-bar a { color: var(--red); text-decoration: none; }
+    .footer-bar a:hover { text-decoration: underline; }
+
+    /* Back link */
+    .back {
+      position: fixed;
+      top: 1em;
+      right: 2em;
+      z-index: 1000;
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.75rem;
+    }
+    .back a { color: var(--gray); text-decoration: none; }
+    .back a:hover { color: var(--red); }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade { animation: fadeIn 0.6s ease both; }
+    .fd1 { animation-delay: 0.05s; }
+    .fd2 { animation-delay: 0.15s; }
+    .fd3 { animation-delay: 0.25s; }
+    .fd4 { animation-delay: 0.35s; }
+    .fd5 { animation-delay: 0.45s; }
+  </style>
+</head>
+<body>
+  <div class="back"><a href="/">&#9664; versions</a></div>
+  <div class="page">
+    <header class="masthead fade">
+      <p class="masthead-date">Est. 2025 &middot; On The World Wide Web</p>
+      <h1 class="masthead-title">Ethan Reimann</h1>
+      <p class="masthead-subtitle">The Ol' Web — A Personal Broadsheet</p>
+      <hr class="masthead-rule" />
+    </header>
+
+    <nav class="nav-bar fade fd1">
+      <a href="/photography/">Photography</a>
+      <span style="color: var(--rule);">&middot;</span>
+      <a href="/projects/">Projects</a>
+      <span style="color: var(--rule);">&middot;</span>
+      <a href="https://github.com/ReimannLabs">GitHub</a>
+    </nav>
+
+    <section class="headline-section fade fd2">
+      <h2 class="headline">A 10th Grader's Attempt at Reclaiming the Personal Web</h2>
+      <p class="headline-deck">In a modern world where personal websites are very uncommon, one student builds his own corner of the internet.</p>
+      <p class="byline">By Ethan Reimann &middot; United States</p>
+    </section>
+
+    <div class="article-body fade fd3">
+      <figure class="portrait-float">
+        <img src="/portrait.jpg" alt="Ethan Reimann" width="200" height="267" />
+        <figcaption>The author, photographed 2025</figcaption>
+      </figure>
+      <p class="drop-cap">
+        Hello World! This is one of my many attempts at a website in this
+        modern world where personal websites are very uncommon. My name is
+        none other than Ethan Reimann, a 10th grade student in the United
+        States. You can find me and my work all across the internet,
+        everything from YouTube videos to contributions to various GitHub
+        projects.
+      </p>
+      <p>
+        Personal websites have always felt like a lost art to me. This site
+        shall grow with time, as I find the time. In all honesty, I would
+        rather my work be on a website owned by me rather than some
+        billionaire social media platform.
+      </p>
+    </div>
+
+    <div class="pull-quote fade fd4">
+      <p>&ldquo;I would rather my work be on a website owned by me rather than some billionaire social media platform.&rdquo;</p>
+    </div>
+
+    <div class="list-columns fade fd4">
+      <div class="list-col">
+        <h3>Recent Books</h3>
+        <ul>
+          <li>The Brothers Karamazov — Dostoevsky <em>&bull; Reading</em></li>
+          <li>The Giver — <span class="artist">Lois Lowry</span></li>
+          <li>We Who Wrestle with God — <span class="artist">Jordan Peterson</span></li>
+          <li>Welcome to the Universe — <span class="artist">Neil DeGrasse Tyson</span></li>
+          <li>Ghost Town Living — <span class="artist">Brent Underwood</span></li>
+          <li>Too Big to Fail — <span class="artist">Andrew Sorkin</span></li>
+          <li>The Order of Time — <span class="artist">Carlo Rovelli</span></li>
+        </ul>
+      </div>
+      <div class="list-col">
+        <h3>Favorite Albums</h3>
+        <ul>
+          <li>I'm The Problem — <span class="artist">Morgan Wallen</span></li>
+          <li>From A Room: Vol. 2 — <span class="artist">Chris Stapleton</span></li>
+          <li>Chief — <span class="artist">Eric Church</span></li>
+          <li>Leather — <span class="artist">Cody Johnson</span></li>
+          <li>From Elvis in Memphis — <span class="artist">Elvis Presley</span></li>
+          <li>What Are We Waiting For? — <span class="artist">For King & Country</span></li>
+          <li>Jars of Clay — <span class="artist">Jars of Clay</span></li>
+          <li>Summertime Blues — <span class="artist">Zach Bryan</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <section class="blog-section fade fd5">
+      <h2 class="section-header">The Blog</h2>
+      <p style="font-style: italic; color: var(--gray); margin-bottom: 1em; font-size: 0.92rem;">
+        There is no set purpose for my blog — I treat it as a digital public journal.
+        Posts will be written at random, and topics will be, well, also, random.
+      </p>
+      <div class="blog-item">
+        <time datetime="2025-10-25">Oct 25, 2025</time>
+        <a href="/a-new-start/">A New Start</a>
+      </div>
+    </section>
+
+    <div class="cta-center fade fd5">
+      <a class="cta-btn" href="https://github.com/ReimannLabs">View on GitHub</a>
+    </div>
+
+    <footer class="footer-bar fade fd5">
+      <p>Powered by <a href="https://reimannlabs.com/">Reimann Labs</a> &middot; MMXXV</p>
+    </footer>
+  </div>
+</body>
+</html>

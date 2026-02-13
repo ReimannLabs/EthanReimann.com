@@ -1,17 +1,265 @@
 ---
+/**
+ * VERSION PICKER — Choose a homepage design
+ * Self-contained page with its own aesthetic
+ */
 
+const versions = [
+  {
+    id: 1,
+    name: 'Terminal',
+    tag: 'CRT / Hacker',
+    desc: 'Phosphor glow, scanlines, ASCII art, command-line prompts. The internet as it should have stayed.',
+    color: '#7fd962',
+    bg: '#0a0e14',
+  },
+  {
+    id: 2,
+    name: 'Broadsheet',
+    tag: 'Editorial / Newspaper',
+    desc: 'Serif typography, multi-column layout, drop caps, datelines. Print is not dead — it moved online.',
+    color: '#8b1a1a',
+    bg: '#faf8f4',
+  },
+  {
+    id: 3,
+    name: 'Parchment',
+    tag: 'Warm Analog',
+    desc: 'Handwritten annotations, cream tones, paper texture, organic flow. A notebook left open on a desk.',
+    color: '#8b4513',
+    bg: '#f5efe0',
+  },
+  {
+    id: 4,
+    name: 'Obsidian',
+    tag: 'Dark Luxury',
+    desc: 'Deep blacks, gold accents, refined typography, smooth reveals. Premium restraint in every pixel.',
+    color: '#c9a84c',
+    bg: '#08080a',
+  },
+  {
+    id: 5,
+    name: 'Blueprint',
+    tag: 'Technical Drawing',
+    desc: 'Graph paper, dimension lines, engineering annotations. The web as a technical specification.',
+    color: '#4fc3f7',
+    bg: '#0a1628',
+  },
+];
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <title>Ethan Reimann – Choose a Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="page">
+    <header class="header fade fd0">
+      <div class="overline">EthanReimann.com</div>
+      <h1 class="title">Choose a<br /><em>Design</em></h1>
+      <p class="subtitle">Five variations of the same personal website. Same content, radically different aesthetics. Pick one to explore.</p>
+    </header>
+
+    <div class="grid">
+      {versions.map((v, i) => (
+        <a href={`/v${v.id}/`} class={`card fade fd${i + 1}`} style={`--accent: ${v.color}; --card-bg: ${v.bg};`}>
+          <div class="card-preview">
+            <span class="card-number" style={`color: ${v.color}`}>{String(v.id).padStart(2, '0')}</span>
+          </div>
+          <div class="card-body">
+            <h2 class="card-name">{v.name}</h2>
+            <span class="card-tag">{v.tag}</span>
+            <p class="card-desc">{v.desc}</p>
+          </div>
+          <div class="card-arrow" style={`color: ${v.color}`}>&#8594;</div>
+        </a>
+      ))}
+    </div>
+
+    <footer class="footer fade fd6">
+      <p>Built with Astro + Base UI &middot; Powered by <a href="https://reimannlabs.com/">Reimann Labs</a></p>
+    </footer>
+  </div>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #09090b;
+      color: #e4e4e7;
+      font-family: 'DM Mono', monospace;
+      font-size: clamp(0.85rem, 0.75rem + 0.4vw, 1rem);
+      line-height: 1.7;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      /* Subtle dot grid */
+      background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    ::selection { background: #a78bfa; color: #09090b; }
+
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 3rem 2rem 4rem;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    .overline {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #71717a;
+      margin-bottom: 1.5em;
+    }
+    .title {
+      font-family: 'Instrument Serif', serif;
+      font-weight: 400;
+      font-size: clamp(2.5rem, 5vw + 1rem, 4.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: #fafafa;
+    }
+    .title em {
+      font-style: italic;
+      background: linear-gradient(135deg, #a78bfa, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .subtitle {
+      max-width: 500px;
+      margin: 1.5em auto 0;
+      color: #71717a;
+      font-size: 0.9rem;
+    }
+
+    /* Card grid */
+    .grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: #27272a;
+      border: 1px solid #27272a;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .card {
+      display: grid;
+      grid-template-columns: 120px 1fr 50px;
+      align-items: center;
+      background: #09090b;
+      text-decoration: none;
+      color: inherit;
+      padding: 1.8rem 2rem;
+      transition: background 0.25s, transform 0.25s;
+      cursor: pointer;
+      gap: 1.5rem;
+    }
+    @media (max-width: 640px) {
+      .card {
+        grid-template-columns: 60px 1fr 40px;
+        padding: 1.2rem 1rem;
+        gap: 1rem;
+      }
+    }
+    .card:hover {
+      background: #18181b;
+    }
+    .card:hover .card-arrow {
+      transform: translateX(4px);
+    }
+    .card:hover .card-preview {
+      box-shadow: 0 0 24px color-mix(in srgb, var(--accent) 20%, transparent);
+    }
+
+    .card-preview {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: var(--card-bg);
+      border: 1px solid #27272a;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: box-shadow 0.3s;
+    }
+    .card-number {
+      font-family: 'Instrument Serif', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      opacity: 0.8;
+    }
+
+    .card-body { min-width: 0; }
+    .card-name {
+      font-family: 'Instrument Serif', serif;
+      font-weight: 400;
+      font-size: 1.3rem;
+      color: #fafafa;
+      line-height: 1.2;
+    }
+    .card-tag {
+      display: inline-block;
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: 0.3em;
+    }
+    .card-desc {
+      color: #71717a;
+      font-size: 0.82rem;
+      margin-top: 0.5em;
+      line-height: 1.6;
+    }
+
+    .card-arrow {
+      font-size: 1.5rem;
+      transition: transform 0.25s;
+      text-align: center;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 3rem;
+      color: #52525b;
+      font-size: 0.75rem;
+    }
+    .footer a {
+      color: #a78bfa;
+      text-decoration: none;
+    }
+    .footer a:hover { text-decoration: underline; }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade { animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .fd0 { animation-delay: 0s; }
+    .fd1 { animation-delay: 0.08s; }
+    .fd2 { animation-delay: 0.16s; }
+    .fd3 { animation-delay: 0.24s; }
+    .fd4 { animation-delay: 0.32s; }
+    .fd5 { animation-delay: 0.40s; }
+    .fd6 { animation-delay: 0.50s; }
+  </style>
+</body>
 </html>
