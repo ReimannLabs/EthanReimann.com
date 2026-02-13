@@ -1,13 +1,15 @@
 {
-  "name": "ethanreimann.com",
-  "version": "0.1.0",
-  "private": true,
+  "name": "",
+  "type": "module",
+  "version": "0.0.1",
   "scripts": {
-    "dev": "eleventy --serve",
-    "start": "npm run dev",
-    "build": "eleventy --quiet"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
-  "devDependencies": {
-    "@11ty/eleventy": "^2.0.1"
+  "dependencies": {
+    "@base-ui/react": "^1.2.0",
+    "astro": "^5.17.1"
   }
 }

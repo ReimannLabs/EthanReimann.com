@@ -1,49 +1,43 @@
-Personal Blog template using Bootstrap 5.3.8 (CDN)
+# Astro Starter Kit: Minimal
 
-This repository now includes a minimal Eleventy starter that builds the Bootstrap-based layout in `src/` and outputs the site to `_site/`.
-
-Files added/updated
-
-- `package.json` — dev script and Eleventy dependency
-- `.eleventy.js` — Eleventy config (passthrough for `css/`)
-- `src/_layouts/base.njk` — base HTML layout using Bootstrap and your styles
-- `src/index.njk` — home list mapped to `collections.posts`
-- `src/_layouts/post.njk` — single-post layout
-- `src/posts/2025-10-23-building-fast-sites.md` — example post
-- `css/style.css` — passthrough custom styles (existing)
-
-Quick start (Eleventy)
-
-1. Install dependencies:
-
-```bash
-npm install
+```sh
+npm create astro@latest -- --template minimal
 ```
 
-2. Run the dev server with live reloading:
+> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
 
-```bash
-npm start
-# opens a local dev server (usually http://localhost:8080)
+## 🚀 Project Structure
+
+Inside of your Astro project, you'll see the following folders and files:
+
+```text
+/
+├── public/
+├── src/
+│   └── pages/
+│       └── index.astro
+└── package.json
 ```
 
-3. Build for production (output goes to `_site/`):
+Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
 
-```bash
-npm run build
-```
+There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
 
-Notes
+Any static assets, like images, can be placed in the `public/` directory.
 
-- The Eleventy starter uses CDN-hosted Bootstrap in the layouts. If you prefer SRI, add the correct hashes in the layout files.
-- `css/style.css` is passthrough-copied to the output so your custom styles are preserved.
-- Images in the example use `picsum.photos`. For production, replace these with optimized images or add `eleventy-img` for responsive image generation.
+## 🧞 Commands
 
-Next steps (suggested)
+All commands are run from the root of the project, from a terminal:
 
-- Add pagination and tag/category pages.
-- Add an RSS feed and SEO metadata.
-- Add `eleventy-img` to generate responsive images at build time.
-- Create a simple GitHub Actions or Netlify workflow to build and publish `_site/` on push.
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `npm install`             | Installs dependencies                            |
+| `npm run dev`             | Starts local dev server at `localhost:4321`      |
+| `npm run build`           | Build your production site to `./dist/`          |
+| `npm run preview`         | Preview your build locally, before deploying     |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-If you want, I can add any of the above (pagination, RSS, image optimization, CI) next and wire up a sample GitHub Actions workflow.
+## 👀 Want to learn more?
+
+Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
