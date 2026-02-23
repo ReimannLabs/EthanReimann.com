@@ -1,0 +1,127 @@
+---
+import AtelierLayout from './AtelierLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  tags?: string[];
+}
+
+const { title, description, date, tags } = Astro.props;
+
+const formattedDate = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<AtelierLayout title={`${title} | Ethan Reimann`} description={description} activeNav="blog">
+  <style>
+    .post { padding: 3rem 0; }
+    .post-back {
+      display: inline-block;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      margin-bottom: 2rem;
+      transition: color 0.2s;
+    }
+    .post-back:hover { color: var(--warm); }
+    .post-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: clamp(1.8rem, 3vw + 0.5rem, 2.8rem);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4em;
+    }
+    .post-date {
+      color: var(--muted);
+      font-size: 0.85rem;
+      display: block;
+      margin-bottom: 0.8em;
+    }
+    .post-tags {
+      display: flex;
+      gap: 0.5em;
+      margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .post-tag {
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--warm);
+      background: var(--warm-light);
+      padding: 0.15em 0.6em;
+      border-radius: 3px;
+    }
+    .post-content { max-width: 650px; }
+    .post-content p { margin-bottom: 1.4em; }
+    .post-content h2 {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-top: 2em;
+      margin-bottom: 0.6em;
+    }
+    .post-content h3 {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+    }
+    .post-content a { color: var(--warm); text-decoration: underline; text-underline-offset: 2px; }
+    .post-content a:hover { text-decoration: none; }
+    .post-content blockquote {
+      border-left: 3px solid var(--warm);
+      padding-left: 1.5rem;
+      margin: 1.5em 0;
+      color: var(--muted);
+      font-style: italic;
+    }
+    .post-content code {
+      font-family: monospace;
+      font-size: 0.9em;
+      background: var(--warm-light);
+      padding: 0.15em 0.4em;
+      border-radius: 3px;
+    }
+    .post-content pre {
+      background: var(--ink);
+      color: #e7e5e0;
+      padding: 1.5rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin: 1.5em 0;
+    }
+    .post-content pre code { background: none; padding: 0; color: inherit; }
+    .post-content ul, .post-content ol { margin-bottom: 1.4em; padding-left: 1.5em; }
+    .post-content li { margin-bottom: 0.3em; }
+    .post-content img {
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+      margin: 1.5em 0;
+    }
+  </style>
+
+  <article class="post f f2">
+    <a href="/blog/" class="post-back">&larr; Back to blog</a>
+    <h1 class="post-title">{title}</h1>
+    <time class="post-date" datetime={date.toISOString()}>{formattedDate}</time>
+    {tags && tags.length > 0 && (
+      <div class="post-tags">
+        {tags.map(tag => <span class="post-tag">{tag}</span>)}
+      </div>
+    )}
+    <div class="post-content">
+      <slot />
+    </div>
+  </article>
+</AtelierLayout>

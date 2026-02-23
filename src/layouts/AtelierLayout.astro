@@ -1,0 +1,121 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  activeNav?: 'photography' | 'projects' | 'blog';
+}
+
+const {
+  title = 'Ethan Reimann',
+  description = 'The personal website of Ethan Reimann',
+  activeNav
+} = Astro.props;
+---
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" href="/favicon.ico" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400&family=Karla:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #fafaf8;
+      --surface: #ffffff;
+      --ink: #1c1917;
+      --muted: #78716c;
+      --border: #e7e5e0;
+      --warm: #b45309;
+      --warm-light: rgba(180, 83, 9, 0.06);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Karla', sans-serif;
+      font-size: clamp(0.9rem, 0.8rem + 0.4vw, 1.05rem);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection { background: var(--warm); color: white; }
+
+    .page { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 2.5rem 0;
+    }
+    .logo {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: -0.01em;
+    }
+    .logo a { color: var(--ink); text-decoration: none; }
+    .header-nav { display: flex; gap: 1.5rem; list-style: none; }
+    .header-nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+    .header-nav a:hover { color: var(--ink); }
+    .header-nav a.nav-active { color: var(--ink); font-weight: 500; }
+
+    /* Footer */
+    .footer {
+      padding: 2rem 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+    .footer a { color: var(--warm); text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .f { animation: fadeUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .f1 { animation-delay: 0.05s; } .f2 { animation-delay: 0.1s; }
+    .f3 { animation-delay: 0.18s; } .f4 { animation-delay: 0.26s; }
+    .f5 { animation-delay: 0.34s; } .f6 { animation-delay: 0.42s; }
+    .f7 { animation-delay: 0.5s; }
+  </style>
+  <slot name="head" />
+</head>
+<body>
+  <div class="page">
+    <header class="header f f1">
+      <div class="logo"><a href="/">Ethan Reimann</a></div>
+      <nav>
+        <ul class="header-nav">
+          <li><a href="/photography/" class={activeNav === 'photography' ? 'nav-active' : ''}>Photography</a></li>
+          <li><a href="/projects/" class={activeNav === 'projects' ? 'nav-active' : ''}>Projects</a></li>
+          <li><a href="/blog/" class={activeNav === 'blog' ? 'nav-active' : ''}>Blog</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <slot />
+
+    <footer class="footer f f7">
+      Powered by <a href="https://reimannlabs.com/">Reimann Labs</a>
+    </footer>
+  </div>
+</body>
+</html>

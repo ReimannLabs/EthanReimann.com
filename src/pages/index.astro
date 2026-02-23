@@ -1,265 +1,330 @@
 ---
 /**
- * VERSION PICKER — Choose a homepage design
- * Self-contained page with its own aesthetic
+ * ATELIER — Gallery / Digital Home
  */
 
-const versions = [
-  {
-    id: 1,
-    name: 'Atelier',
-    tag: 'Gallery / Digital Home',
-    desc: 'Airy studio warmth with prominent room-style navigation. Your photography, projects, and writing — all under one roof.',
-    color: '#b45309',
-    bg: '#fafaf8',
-  },
-  {
-    id: 2,
-    name: 'Folio',
-    tag: 'Classic Book / Codex',
-    desc: 'A beautifully typeset personal almanac with sidebar table-of-contents, drop caps, and numbered chapters.',
-    color: '#9b4d2b',
-    bg: '#fffdf7',
-  },
-  {
-    id: 3,
-    name: 'Dossier',
-    tag: 'Modern Utilitarian',
-    desc: 'Bold black-and-white filing system. Thick borders, tabular data, section directories. A well-organized desk.',
-    color: '#d12e1e',
-    bg: '#f0eeea',
-  },
-  {
-    id: 4,
-    name: 'Homestead',
-    tag: 'Warm & Inviting',
-    desc: 'Earthy greens, soft shadows, rounded cards. A cabin on the internet — distinct rooms for every part of your digital life.',
-    color: '#4a7c59',
-    bg: '#f5f0e8',
-  },
-  {
-    id: 5,
-    name: 'Meridian',
-    tag: 'Dark Contemporary',
-    desc: 'Sleek dark editorial with sharp accents. Magazine-quality portfolio layout that showcases photography and projects.',
-    color: '#e05a33',
-    bg: '#0f0f10',
-  },
+import AtelierLayout from '../layouts/AtelierLayout.astro';
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import portraitOutside from '../images/ethan_portrait_outside.jpg';
+import performingArts from '../images/ethan_performing_arts.jpg';
+import vcfmw from '../images/ethan_VCFMW.jpg';
+import portraitInside from '../images/ethan_new_portrait_inside.jpg';
+import cameraDarkmirror from '../images/ethan_camera_darkmirror.JPG';
+
+const rooms = [
+  { name: 'Photography', href: '/photography/', icon: '&#9634;', desc: 'Moments captured through the lens' },
+  { name: 'Projects', href: '/projects/', icon: '&#9648;', desc: 'Things I\'ve built and contributed to' },
+  { name: 'The Blog', href: '/blog/', icon: '&#9998;', desc: 'A digital public journal' },
+  { name: 'GitHub', href: 'https://github.com/ReimannLabs', icon: '&#10070;', desc: 'Open source work and code' },
 ];
+
+const books = [
+  { title: 'The Brothers Karamazov', author: 'Fyodor Dostoevsky', active: true },
+  { title: 'The Giver', author: 'Lois Lowry' },
+  { title: 'We Who Wrestle with God', author: 'Jordan Peterson' },
+  { title: 'Welcome to the Universe', author: 'Neil DeGrasse Tyson, Et al.' },
+  { title: 'Ghost Town Living', author: 'Brent Underwood' },
+  { title: 'Too Big to Fail', author: 'Andrew Sorkin' },
+  { title: 'The Order of Time', author: 'Carlo Rovelli' },
+];
+
+const albums = [
+  { title: "I'm The Problem", artist: 'Morgan Wallen' },
+  { title: 'From A Room: Volume 2', artist: 'Chris Stapleton' },
+  { title: 'Chief', artist: 'Eric Church' },
+  { title: 'Leather', artist: 'Cody Johnson' },
+  { title: 'From Elvis in Memphis', artist: 'Elvis Presley' },
+  { title: 'What Are We Waiting For?', artist: 'For King & Country' },
+  { title: 'Jars of Clay', artist: 'Jars of Clay' },
+  { title: 'Summertime Blues', artist: 'Zach Bryan' },
+];
+
+const blogPosts = await getCollection('blog', ({ data }) => !data.draft);
+const sortedPosts = blogPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <title>Ethan Reimann – Choose a Design</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
-</head>
-<body>
-  <div class="page">
-    <header class="header fade fd0">
-      <div class="overline">EthanReimann.com</div>
-      <h1 class="title">Choose a<br /><em>Design</em></h1>
-      <p class="subtitle">Five variations of the same personal website. Same content, radically different aesthetics. Pick one to explore.</p>
-    </header>
-
-    <div class="grid">
-      {versions.map((v, i) => (
-        <a href={`/v${v.id}/`} class={`card fade fd${i + 1}`} style={`--accent: ${v.color}; --card-bg: ${v.bg};`}>
-          <div class="card-preview">
-            <span class="card-number" style={`color: ${v.color}`}>{String(v.id).padStart(2, '0')}</span>
-          </div>
-          <div class="card-body">
-            <h2 class="card-name">{v.name}</h2>
-            <span class="card-tag">{v.tag}</span>
-            <p class="card-desc">{v.desc}</p>
-          </div>
-          <div class="card-arrow" style={`color: ${v.color}`}>&#8594;</div>
-        </a>
-      ))}
-    </div>
-
-    <footer class="footer fade fd6">
-      <p>Built with Astro + Base UI &middot; Powered by <a href="https://reimannlabs.com/">Reimann Labs</a></p>
-    </footer>
-  </div>
-
+<AtelierLayout>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      background: #09090b;
-      color: #e4e4e7;
-      font-family: 'DM Mono', monospace;
-      font-size: clamp(0.85rem, 0.75rem + 0.4vw, 1rem);
-      line-height: 1.7;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-      /* Subtle dot grid */
-      background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
-      background-size: 24px 24px;
+    /* Hero */
+    .hero {
+      padding: 4rem 0;
+      border-bottom: 1px solid var(--border);
     }
-
-    ::selection { background: #a78bfa; color: #09090b; }
-
-    .page {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 3rem 2rem 4rem;
-    }
-
-    /* Header */
-    .header {
-      text-align: center;
-      margin-bottom: 4rem;
-    }
-    .overline {
-      font-size: 0.7rem;
+    .hero-greeting {
+      font-size: 0.75rem;
       font-weight: 500;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: #71717a;
-      margin-bottom: 1.5em;
+      color: var(--warm);
+      margin-bottom: 1em;
     }
-    .title {
-      font-family: 'Instrument Serif', serif;
+    .hero-title {
+      font-family: 'Fraunces', serif;
       font-weight: 400;
-      font-size: clamp(2.5rem, 5vw + 1rem, 4.5rem);
-      line-height: 1.05;
+      font-size: clamp(2.2rem, 4vw + 0.8rem, 3.8rem);
+      line-height: 1.15;
       letter-spacing: -0.02em;
-      color: #fafafa;
+      max-width: 600px;
     }
-    .title em {
-      font-style: italic;
-      background: linear-gradient(135deg, #a78bfa, #6366f1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .subtitle {
-      max-width: 500px;
-      margin: 1.5em auto 0;
-      color: #71717a;
-      font-size: 0.9rem;
-    }
+    .hero-title em { font-style: italic; color: var(--warm); }
 
-    /* Card grid */
-    .grid {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-      background: #27272a;
-      border: 1px solid #27272a;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    .card {
+    /* About with portrait */
+    .intro {
       display: grid;
-      grid-template-columns: 120px 1fr 50px;
+      grid-template-columns: 1fr 280px;
+      gap: 3rem;
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--border);
       align-items: center;
-      background: #09090b;
-      text-decoration: none;
-      color: inherit;
-      padding: 1.8rem 2rem;
-      transition: background 0.25s, transform 0.25s;
-      cursor: pointer;
-      gap: 1.5rem;
     }
     @media (max-width: 640px) {
-      .card {
-        grid-template-columns: 60px 1fr 40px;
-        padding: 1.2rem 1rem;
-        gap: 1rem;
-      }
+      .intro { grid-template-columns: 1fr; }
+      .portrait { max-width: 260px; }
     }
-    .card:hover {
-      background: #18181b;
-    }
-    .card:hover .card-arrow {
-      transform: translateX(4px);
-    }
-    .card:hover .card-preview {
-      box-shadow: 0 0 24px color-mix(in srgb, var(--accent) 20%, transparent);
-    }
-
-    .card-preview {
+    .intro p { color: var(--ink); margin-bottom: 1em; }
+    .intro p:last-child { margin-bottom: 0; }
+    .portrait {
       width: 100%;
-      aspect-ratio: 4/3;
-      background: var(--card-bg);
-      border: 1px solid #27272a;
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: box-shadow 0.3s;
-    }
-    .card-number {
-      font-family: 'Instrument Serif', serif;
-      font-size: 2rem;
-      font-weight: 400;
-      opacity: 0.8;
+      height: auto;
+      border-radius: 6px;
+      filter: grayscale(15%);
     }
 
-    .card-body { min-width: 0; }
-    .card-name {
-      font-family: 'Instrument Serif', serif;
-      font-weight: 400;
-      font-size: 1.3rem;
-      color: #fafafa;
-      line-height: 1.2;
+    /* Room tiles */
+    .rooms {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 3rem 0;
     }
-    .card-tag {
-      display: inline-block;
-      font-size: 0.6rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-top: 0.3em;
-    }
-    .card-desc {
-      color: #71717a;
-      font-size: 0.82rem;
-      margin-top: 0.5em;
-      line-height: 1.6;
-    }
-
-    .card-arrow {
-      font-size: 1.5rem;
-      transition: transform 0.25s;
-      text-align: center;
-    }
-
-    /* Footer */
-    .footer {
-      text-align: center;
-      margin-top: 3rem;
-      color: #52525b;
-      font-size: 0.75rem;
-    }
-    .footer a {
-      color: #a78bfa;
+    @media (max-width: 520px) { .rooms { grid-template-columns: 1fr; } }
+    .room {
+      background: var(--surface);
+      padding: 2rem;
       text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+      transition: background 0.2s;
     }
-    .footer a:hover { text-decoration: underline; }
+    .room:hover { background: var(--warm-light); }
+    .room-icon { font-size: 1.5rem; color: var(--warm); line-height: 1; }
+    .room-name { font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.05rem; }
+    .room-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
 
-    /* Animations */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* Callout */
+    .callout {
+      background: var(--warm-light);
+      border-left: 3px solid var(--warm);
+      padding: 1.5rem 2rem;
+      margin: 3rem 0;
+      border-radius: 0 6px 6px 0;
     }
-    .fade { animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
-    .fd0 { animation-delay: 0s; }
-    .fd1 { animation-delay: 0.08s; }
-    .fd2 { animation-delay: 0.16s; }
-    .fd3 { animation-delay: 0.24s; }
-    .fd4 { animation-delay: 0.32s; }
-    .fd5 { animation-delay: 0.40s; }
-    .fd6 { animation-delay: 0.50s; }
+    .callout strong { font-family: 'Fraunces', serif; display: block; margin-bottom: 0.3em; font-size: 0.95rem; }
+    .callout p { color: var(--muted); font-size: 0.9rem; }
+
+    /* Lists */
+    .lists {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    @media (max-width: 640px) { .lists { grid-template-columns: 1fr; gap: 2rem; } }
+    .list-section h2 {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 1em;
+      padding-bottom: 0.5em;
+      border-bottom: 1px solid var(--border);
+    }
+    .list-section ul { list-style: none; }
+    .list-section li {
+      padding: 0.4em 0;
+      font-size: 0.9rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 1em;
+      border-bottom: 1px solid var(--bg);
+    }
+    .list-section li:last-child { border-bottom: none; }
+    .list-title { color: var(--ink); }
+    .list-meta { color: var(--muted); font-size: 0.82em; text-align: right; white-space: nowrap; }
+    .badge {
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--warm);
+      background: var(--warm-light);
+      padding: 0.15em 0.6em;
+      border-radius: 3px;
+    }
+
+    /* Bio */
+    .bio { padding: 3rem 0; border-bottom: 1px solid var(--border); }
+    .bio h2 {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 1em;
+      padding-bottom: 0.5em;
+      border-bottom: 1px solid var(--border);
+    }
+    .bio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start; }
+    @media (max-width: 640px) { .bio-grid { grid-template-columns: 1fr; } }
+    .bio-list { display: flex; flex-direction: column; gap: 0; }
+    .bio-row { display: flex; gap: 1.5rem; padding: 0.65em 0; border-bottom: 1px solid var(--bg); }
+    .bio-row:last-child { border-bottom: none; }
+    .bio-row dt {
+      font-weight: 600; font-size: 0.82rem; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--warm); min-width: 80px; flex-shrink: 0; padding-top: 0.1em;
+    }
+    .bio-row dd { font-size: 0.9rem; color: var(--ink); }
+    .bio-row dd a { color: var(--warm); text-decoration: none; }
+    .bio-row dd a:hover { text-decoration: underline; }
+    .bio-note { color: var(--muted); font-size: 0.82em; }
+    .bio-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+    .bio-photo {
+      width: 100%; height: auto; aspect-ratio: 4/3; object-fit: cover;
+      border-radius: 6px; filter: grayscale(10%); transition: filter 0.3s;
+    }
+    .bio-photo:hover { filter: grayscale(0%); }
+
+    /* Blog */
+    .blog { padding: 3rem 0; }
+    .blog h2 {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 1em;
+      padding-bottom: 0.5em;
+      border-bottom: 1px solid var(--border);
+    }
+    .blog-note { color: var(--muted); font-size: 0.85rem; font-style: italic; margin-bottom: 1em; }
+    .blog-item { display: flex; justify-content: space-between; align-items: baseline; padding: 0.6em 0; }
+    .blog-item a { color: var(--ink); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+    .blog-item a:hover { color: var(--warm); }
+    .blog-item time { color: var(--muted); font-size: 0.82rem; }
   </style>
-</body>
-</html>
+
+  <section class="hero f f2">
+    <p class="hero-greeting">Welcome to my corner of the internet</p>
+    <h1 class="hero-title">This is <em>my digital home</em> — come on in.</h1>
+  </section>
+
+  <section class="intro f f3">
+    <div>
+      <p>
+        Hello World! I'm Ethan Reimann, a 10th grade student in the United
+        States. This is one of my many attempts at a website in this modern
+        world where personal websites are very uncommon.
+      </p>
+      <p>
+        You can find me and my work all across the internet — everything from
+        YouTube videos to contributions to various GitHub projects. This site
+        is the home base for all of it.
+      </p>
+    </div>
+    <Image class="portrait" src={portraitOutside} alt="Ethan Reimann outdoors" width={600} quality={85} />
+  </section>
+
+  <div class="rooms f f4">
+    {rooms.map((room) => (
+      <a class="room" href={room.href}>
+        <span class="room-icon" set:html={room.icon} />
+        <span class="room-name">{room.name}</span>
+        <span class="room-desc">{room.desc}</span>
+      </a>
+    ))}
+  </div>
+
+  <section class="bio f f5">
+    <h2>Bio</h2>
+    <div class="bio-grid">
+      <div class="bio-details">
+        <dl class="bio-list">
+          <div class="bio-row">
+            <dt>Age</dt>
+            <dd>16 <span class="bio-note">— born July 2009</span></dd>
+          </div>
+          <div class="bio-row">
+            <dt>Education</dt>
+            <dd>10th Grade Student<br/><span class="bio-note">Interested in pursuing a degree in Economics, Music, or Finance</span></dd>
+          </div>
+          <div class="bio-row">
+            <dt>Email</dt>
+            <dd><a href="mailto:hello@ethanreimann.com">hello@ethanreimann.com</a></dd>
+          </div>
+          <div class="bio-row">
+            <dt>Hobbies</dt>
+            <dd>Theatre, Music <span class="bio-note">(Vocal &amp; Composition)</span>, Software Engineering, 4‑H, Writing</dd>
+          </div>
+        </dl>
+      </div>
+      <div class="bio-photos">
+        <Image class="bio-photo" src={performingArts} alt="Ethan on stage in a Dare to Dream theatre production" width={450} quality={80} />
+        <Image class="bio-photo" src={vcfmw} alt="Ethan at the Vintage Computer Festival Midwest" width={450} quality={80} />
+        <Image class="bio-photo" src={portraitInside} alt="Moody indoor portrait" width={450} quality={80} />
+        <Image class="bio-photo" src={cameraDarkmirror} alt="Ethan with camera" width={450} quality={80} />
+      </div>
+    </div>
+  </section>
+
+  <div class="callout f f5">
+    <strong>Why Have a Personal Website in the 2020s?</strong>
+    <p>
+      Personal websites have always felt like a lost art. I would rather my work
+      be on a website owned by me rather than some billionaire social media platform.
+      This site shall grow with time.
+    </p>
+  </div>
+
+  <div class="lists f f5">
+    <div class="list-section">
+      <h2>Recent Books</h2>
+      <ul>
+        {books.map((b) => (
+          <li>
+            <span class="list-title">{b.title}</span>
+            {b.active ? <span class="badge">Reading</span> : <span class="list-meta">{b.author}</span>}
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div class="list-section">
+      <h2>Favorite Albums</h2>
+      <ul>
+        {albums.map((a) => (
+          <li>
+            <span class="list-title">{a.title}</span>
+            <span class="list-meta">{a.artist}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <section class="blog f f6" id="blog">
+    <h2>The Blog</h2>
+    <p class="blog-note">
+      No set purpose — a digital public journal. Random posts, random topics.
+    </p>
+    {sortedPosts.map((post) => (
+      <div class="blog-item">
+        <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+        <time datetime={post.data.date.toISOString()}>
+          {post.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+        </time>
+      </div>
+    ))}
+  </section>
+</AtelierLayout>

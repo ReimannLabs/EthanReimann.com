@@ -1,0 +1,72 @@
+---
+import AtelierLayout from '../../layouts/AtelierLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog', ({ data }) => !data.draft);
+const sortedPosts = posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<AtelierLayout title="Blog | Ethan Reimann" description="Blog posts by Ethan Reimann" activeNav="blog">
+  <style>
+    .blog-index { padding: 3rem 0; }
+    .blog-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: clamp(1.8rem, 3vw + 0.5rem, 2.8rem);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+    .blog-subtitle {
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-style: italic;
+      margin-top: 0.5em;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .blog-entry {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.8em 0;
+      border-bottom: 1px solid var(--bg);
+    }
+    .blog-entry:last-child { border-bottom: none; }
+    .blog-entry a {
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .blog-entry a:hover { color: var(--warm); }
+    .blog-entry time {
+      color: var(--muted);
+      font-size: 0.82rem;
+      white-space: nowrap;
+      margin-left: 1em;
+    }
+    .blog-empty {
+      color: var(--muted);
+      font-style: italic;
+      padding: 2rem 0;
+    }
+  </style>
+
+  <section class="blog-index f f2">
+    <h1 class="blog-title">The Blog</h1>
+    <p class="blog-subtitle">No set purpose — a digital public journal. Random posts, random topics.</p>
+    {sortedPosts.length > 0 ? (
+      sortedPosts.map((post) => (
+        <div class="blog-entry">
+          <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+          <time datetime={post.data.date.toISOString()}>
+            {post.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+          </time>
+        </div>
+      ))
+    ) : (
+      <p class="blog-empty">No posts yet. Check back soon.</p>
+    )}
+  </section>
+</AtelierLayout>

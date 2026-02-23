@@ -1,0 +1,100 @@
+---
+import AtelierLayout from '../../layouts/AtelierLayout.astro';
+
+const projects = [
+  {
+    title: 'Flux',
+    description: 'A modern communication platform built as an alternative to Discord, focused on privacy and performance.',
+    tags: ['Communication', 'Platform'],
+  },
+  {
+    title: 'Report',
+    description: 'An educational technology platform focused on streamlining academic reporting and assessment.',
+    tags: ['EdTech', 'Platform'],
+  },
+  {
+    title: 'FarmKit',
+    description: 'A platform designed to help small-scale farmers manage and track their operations.',
+    tags: ['Platform', 'Agriculture'],
+  },
+  {
+    title: 'Learning PCB Design',
+    description: 'An ongoing exploration into printed circuit board design, from schematic capture to fabrication.',
+    tags: ['Hardware', 'Electronics'],
+  },
+  {
+    title: 'Cerro Gordo History',
+    description: 'A school research project documenting the history of Cerro Gordo, a ghost town in the Inyo Mountains of California.',
+    tags: ['Research', 'History'],
+  },
+];
+---
+
+<AtelierLayout title="Projects | Ethan Reimann" description="Projects by Ethan Reimann" activeNav="projects">
+  <style>
+    .projects-page { padding: 3rem 0; }
+    .projects-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: clamp(1.8rem, 3vw + 0.5rem, 2.8rem);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+    .projects-subtitle {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 0.5em;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .project-card {
+      padding: 1.8rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .project-card:last-child { border-bottom: none; }
+    .project-name {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 0.4em;
+    }
+    .project-desc {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      max-width: 600px;
+    }
+    .project-tags {
+      display: flex;
+      gap: 0.5em;
+      margin-top: 0.8em;
+    }
+    .project-tag {
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--warm);
+      background: var(--warm-light);
+      padding: 0.15em 0.6em;
+      border-radius: 3px;
+    }
+  </style>
+
+  <section class="projects-page f f2">
+    <h1 class="projects-title">Projects</h1>
+    <p class="projects-subtitle">Things I've built and contributed to.</p>
+    {projects.map((project) => (
+      <div class="project-card">
+        <h2 class="project-name">{project.title}</h2>
+        <p class="project-desc">{project.description}</p>
+        <div class="project-tags">
+          {project.tags.map((tag) => (
+            <span class="project-tag">{tag}</span>
+          ))}
+        </div>
+      </div>
+    ))}
+  </section>
+</AtelierLayout>
