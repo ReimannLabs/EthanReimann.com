@@ -1,31 +1,72 @@
 ---
 import AtelierLayout from '../../layouts/AtelierLayout.astro';
 
-const projects = [
+const sections = [
   {
-    title: 'Flux',
-    description: 'A modern communication platform built as an alternative to Discord, focused on privacy and performance.',
-    tags: ['Communication', 'Platform'],
+    id: 'school',
+    title: 'School',
+    description: "Projects from my PBL school — research, building, and learning by doing.",
+    projects: [
+      {
+        title: 'Cerro Gordo History',
+        description: 'A website and deep-dive research project into the history of Cerro Gordo, a ghost town in the Inyo Mountains of California.',
+        tags: ['Research', 'History', 'Web'],
+      },
+      {
+        title: 'Learning PCB Design',
+        description: 'Built a small programmable keyboard from scratch — learning schematic capture, PCB layout, and fabrication along the way.',
+        tags: ['Hardware', 'Electronics'],
+      },
+    ],
   },
   {
-    title: 'Report',
-    description: 'An educational technology platform focused on streamlining academic reporting and assessment.',
-    tags: ['EdTech', 'Platform'],
+    id: 'software',
+    title: 'Software',
+    description: 'Apps and platforms I\'m building.',
+    projects: [
+      {
+        title: 'FarmKit',
+        description: 'A Facebook Marketplace-like platform for connecting local farms with local buyers. Think farm-to-table, but for everything.',
+        tags: ['Platform', 'Agriculture'],
+        status: 'Alpha',
+      },
+      {
+        title: 'Report',
+        description: 'A project management dashboard purpose-built for PBL schools — tracking projects, progress, and assessment in one place.',
+        tags: ['EdTech', 'Dashboard'],
+        status: 'Alpha',
+      },
+      {
+        title: 'Flux',
+        description: 'A Discord-like communication app for my friends and I, built on Convex and Railway.',
+        tags: ['Communication', 'Real-time'],
+        status: 'Beta',
+      },
+    ],
   },
   {
-    title: 'FarmKit',
-    description: 'A platform designed to help small-scale farmers manage and track their operations.',
-    tags: ['Platform', 'Agriculture'],
-  },
-  {
-    title: 'Learning PCB Design',
-    description: 'An ongoing exploration into printed circuit board design, from schematic capture to fabrication.',
-    tags: ['Hardware', 'Electronics'],
-  },
-  {
-    title: 'Cerro Gordo History',
-    description: 'A school research project documenting the history of Cerro Gordo, a ghost town in the Inyo Mountains of California.',
-    tags: ['Research', 'History'],
+    id: 'business',
+    title: 'Business',
+    description: 'Ventures and brands I\'m involved with.',
+    projects: [
+      {
+        title: 'Reimann Labs',
+        description: 'My software and website business.',
+        tags: ['Software', 'Web'],
+        link: 'https://reimannlabs.com',
+      },
+      {
+        title: 'Reimann Hobby Acres',
+        description: 'My family\'s hobby farm and soon-to-be equine therapy center.',
+        tags: ['Agriculture', 'Equine Therapy'],
+      },
+      {
+        title: 'Badger Web Works',
+        description: 'A subscription-based website design service for small businesses.',
+        tags: ['Web Design', 'Service'],
+        link: 'https://badgerwebworks.com',
+      },
+    ],
   },
 ];
 ---
@@ -33,6 +74,7 @@ const projects = [
 <AtelierLayout title="Projects | Ethan Reimann" description="Projects by Ethan Reimann" activeNav="projects">
   <style>
     .projects-page { padding: 3rem 0; }
+
     .projects-title {
       font-family: 'Fraunces', serif;
       font-weight: 400;
@@ -48,50 +90,172 @@ const projects = [
       padding-bottom: 1.5rem;
       border-bottom: 1px solid var(--border);
     }
-    .project-card {
-      padding: 1.8rem 0;
+
+    /* ── Section ── */
+    .section { margin-bottom: 2.5rem; }
+    .section:last-child { margin-bottom: 0; }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 0.4rem;
+    }
+    .section-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--ink);
+    }
+    .section-count {
+      font-size: 0.7rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .section-desc {
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
       border-bottom: 1px solid var(--border);
     }
-    .project-card:last-child { border-bottom: none; }
+
+    /* ── Card Grid ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 0.75rem;
+    }
+    @media (max-width: 480px) {
+      .card-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Project Card ── */
+    .project-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.35rem;
+      background: var(--surface);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .project-card:hover {
+      border-color: var(--warm);
+      box-shadow: 0 2px 12px rgba(180, 83, 9, 0.08);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
     .project-name {
       font-family: 'Fraunces', serif;
       font-weight: 700;
-      font-size: 1.1rem;
-      margin-bottom: 0.4em;
+      font-size: 1.02rem;
+      color: var(--ink);
     }
+
+    .status-badge {
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.2em 0.6em;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+    .status-alpha {
+      color: #b45309;
+      background: rgba(180, 83, 9, 0.08);
+    }
+    .status-beta {
+      color: #0d6efd;
+      background: rgba(13, 110, 253, 0.08);
+    }
+
     .project-desc {
       color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.6;
-      max-width: 600px;
+      font-size: 0.85rem;
+      line-height: 1.55;
     }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-top: auto;
+      padding-top: 0.4rem;
+    }
+
     .project-tags {
       display: flex;
-      gap: 0.5em;
-      margin-top: 0.8em;
+      flex-wrap: wrap;
+      gap: 0.35em;
     }
     .project-tag {
-      font-size: 0.6rem;
+      font-size: 0.58rem;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: var(--warm);
       background: var(--warm-light);
-      padding: 0.15em 0.6em;
+      padding: 0.15em 0.55em;
       border-radius: 3px;
     }
+
+    .card-link {
+      font-size: 0.75rem;
+      color: var(--warm);
+      text-decoration: none;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+      flex-shrink: 0;
+    }
+    .card-link:hover { text-decoration: underline; }
+    .card-link::after { content: ' ›'; }
   </style>
 
   <section class="projects-page f f2">
     <h1 class="projects-title">Projects</h1>
-    <p class="projects-subtitle">Things I've built and contributed to.</p>
-    {projects.map((project) => (
-      <div class="project-card">
-        <h2 class="project-name">{project.title}</h2>
-        <p class="project-desc">{project.description}</p>
-        <div class="project-tags">
-          {project.tags.map((tag) => (
-            <span class="project-tag">{tag}</span>
+    <p class="projects-subtitle">Things I've built, am building, and am involved with.</p>
+
+    {sections.map((section, si) => (
+      <div class={`section f f${si + 3}`}>
+        <div class="section-header">
+          <h2 class="section-title">{section.title}</h2>
+          <span class="section-count">{section.projects.length} project{section.projects.length !== 1 ? 's' : ''}</span>
+        </div>
+        <p class="section-desc">{section.description}</p>
+
+        <div class="card-grid">
+          {section.projects.map((project) => (
+            <div class="project-card">
+              <div class="card-top">
+                <h3 class="project-name">{project.title}</h3>
+                {project.status && (
+                  <span class={`status-badge status-${project.status.toLowerCase()}`}>{project.status}</span>
+                )}
+              </div>
+              <p class="project-desc">{project.description}</p>
+              <div class="card-footer">
+                <div class="project-tags">
+                  {project.tags.map((tag) => (
+                    <span class="project-tag">{tag}</span>
+                  ))}
+                </div>
+                {project.link && (
+                  <a class="card-link" href={project.link} target="_blank" rel="noopener noreferrer">
+                    {project.link.replace(/^https?:\/\//, '')}
+                  </a>
+                )}
+              </div>
+            </div>
           ))}
         </div>
       </div>
