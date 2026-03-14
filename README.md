@@ -1,43 +1,39 @@
-# Astro Starter Kit: Minimal
+# Ethan Reimann's Personal Website
 
-```sh
-npm create astro@latest -- --template minimal
-```
+This is the repository for my personal portfolio and blog, located at [EthanReimann.com](https://ethanreimann.com). It serves as a central hub for my software projects, business ventures, writing, and other experiments.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 🚀 About the Project
 
-## 🚀 Project Structure
+The site is built as a highly performant static website with a focus on clean aesthetics and straightforward typography. It currently features:
+- **Projects Portfolio:** Covering my work in software (FarmKit, Report, Flux), hardware/PBL research, and business ventures (Reimann Labs, Badger Web Works).
+- **Blog:** A space for writing about software engineering, web design, and other interests.
 
-Inside of your Astro project, you'll see the following folders and files:
+## 🛠️ Technology Stack
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+- **Framework:** [Astro](https://astro.build/) - for static site generation and fast page loads.
+- **UI Components & Animation:** React, Base UI, and Motion.
+- **Styling:** Vanilla CSS, tailored for a responsive and premium design system without heavy frameworks.
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## 🏃‍♂️ Running Locally
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-Any static assets, like images, can be placed in the `public/` directory.
+2. **Start the development server:**
+   ```bash
+   npm run dev
+   ```
+   The site will be running at `http://localhost:4321`.
 
-## 🧞 Commands
+3. **Build for production:**
+   ```bash
+   npm run build
+   ```
 
-All commands are run from the root of the project, from a terminal:
+## 📬 Connect
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- **Website:** [EthanReimann.com](https://ethanreimann.com)
+- **Reimann Labs:** [reimannlabs.com](https://reimannlabs.com)
+- **Badger Web Works:** [badgerwebworks.com](https://badgerwebworks.com)
