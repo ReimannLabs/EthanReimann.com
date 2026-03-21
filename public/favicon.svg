@@ -7,15 +7,6 @@
       .letter { fill: #1c1917; }
     }
   </style>
-  <!-- Rounded square background -->
-  <rect class="bg" x="4" y="4" width="120" height="120" rx="20" ry="20"/>
-  <!-- E -->
-  <path class="letter" d="
-    M 22 30 h 34 v 10 h -22 v 14 h 18 v 10 h -18 v 14 h 23 v 10 h -35 z
-  "/>
-  <!-- R -->
-  <path class="letter" d="
-    M 66 30 h 24 q 18 0 18 17 q 0 12 -10 16 l 14 25 h -14 l -12 -23 h -8 v 23 h -12 z
-    M 78 40 v 16 h 12 q 8 0 8 -8 q 0 -8 -8 -8 z
-  "/>
+  <rect class="bg" x="4" y="4" width="120" height="120" rx="18" ry="18"/>
+  <text class="letter" x="64" y="96" font-family="Georgia, 'Times New Roman', serif" font-size="96" font-weight="700" text-anchor="middle">e</text>
 </svg>
