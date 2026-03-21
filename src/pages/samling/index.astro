@@ -31,22 +31,22 @@ const extracurriculars = [
   {
     title: 'Theatre / Performing Arts',
     detail: 'Since 9th grade',
-    icon: '\u{1F3AD}',
+    icon: 'fa-solid fa-masks-theater',
   },
   {
     title: 'Student Government',
     detail: 'Vice President 2025\u20132026 \u00B7 3+ years experience',
-    icon: '\u{1F3DB}',
+    icon: 'fa-solid fa-landmark',
   },
   {
     title: 'Voice Student',
     detail: 'Studying under Barbara Lattimer',
-    icon: '\u{1F3A4}',
+    icon: 'fa-solid fa-microphone',
   },
   {
     title: '4-H',
     detail: 'Member since 1st grade \u00B7 Current president of 4-H group',
-    icon: '\u{1F331}',
+    icon: 'fa-solid fa-clover',
   },
 ];
 ---
@@ -213,8 +213,9 @@ const extracurriculars = [
       box-shadow: 0 2px 12px rgba(180, 83, 9, 0.08);
     }
     .sam-extra-icon {
-      font-size: 1.4rem;
-      margin-bottom: 0.4rem;
+      font-size: 1.2rem;
+      color: var(--warm);
+      margin-bottom: 0.5rem;
       display: block;
     }
     .sam-extra-name {
@@ -369,7 +370,7 @@ const extracurriculars = [
       <div class="sam-extra-grid">
         {extracurriculars.map((e) => (
           <div class="sam-extra-card">
-            <span class="sam-extra-icon">{e.icon}</span>
+            <i class={`sam-extra-icon ${e.icon}`}></i>
             <h3 class="sam-extra-name">{e.title}</h3>
             <p class="sam-extra-detail">{e.detail}</p>
           </div>
