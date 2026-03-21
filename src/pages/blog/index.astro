@@ -7,44 +7,105 @@ const sortedPosts = posts.sort((a, b) => b.data.date.valueOf() - a.data.date.val
 ---
 
 <AtelierLayout title="Blog | Ethan Reimann" description="Blog posts by Ethan Reimann" activeNav="blog">
-  <style>
+  <style is:global>
+    /* ── Blog Index ── */
     .blog-index { padding: 3rem 0; }
+
+    .blog-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
     .blog-title {
       font-family: 'Fraunces', serif;
-      font-weight: 400;
+      font-weight: 700;
       font-size: clamp(1.8rem, 3vw + 0.5rem, 2.8rem);
       line-height: 1.2;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+    }
+    .blog-stamp {
+      display: inline-block;
+      border: 2.5px solid var(--warm);
+      color: var(--warm);
+      padding: 0.25em 0.7em;
+      font-size: 0.58rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      position: relative;
+      line-height: 1.4;
+      transform: rotate(-2.5deg);
+    }
+    .blog-stamp::after {
+      content: '';
+      position: absolute;
+      inset: 2.5px;
+      border: 1px solid var(--warm);
     }
     .blog-subtitle {
       color: var(--muted);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-style: italic;
-      margin-top: 0.5em;
-      margin-bottom: 2.5rem;
+      margin-bottom: 2rem;
       padding-bottom: 1.5rem;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 2px solid var(--ink);
     }
+
     .blog-entry {
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: 2.2em 1fr auto;
+      gap: 0.8rem;
       align-items: baseline;
-      padding: 0.8em 0;
-      border-bottom: 1px solid var(--bg);
+      padding: 0.85em 0;
+      border-bottom: 1.5px solid var(--border);
     }
     .blog-entry:last-child { border-bottom: none; }
-    .blog-entry a {
+    .blog-entry-num {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--border);
+    }
+    .blog-entry-link {
       color: var(--ink);
       text-decoration: none;
-      font-weight: 500;
-      transition: color 0.2s;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: color 0.15s;
     }
-    .blog-entry a:hover { color: var(--warm); }
-    .blog-entry time {
-      color: var(--muted);
+    .blog-entry-link:hover { color: var(--warm); }
+    .blog-entry-desc {
+      display: block;
       font-size: 0.82rem;
+      font-weight: 400;
+      color: var(--muted);
+      margin-top: 0.15em;
+      line-height: 1.5;
+    }
+    .blog-entry-date {
+      color: var(--muted);
+      font-size: 0.78rem;
       white-space: nowrap;
-      margin-left: 1em;
+    }
+    .blog-entry-tags {
+      display: flex;
+      gap: 0.3em;
+      margin-top: 0.35em;
+    }
+    .blog-entry-tag {
+      display: inline-block;
+      background: var(--ink);
+      color: #fafaf8;
+      font-size: 0.5rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0.25em 0.55em;
+      border-radius: 2px;
     }
     .blog-empty {
       color: var(--muted);
@@ -54,13 +115,28 @@ const sortedPosts = posts.sort((a, b) => b.data.date.valueOf() - a.data.date.val
   </style>
 
   <section class="blog-index f f2">
-    <h1 class="blog-title">The Blog</h1>
+    <div class="blog-header">
+      <h1 class="blog-title">The Blog</h1>
+      <span class="blog-stamp">{sortedPosts.length} Posts</span>
+    </div>
     <p class="blog-subtitle">No set purpose — a digital public journal. Random posts, random topics.</p>
+
     {sortedPosts.length > 0 ? (
-      sortedPosts.map((post) => (
+      sortedPosts.map((post, i) => (
         <div class="blog-entry">
-          <a href={`/blog/${post.id}/`}>{post.data.title}</a>
-          <time datetime={post.data.date.toISOString()}>
+          <span class="blog-entry-num">{String(i + 1).padStart(2, '0')}</span>
+          <div>
+            <a class="blog-entry-link" href={`/blog/${post.id}/`}>{post.data.title}</a>
+            <span class="blog-entry-desc">{post.data.description}</span>
+            {post.data.tags && post.data.tags.length > 0 && (
+              <div class="blog-entry-tags">
+                {post.data.tags.map((tag) => (
+                  <span class="blog-entry-tag">{tag}</span>
+                ))}
+              </div>
+            )}
+          </div>
+          <time class="blog-entry-date" datetime={post.data.date.toISOString()}>
             {post.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
           </time>
         </div>

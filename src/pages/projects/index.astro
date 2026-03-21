@@ -5,6 +5,7 @@ const sections = [
   {
     id: 'school',
     title: 'School',
+    num: '01',
     description: "Projects from my PBL school — research, building, and learning by doing.",
     projects: [
       {
@@ -17,18 +18,25 @@ const sections = [
         description: 'Built a small programmable keyboard from scratch — learning schematic capture, PCB layout, and fabrication along the way.',
         tags: ['Hardware', 'Electronics'],
       },
+      {
+        title: 'Producing an Album',
+        description: 'Working with my father David Reimann to produce a simple piano EP by end of April — an experiment in mixing, mastering, and learning the craft.',
+        tags: ['Music', 'Production'],
+        status: 'In Progress',
+      },
     ],
   },
   {
     id: 'software',
     title: 'Software',
+    num: '02',
     description: 'Apps and platforms I\'m building.',
     projects: [
       {
         title: 'FarmKit',
-        description: 'A Facebook Marketplace-like platform for connecting local farms with local buyers. Think farm-to-table, but for everything.',
+        description: 'A Facebook Marketplace-like platform for connecting local farms with local buyers. Think farm-to-table, but for everything. Sign up now at farmkit.us.',
         tags: ['Platform', 'Agriculture'],
-        status: 'Alpha',
+        status: 'Open Beta',
         link: 'https://farmkit.us',
       },
       {
@@ -41,13 +49,14 @@ const sections = [
         title: 'Flux',
         description: 'A Discord-like communication app for my friends and I, built on Convex and Railway.',
         tags: ['Communication', 'Real-time'],
-        status: 'Beta',
+        status: 'Early Dev',
       },
     ],
   },
   {
     id: 'business',
     title: 'Business',
+    num: '03',
     description: 'Ventures and brands I\'m involved with.',
     projects: [
       {
@@ -73,67 +82,103 @@ const sections = [
 ---
 
 <AtelierLayout title="Projects | Ethan Reimann" description="Projects by Ethan Reimann" activeNav="projects">
-  <style>
+  <style is:global>
+    /* ── Projects Page ── */
     .projects-page { padding: 3rem 0; }
 
+    .projects-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
     .projects-title {
       font-family: 'Fraunces', serif;
-      font-weight: 400;
+      font-weight: 700;
       font-size: clamp(1.8rem, 3vw + 0.5rem, 2.8rem);
       line-height: 1.2;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+    }
+    .projects-stamp {
+      display: inline-block;
+      border: 2.5px solid var(--warm);
+      color: var(--warm);
+      padding: 0.25em 0.7em;
+      font-size: 0.58rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      position: relative;
+      line-height: 1.4;
+      transform: rotate(-2.5deg);
+    }
+    .projects-stamp::after {
+      content: '';
+      position: absolute;
+      inset: 2.5px;
+      border: 1px solid var(--warm);
     }
     .projects-subtitle {
       color: var(--muted);
       font-size: 0.9rem;
-      margin-top: 0.5em;
       margin-bottom: 2.5rem;
       padding-bottom: 1.5rem;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 2px solid var(--ink);
     }
 
     /* ── Section ── */
-    .section { margin-bottom: 2.5rem; }
-    .section:last-child { margin-bottom: 0; }
-
-    .section-header {
+    .proj-section { margin-bottom: 2.5rem; }
+    .proj-section:last-child { margin-bottom: 0; }
+    .proj-section-header {
       display: flex;
       align-items: baseline;
-      gap: 1rem;
-      margin-bottom: 0.4rem;
+      gap: 0.8rem;
+      margin-bottom: 0.3rem;
     }
-    .section-title {
+    .proj-section-num {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: var(--border);
+      line-height: 1;
+    }
+    .proj-section-title {
       font-family: 'Fraunces', serif;
       font-weight: 700;
       font-size: 1.15rem;
       color: var(--ink);
     }
-    .section-count {
-      font-size: 0.7rem;
+    .proj-section-count {
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
       color: var(--muted);
-      font-weight: 500;
     }
-    .section-desc {
+    .proj-section-desc {
       color: var(--muted);
       font-size: 0.82rem;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1rem;
       padding-bottom: 0.75rem;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1.5px dashed var(--border);
     }
 
     /* ── Card Grid ── */
-    .card-grid {
+    .proj-card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 0.75rem;
+      gap: 0.6rem;
     }
     @media (max-width: 480px) {
-      .card-grid { grid-template-columns: 1fr; }
+      .proj-card-grid { grid-template-columns: 1fr; }
     }
 
     /* ── Project Card ── */
-    .project-card {
-      border: 1px solid var(--border);
+    .proj-card {
+      border: 2px solid var(--ink);
       border-radius: 8px;
       padding: 1.25rem 1.35rem;
       background: var(--surface);
@@ -142,49 +187,43 @@ const sections = [
       flex-direction: column;
       gap: 0.5rem;
     }
-    .project-card:hover {
+    .proj-card:hover {
       border-color: var(--warm);
       box-shadow: 0 2px 12px rgba(180, 83, 9, 0.08);
     }
-
-    .card-top {
+    .proj-card-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 0.5rem;
     }
-    .project-name {
+    .proj-card-name {
       font-family: 'Fraunces', serif;
       font-weight: 700;
       font-size: 1.02rem;
       color: var(--ink);
     }
-
-    .status-badge {
-      font-size: 0.6rem;
-      font-weight: 600;
+    .proj-status {
+      font-size: 0.55rem;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
       padding: 0.2em 0.6em;
-      border-radius: 3px;
+      border-radius: 2px;
       flex-shrink: 0;
+      color: #fff;
     }
-    .status-alpha {
-      color: #b45309;
-      background: rgba(180, 83, 9, 0.08);
-    }
-    .status-beta {
-      color: #0d6efd;
-      background: rgba(13, 110, 253, 0.08);
-    }
-
-    .project-desc {
+    .proj-status-alpha { background: var(--warm); }
+    .proj-status-beta { background: var(--ink); }
+    .proj-status-open\ beta { background: #16a34a; }
+    .proj-status-early\ dev { background: var(--muted); }
+    .proj-status-in\ progress { background: #2563eb; }
+    .proj-card-desc {
       color: var(--muted);
       font-size: 0.85rem;
       line-height: 1.55;
     }
-
-    .card-footer {
+    .proj-card-footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -192,67 +231,63 @@ const sections = [
       margin-top: auto;
       padding-top: 0.4rem;
     }
-
-    .project-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35em;
-    }
-    .project-tag {
-      font-size: 0.58rem;
-      font-weight: 600;
+    .proj-tags { display: flex; flex-wrap: wrap; gap: 0.3em; }
+    .proj-tag {
+      font-size: 0.5rem;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       color: var(--warm);
-      background: var(--warm-light);
-      padding: 0.15em 0.55em;
-      border-radius: 3px;
+      background: rgba(180, 83, 9, 0.08);
+      padding: 0.2em 0.55em;
+      border-radius: 2px;
     }
-
-    .card-link {
+    .proj-link {
       font-size: 0.75rem;
       color: var(--warm);
       text-decoration: none;
-      font-weight: 500;
+      font-weight: 600;
       white-space: nowrap;
-      transition: opacity 0.15s;
       flex-shrink: 0;
     }
-    .card-link:hover { text-decoration: underline; }
-    .card-link::after { content: ' ›'; }
+    .proj-link:hover { text-decoration: underline; }
   </style>
 
   <section class="projects-page f f2">
-    <h1 class="projects-title">Projects</h1>
+    <div class="projects-header">
+      <h1 class="projects-title">Projects</h1>
+      <span class="projects-stamp">Building Things</span>
+    </div>
     <p class="projects-subtitle">Things I've built, am building, and am involved with.</p>
 
     {sections.map((section, si) => (
-      <div class={`section f f${si + 3}`}>
-        <div class="section-header">
-          <h2 class="section-title">{section.title}</h2>
-          <span class="section-count">{section.projects.length} project{section.projects.length !== 1 ? 's' : ''}</span>
+      <div class={`proj-section f f${si + 3}`}>
+        <div class="proj-section-header">
+          <span class="proj-section-num">{section.num}</span>
+          <h2 class="proj-section-title">{section.title}</h2>
+          <span class="proj-section-count">{section.projects.length} project{section.projects.length !== 1 ? 's' : ''}</span>
         </div>
-        <p class="section-desc">{section.description}</p>
+        <p class="proj-section-desc">{section.description}</p>
 
-        <div class="card-grid">
+        <div class="proj-card-grid">
           {section.projects.map((project) => (
-            <div class="project-card">
-              <div class="card-top">
-                <h3 class="project-name">{project.title}</h3>
+            <div class="proj-card">
+              <div class="proj-card-top">
+                <h3 class="proj-card-name">{project.title}</h3>
                 {project.status && (
-                  <span class={`status-badge status-${project.status.toLowerCase()}`}>{project.status}</span>
+                  <span class={`proj-status proj-status-${project.status.toLowerCase()}`}>{project.status}</span>
                 )}
               </div>
-              <p class="project-desc">{project.description}</p>
-              <div class="card-footer">
-                <div class="project-tags">
+              <p class="proj-card-desc">{project.description}</p>
+              <div class="proj-card-footer">
+                <div class="proj-tags">
                   {project.tags.map((tag) => (
-                    <span class="project-tag">{tag}</span>
+                    <span class="proj-tag">{tag}</span>
                   ))}
                 </div>
                 {project.link && (
-                  <a class="card-link" href={project.link} target="_blank" rel="noopener noreferrer">
-                    {project.link.replace(/^https?:\/\//, '')}
+                  <a class="proj-link" href={project.link} target="_blank" rel="noopener noreferrer">
+                    {project.link.replace(/^https?:\/\//, '')} ›
                   </a>
                 )}
               </div>

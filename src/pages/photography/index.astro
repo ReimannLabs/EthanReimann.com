@@ -54,270 +54,172 @@ const folders = [
     photos: other.map((p) => ({ src: p.src, alt: p.alt, name: p.name + '.jpg', fullSrc: p.src.src })),
   },
 ].map((f) => ({ ...f, count: f.photos.length }));
+
+const totalPhotos = folders.reduce((a, f) => a + f.count, 0);
 ---
 
 <AtelierLayout title="Photography | Ethan Reimann" description="Photos by Ethan Reimann" activeNav="photography">
-  <style>
-    /* ── Finder Window Shell ── */
-    .finder {
-      margin: 2rem 0 3rem;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      overflow: hidden;
-      background: var(--surface);
-      box-shadow: 0 4px 24px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04);
-    }
+  <style is:global>
+    /* ── Photography Page ── */
+    .photo-page { padding: 3rem 0; }
 
-    /* ── Title Bar ── */
-    .finder-titlebar {
+    .photo-header {
       display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.7rem 1rem;
-      background: linear-gradient(to bottom, #f7f7f5, #eeece8);
-      border-bottom: 1px solid var(--border);
-      user-select: none;
-    }
-    .titlebar-dots {
-      display: flex;
-      gap: 6px;
-      flex-shrink: 0;
-    }
-    .dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-    }
-    .dot-close { background: #ff5f57; }
-    .dot-min { background: #febc2e; }
-    .dot-max { background: #28c840; }
-    .titlebar-title {
-      flex: 1;
-      text-align: center;
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: var(--muted);
-      letter-spacing: 0.01em;
-    }
-    .titlebar-spacer {
-      width: 54px;
-      flex-shrink: 0;
-    }
-
-    /* ── Toolbar ── */
-    .finder-toolbar {
-      display: flex;
-      align-items: center;
+      align-items: baseline;
       justify-content: space-between;
-      padding: 0.5rem 1rem;
-      border-bottom: 1px solid var(--border);
-      background: var(--bg);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
     }
-    .toolbar-breadcrumb {
+    .photo-page-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: clamp(1.8rem, 3vw + 0.5rem, 2.8rem);
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+    }
+    .photo-stamp {
+      display: inline-block;
+      border: 2.5px solid var(--warm);
+      color: var(--warm);
+      padding: 0.25em 0.7em;
+      font-size: 0.58rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      position: relative;
+      line-height: 1.4;
+      transform: rotate(-2.5deg);
+    }
+    .photo-stamp::after {
+      content: '';
+      position: absolute;
+      inset: 2.5px;
+      border: 1px solid var(--warm);
+    }
+    .photo-subtitle {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 2px solid var(--ink);
+    }
+
+    /* ── Breadcrumb ── */
+    .photo-breadcrumb {
       display: flex;
       align-items: center;
-      gap: 0.35rem;
-      font-size: 0.8rem;
-      color: var(--muted);
+      gap: 0.4rem;
+      font-size: 0.82rem;
+      margin-bottom: 1.5rem;
     }
-    .breadcrumb-link {
+    .photo-breadcrumb-btn {
       background: none;
-      border: none;
-      font: inherit;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      font-family: 'Karla', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
       color: var(--warm);
       cursor: pointer;
-      padding: 0.15em 0.3em;
-      border-radius: 4px;
-      transition: background 0.15s;
+      padding: 0.25em 0.6em;
+      transition: border-color 0.15s;
     }
-    .breadcrumb-link:hover { background: var(--warm-light); }
-    .breadcrumb-sep { color: var(--border); font-size: 0.9em; }
-    .breadcrumb-current {
-      font-weight: 600;
-      color: var(--ink);
-    }
-    .toolbar-meta {
-      font-size: 0.75rem;
-      color: var(--muted);
-    }
+    .photo-breadcrumb-btn:hover { border-color: var(--ink); }
+    .photo-breadcrumb-sep { color: var(--border); }
+    .photo-breadcrumb-current { font-weight: 700; color: var(--ink); }
 
-    /* ── Sidebar + Content Layout ── */
-    .finder-body {
+    /* ── Album grid (root) ── */
+    .album-grid {
       display: grid;
-      grid-template-columns: 180px 1fr;
-      min-height: 480px;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.6rem;
     }
-    @media (max-width: 640px) {
-      .finder-body { grid-template-columns: 1fr; }
-      .finder-body.viewing-folder .finder-sidebar { display: none; }
-    }
-
-    /* ── Sidebar ── */
-    .finder-sidebar {
-      border-right: 1px solid var(--border);
-      background: linear-gradient(to bottom, #f5f4f1, #efede9);
-      padding: 0.75rem 0;
-    }
-    .sidebar-label {
-      font-size: 0.65rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      padding: 0.5rem 1rem 0.35rem;
-    }
-    .sidebar-item {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      width: 100%;
-      padding: 0.4rem 1rem;
-      background: none;
-      border: none;
-      font: inherit;
-      font-size: 0.82rem;
-      color: var(--ink);
+    .album-card {
+      border: 2px solid var(--ink);
+      border-radius: 8px;
+      padding: 1.4rem;
+      background: var(--surface);
       cursor: pointer;
+      transition: border-color 0.2s, box-shadow 0.2s;
       text-align: left;
-      transition: background 0.15s;
-      border-radius: 0;
+      font-family: 'Karla', sans-serif;
+      font-size: inherit;
+      width: 100%;
+      color: var(--ink);
     }
-    .sidebar-item:hover { background: rgba(0,0,0,0.04); }
-    .sidebar-item.active {
-      background: var(--warm);
-      color: white;
+    .album-card:hover {
+      border-color: var(--warm);
+      box-shadow: 0 2px 12px rgba(180, 83, 9, 0.08);
     }
-    .sidebar-icon {
-      font-size: 1rem;
-      width: 1.2em;
-      text-align: center;
-      flex-shrink: 0;
+    .album-num {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: var(--border);
+      line-height: 1;
+      display: block;
     }
-    .sidebar-count {
-      margin-left: auto;
+    .album-card:hover .album-num { color: var(--warm); }
+    .album-name {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1.02rem;
+      margin-top: 0.3rem;
+      display: block;
+    }
+    .album-count {
       font-size: 0.72rem;
       color: var(--muted);
-      opacity: 0.7;
-    }
-    .sidebar-item.active .sidebar-count { color: rgba(255,255,255,0.7); }
-
-    /* ── Content Area ── */
-    .finder-content {
-      padding: 1.25rem;
-      background: var(--surface);
-      overflow-y: auto;
-    }
-
-    /* ── Folder Grid (root view) ── */
-    .folder-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-      gap: 1.25rem;
-      padding: 0.5rem;
-    }
-    .folder-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.4rem;
-      cursor: pointer;
-      background: none;
-      border: none;
-      font: inherit;
-      padding: 0.75rem 0.5rem;
-      border-radius: 8px;
-      transition: background 0.15s;
-    }
-    .folder-item:hover { background: var(--warm-light); }
-    .folder-item:active { background: rgba(180, 83, 9, 0.12); }
-    .folder-icon {
-      font-size: 3.2rem;
-      line-height: 1;
-      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.08));
-    }
-    .folder-name {
-      font-size: 0.78rem;
-      font-weight: 500;
-      text-align: center;
-      color: var(--ink);
-      line-height: 1.3;
-    }
-    .folder-meta {
-      font-size: 0.68rem;
-      color: var(--muted);
-    }
-
-    /* ── Photo Grid (inside folder) ── */
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 0.75rem;
-      padding: 0.25rem;
-    }
-    @media (max-width: 480px) {
-      .photo-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 0.5rem; }
-    }
-    .photo-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.4rem;
-      cursor: pointer;
-      padding: 0.5rem;
-      border-radius: 6px;
-      border: 2px solid transparent;
-      transition: border-color 0.15s, background 0.15s;
-    }
-    .photo-item:hover { background: var(--warm-light); }
-    .photo-item.selected {
-      background: rgba(180, 83, 9, 0.08);
-      border-color: var(--warm);
-    }
-
-    /* macOS-style square thumbnail frame */
-    .thumb-frame {
-      width: 100%;
-      aspect-ratio: 1;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      background: var(--bg);
-      box-shadow:
-        0 0.5px 1px rgba(0,0,0,0.06),
-        0 2px 6px rgba(0,0,0,0.06);
-      overflow: hidden;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .photo-item:hover .thumb-frame {
-      transform: scale(1.03);
-      box-shadow:
-        0 1px 2px rgba(0,0,0,0.08),
-        0 4px 12px rgba(0,0,0,0.10);
-    }
-    .photo-thumb {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      margin-top: 0.2rem;
       display: block;
     }
 
-    .photo-name {
-      font-size: 0.7rem;
-      color: var(--ink);
+    /* ── Photo grid (inside album) ── */
+    .pg-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 0.6rem;
+    }
+    @media (max-width: 480px) {
+      .pg-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+    }
+    .pg-item {
+      cursor: pointer;
+      border: 2px solid var(--ink);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .pg-item:hover {
+      border-color: var(--warm);
+      box-shadow: 0 2px 12px rgba(180, 83, 9, 0.08);
+    }
+    .pg-thumb {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      display: block;
+    }
+    .pg-name {
+      font-size: 0.68rem;
+      color: var(--muted);
+      padding: 0.4rem 0.5rem;
       text-align: center;
-      line-height: 1.3;
-      max-width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      border-top: 1px dashed var(--border);
     }
 
     /* ── Lightbox ── */
-    .lightbox {
+    .lb-overlay {
       display: none;
       position: fixed;
       inset: 0;
       z-index: 1000;
-      background: rgba(0,0,0,0.85);
+      background: rgba(0,0,0,0.88);
       align-items: center;
       justify-content: center;
       padding: 2rem;
@@ -325,20 +227,20 @@ const folders = [
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
     }
-    .lightbox.open { display: flex; }
-    .lightbox-img {
+    .lb-overlay.open { display: flex; }
+    .lb-img {
       max-width: 90vw;
       max-height: 85vh;
       object-fit: contain;
       border-radius: 6px;
       box-shadow: 0 8px 40px rgba(0,0,0,0.4);
-      animation: lbFade 0.25s ease-out;
+      animation: lbIn 0.25s ease-out;
     }
-    @keyframes lbFade {
+    @keyframes lbIn {
       from { opacity: 0; transform: scale(0.95); }
       to { opacity: 1; transform: scale(1); }
     }
-    .lightbox-close {
+    .lb-close {
       position: absolute;
       top: 1.25rem;
       right: 1.5rem;
@@ -351,22 +253,22 @@ const folders = [
       transition: opacity 0.15s;
       line-height: 1;
     }
-    .lightbox-close:hover { opacity: 1; }
-    .lightbox-caption {
+    .lb-close:hover { opacity: 1; }
+    .lb-caption {
       position: absolute;
       bottom: 1.5rem;
       left: 50%;
       transform: translateX(-50%);
-      color: rgba(255,255,255,0.8);
-      font-size: 0.8rem;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.78rem;
       text-align: center;
       max-width: 80%;
     }
-    .lightbox-nav {
+    .lb-nav {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.1);
       border: none;
       color: white;
       font-size: 1.5rem;
@@ -375,235 +277,103 @@ const folders = [
       border-radius: 8px;
       opacity: 0.6;
       transition: opacity 0.15s, background 0.15s;
-      backdrop-filter: blur(4px);
     }
-    .lightbox-nav:hover { opacity: 1; background: rgba(255,255,255,0.2); }
-    .lightbox-prev { left: 1rem; }
-    .lightbox-next { right: 1rem; }
+    .lb-nav:hover { opacity: 1; background: rgba(255,255,255,0.2); }
+    .lb-prev { left: 1rem; }
+    .lb-next { right: 1rem; }
 
-    /* ── Status Bar ── */
-    .finder-status {
-      padding: 0.4rem 1rem;
-      border-top: 1px solid var(--border);
-      font-size: 0.72rem;
-      color: var(--muted);
-      background: linear-gradient(to bottom, #f7f7f5, #f0eeea);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    /* ── Mobile sidebar shown as top tabs ── */
-    @media (max-width: 640px) {
-      .finder-sidebar {
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0;
-        padding: 0.4rem;
-      }
-      .sidebar-label { display: none; }
-      .sidebar-item {
-        padding: 0.4rem 0.8rem;
-        border-radius: 6px;
-        font-size: 0.78rem;
-      }
-      .sidebar-item.active { border-radius: 6px; }
-      .finder-content { min-height: 360px; }
-    }
-
-    /* ── Empty State ── */
-    .empty-hint {
+    .pg-empty {
       text-align: center;
       padding: 4rem 1rem;
       color: var(--muted);
-      font-size: 0.85rem;
+      font-style: italic;
     }
-    .empty-hint span {
-      display: block;
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-    }
+    .pg-hidden { display: none !important; }
   </style>
 
-  <!-- Finder Window -->
-  <div class="finder f f2" id="finder">
+  <section class="photo-page f f2">
+    <div class="photo-header">
+      <h1 class="photo-page-title">Photography</h1>
+      <span class="photo-stamp">{totalPhotos} Photos</span>
+    </div>
+    <p class="photo-subtitle">Moments captured through the lens, organized by album.</p>
 
-    <!-- Title Bar -->
-    <div class="finder-titlebar">
-      <div class="titlebar-dots">
-        <span class="dot dot-close"></span>
-        <span class="dot dot-min"></span>
-        <span class="dot dot-max"></span>
-      </div>
-      <span class="titlebar-title" id="windowTitle">Photography</span>
-      <div class="titlebar-spacer"></div>
+    <div class="photo-breadcrumb" id="breadcrumb">
+      <span class="photo-breadcrumb-current">All Albums</span>
     </div>
 
-    <!-- Toolbar with breadcrumbs -->
-    <div class="finder-toolbar">
-      <div class="toolbar-breadcrumb" id="breadcrumb">
-        <span class="breadcrumb-current">Photography</span>
-      </div>
-      <span class="toolbar-meta" id="toolbarMeta">{folders.length} folders</span>
-    </div>
-
-    <!-- Body: Sidebar + Content -->
-    <div class="finder-body" id="finderBody">
-      <aside class="finder-sidebar" id="sidebar">
-        <div class="sidebar-label">Albums</div>
-        <button class="sidebar-item active" data-folder="root">
-          <span class="sidebar-icon">📂</span>
-          All
+    <!-- Root: Album cards -->
+    <div class="album-grid" id="rootView">
+      {folders.map((folder, i) => (
+        <button class="album-card" data-open={folder.id}>
+          <span class="album-num">{String(i + 1).padStart(2, '0')}</span>
+          <span class="album-name">{folder.name}</span>
+          <span class="album-count">{folder.count > 0 ? `${folder.count} photos` : 'Empty'}</span>
         </button>
-        {folders.map((folder) => (
-          <button class="sidebar-item" data-folder={folder.id}>
-            <span class="sidebar-icon">📁</span>
-            {folder.name}
-            <span class="sidebar-count">{folder.count}</span>
-          </button>
-        ))}
-      </aside>
+      ))}
+    </div>
 
-      <main class="finder-content" id="finderContent">
-        <!-- Root view: Folder icons -->
-        <div class="folder-grid" id="rootView">
-          {folders.map((folder) => (
-            <button class="folder-item" data-open={folder.id}>
-              <span class="folder-icon">📁</span>
-              <span class="folder-name">{folder.name}</span>
-              <span class="folder-meta">{folder.count > 0 ? `${folder.count} items` : 'Empty'}</span>
-            </button>
-          ))}
-        </div>
-
-        <!-- Per-folder photo grids (hidden initially) -->
-        {folders.map((folder) => (
-          <div class="photo-grid" id={`grid-${folder.id}`} style="display:none" data-folder-grid={folder.id}>
-            {folder.photos.map((photo, i) => (
-              <div class="photo-item" data-lightbox={folder.id} data-index={i} data-full={photo.fullSrc}>
-                <div class="thumb-frame">
-                  <Image class="photo-thumb" src={photo.src} alt={photo.alt} width={300} quality={75} />
-                </div>
-                <span class="photo-name">{photo.name}</span>
-              </div>
-            ))}
+    <!-- Per-album photo grids -->
+    {folders.map((folder) => (
+      <div class="pg-grid pg-hidden" id={`grid-${folder.id}`} data-folder-grid={folder.id}>
+        {folder.photos.map((photo, i) => (
+          <div class="pg-item" data-lightbox={folder.id} data-index={i} data-full={photo.fullSrc}>
+            <Image class="pg-thumb" src={photo.src} alt={photo.alt} width={300} quality={75} />
+            <div class="pg-name">{photo.name}</div>
           </div>
         ))}
+      </div>
+    ))}
 
-        <div class="empty-hint" id="emptyState" style="display:none">
-          <span>📷</span>
-          No photos here yet.
-        </div>
-      </main>
-    </div>
+    <div class="pg-empty pg-hidden" id="emptyState">No photos in this album yet.</div>
+  </section>
 
-    <!-- Status Bar -->
-    <div class="finder-status">
-      <span id="statusText">{folders.length} folders</span>
-      <span id="statusPath">~/Photography</span>
-    </div>
-  </div>
-
-  <!-- Lightbox Overlay -->
-  <div class="lightbox" id="lightbox">
-    <button class="lightbox-close" id="lbClose" aria-label="Close">&times;</button>
-    <button class="lightbox-nav lightbox-prev" id="lbPrev" aria-label="Previous">&#8249;</button>
-    <button class="lightbox-nav lightbox-next" id="lbNext" aria-label="Next">&#8250;</button>
-    <img class="lightbox-img" id="lbImg" src="" alt="" />
-    <div class="lightbox-caption" id="lbCaption"></div>
+  <!-- Lightbox -->
+  <div class="lb-overlay" id="lightbox">
+    <button class="lb-close" id="lbClose" aria-label="Close">&times;</button>
+    <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">&#8249;</button>
+    <button class="lb-nav lb-next" id="lbNext" aria-label="Next">&#8250;</button>
+    <img class="lb-img" id="lbImg" src="" alt="" />
+    <div class="lb-caption" id="lbCaption"></div>
   </div>
 
   <script>
-    const finderBody = document.getElementById('finderBody')!;
     const rootView = document.getElementById('rootView')!;
     const breadcrumb = document.getElementById('breadcrumb')!;
-    const toolbarMeta = document.getElementById('toolbarMeta')!;
-    const windowTitle = document.getElementById('windowTitle')!;
-    const statusText = document.getElementById('statusText')!;
-    const statusPath = document.getElementById('statusPath')!;
-    const sidebar = document.getElementById('sidebar')!;
-
     const folderGrids = document.querySelectorAll<HTMLElement>('[data-folder-grid]');
     const emptyState = document.getElementById('emptyState')!;
-    const sidebarItems = document.querySelectorAll<HTMLButtonElement>('.sidebar-item');
-    const folderButtons = document.querySelectorAll<HTMLButtonElement>('.folder-item');
-
-    let currentFolder: string = 'root';
 
     function navigateTo(folderId: string) {
-      currentFolder = folderId;
-
-      // Toggle body class for mobile sidebar hiding
-      if (folderId === 'root') {
-        finderBody.classList.remove('viewing-folder');
-      } else {
-        finderBody.classList.add('viewing-folder');
-      }
-
-      // Show/hide grids
       rootView.style.display = folderId === 'root' ? 'grid' : 'none';
-      emptyState.style.display = 'none';
+      emptyState.classList.add('pg-hidden');
 
       let activeGridHasItems = false;
       folderGrids.forEach((g) => {
         const isActive = g.dataset.folderGrid === folderId;
-        g.style.display = isActive ? 'grid' : 'none';
+        g.classList.toggle('pg-hidden', !isActive);
         if (isActive) activeGridHasItems = g.children.length > 0;
       });
 
-      // Show empty state for folders with no photos
       if (folderId !== 'root' && !activeGridHasItems) {
-        emptyState.style.display = 'block';
-        // Hide the empty grid too
+        emptyState.classList.remove('pg-hidden');
         folderGrids.forEach((g) => {
-          if (g.dataset.folderGrid === folderId) g.style.display = 'none';
+          if (g.dataset.folderGrid === folderId) g.classList.add('pg-hidden');
         });
       }
 
-      // Update sidebar active state
-      sidebarItems.forEach((item) => {
-        item.classList.toggle('active', item.dataset.folder === folderId);
-      });
-
-      // Build breadcrumb
       if (folderId === 'root') {
-        breadcrumb.innerHTML = '<span class="breadcrumb-current">Photography</span>';
-        windowTitle.textContent = 'Photography';
-        statusPath.textContent = '~/Photography';
+        breadcrumb.innerHTML = '<span class="photo-breadcrumb-current">All Albums</span>';
       } else {
-        const folderName = document.querySelector(`[data-open="${folderId}"] .folder-name`)?.textContent || folderId;
-        breadcrumb.innerHTML = `
-          <button class="breadcrumb-link" data-nav="root">Photography</button>
-          <span class="breadcrumb-sep">›</span>
-          <span class="breadcrumb-current">${folderName}</span>
-        `;
+        const folderName = document.querySelector(`[data-open="${folderId}"] .album-name`)?.textContent || folderId;
+        breadcrumb.innerHTML =
+          `<button class="photo-breadcrumb-btn" data-nav="root">&larr; Albums</button>` +
+          `<span class="photo-breadcrumb-sep">/</span>` +
+          `<span class="photo-breadcrumb-current">${folderName}</span>`;
         breadcrumb.querySelector('[data-nav="root"]')?.addEventListener('click', () => navigateTo('root'));
-        windowTitle.textContent = folderName;
-        statusPath.textContent = `~/Photography/${folderName}`;
-      }
-
-      // Update meta counts
-      if (folderId === 'root') {
-        const count = folderGrids.length;
-        toolbarMeta.textContent = `${count} folder${count !== 1 ? 's' : ''}`;
-        statusText.textContent = `${count} folder${count !== 1 ? 's' : ''}`;
-      } else {
-        const grid = document.getElementById(`grid-${folderId}`);
-        const count = grid ? grid.children.length : 0;
-        toolbarMeta.textContent = count > 0 ? `${count} item${count !== 1 ? 's' : ''}` : 'Empty';
-        statusText.textContent = count > 0 ? `${count} item${count !== 1 ? 's' : ''}` : 'Empty';
       }
     }
 
-    // Sidebar clicks
-    sidebarItems.forEach((item) => {
-      item.addEventListener('click', () => navigateTo(item.dataset.folder || 'root'));
-    });
-
-    // Folder icon double-click / click
-    folderButtons.forEach((btn) => {
+    document.querySelectorAll<HTMLButtonElement>('.album-card').forEach((btn) => {
       btn.addEventListener('click', () => navigateTo(btn.dataset.open || 'root'));
     });
 
@@ -611,9 +381,6 @@ const folders = [
     const lightbox = document.getElementById('lightbox')!;
     const lbImg = document.getElementById('lbImg') as HTMLImageElement;
     const lbCaption = document.getElementById('lbCaption')!;
-    const lbClose = document.getElementById('lbClose')!;
-    const lbPrev = document.getElementById('lbPrev')!;
-    const lbNext = document.getElementById('lbNext')!;
 
     let lbPhotos: { src: string; alt: string; name: string }[] = [];
     let lbIndex = 0;
@@ -621,28 +388,26 @@ const folders = [
     function openLightbox(folderId: string, index: number) {
       const grid = document.getElementById(`grid-${folderId}`);
       if (!grid) return;
-      const items = grid.querySelectorAll<HTMLElement>('.photo-item');
-      lbPhotos = Array.from(items).map((item) => {
+      lbPhotos = Array.from(grid.querySelectorAll<HTMLElement>('.pg-item')).map((item) => {
         const img = item.querySelector('img')!;
-        const fullSrc = item.dataset.full || img.src;
         return {
-          src: fullSrc,
+          src: item.dataset.full || img.src,
           alt: img.alt,
-          name: item.querySelector('.photo-name')?.textContent || '',
+          name: item.querySelector('.pg-name')?.textContent || '',
         };
       });
       lbIndex = index;
-      showLightboxPhoto();
+      showPhoto();
       lightbox.classList.add('open');
       document.body.style.overflow = 'hidden';
     }
 
-    function showLightboxPhoto() {
-      const photo = lbPhotos[lbIndex];
-      if (!photo) return;
-      lbImg.src = photo.src;
-      lbImg.alt = photo.alt;
-      lbCaption.textContent = `${photo.name}  (${lbIndex + 1} of ${lbPhotos.length})`;
+    function showPhoto() {
+      const p = lbPhotos[lbIndex];
+      if (!p) return;
+      lbImg.src = p.src;
+      lbImg.alt = p.alt;
+      lbCaption.textContent = `${p.name}  (${lbIndex + 1} of ${lbPhotos.length})`;
     }
 
     function closeLightbox() {
@@ -650,34 +415,29 @@ const folders = [
       document.body.style.overflow = '';
     }
 
-    lbClose.addEventListener('click', closeLightbox);
-    lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox) closeLightbox();
-    });
-    lbPrev.addEventListener('click', (e) => {
+    document.getElementById('lbClose')!.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+    document.getElementById('lbPrev')!.addEventListener('click', (e) => {
       e.stopPropagation();
       lbIndex = (lbIndex - 1 + lbPhotos.length) % lbPhotos.length;
-      showLightboxPhoto();
+      showPhoto();
     });
-    lbNext.addEventListener('click', (e) => {
+    document.getElementById('lbNext')!.addEventListener('click', (e) => {
       e.stopPropagation();
       lbIndex = (lbIndex + 1) % lbPhotos.length;
-      showLightboxPhoto();
+      showPhoto();
     });
-
     document.addEventListener('keydown', (e) => {
       if (!lightbox.classList.contains('open')) return;
       if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowLeft') { lbIndex = (lbIndex - 1 + lbPhotos.length) % lbPhotos.length; showLightboxPhoto(); }
-      if (e.key === 'ArrowRight') { lbIndex = (lbIndex + 1) % lbPhotos.length; showLightboxPhoto(); }
+      if (e.key === 'ArrowLeft') { lbIndex = (lbIndex - 1 + lbPhotos.length) % lbPhotos.length; showPhoto(); }
+      if (e.key === 'ArrowRight') { lbIndex = (lbIndex + 1) % lbPhotos.length; showPhoto(); }
     });
 
-    // Attach lightbox triggers
-    document.querySelectorAll('.photo-item').forEach((item) => {
+    document.querySelectorAll('.pg-item').forEach((item) => {
       item.addEventListener('click', () => {
-        const folderId = (item as HTMLElement).dataset.lightbox!;
-        const index = parseInt((item as HTMLElement).dataset.index || '0', 10);
-        openLightbox(folderId, index);
+        const el = item as HTMLElement;
+        openLightbox(el.dataset.lightbox!, parseInt(el.dataset.index || '0', 10));
       });
     });
   </script>
