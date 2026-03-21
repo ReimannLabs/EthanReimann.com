@@ -1,0 +1,73 @@
+---
+import AtelierLayout from '../layouts/AtelierLayout.astro';
+
+const year = new Date().getFullYear();
+---
+
+<AtelierLayout title="Footer Tests | Ethan Reimann" description="Testing new footer designs" activeNav="">
+  <section class="section">
+    <h1 style="margin-bottom: 1rem;">Footer Design Tests</h1>
+    <p style="margin-bottom: 3rem; color: var(--color-midtone);">Below are the 3 footer designs. Scroll down to see them all, separated by borders.</p>
+
+    <!-- Vector 1 -->
+    <h2 style="margin-bottom: 1rem;">Vector 1: The "Console Exit Sequence"</h2>
+    <div style="margin-bottom: 4rem; padding: 2rem; border: 1px dotted var(--color-midtone); background: var(--color-base);">
+      <footer style="border-top: 2px dashed var(--color-midtone); padding-top: var(--space-xl); padding-bottom: var(--space-2xl); margin-top: var(--space-lg); display: flex; flex-direction: column; gap: var(--space-sm);">
+        <div style="color: var(--color-midtone); opacity: 0.8;">
+          <span>[SYSTEM]</span> Connection closing...
+        </div>
+        <div>
+          <span style="color: var(--color-primary);">ethan@localhost</span>
+          <span style="color: var(--color-accent);">:~</span>$ exit
+        </div>
+        <div style="margin-top: var(--space-md); font-size: 0.9em;">
+          <p>
+            Process completed by <a href="https://reimannlabs.com/" style="text-decoration-style: wavy;">Reimann Labs</a>
+          </p>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Vector 2 -->
+    <h2 style="margin-bottom: 1rem;">Vector 2: The "Diagnostic Grid"</h2>
+    <div style="margin-bottom: 4rem; padding: 2rem; border: 1px dotted var(--color-midtone); background: var(--color-base);">
+      <footer style="border-top: 0.25em solid var(--color-contrast); border-bottom: 0.25em solid var(--color-contrast); padding: var(--space-md) 0; margin-top: var(--space-lg); margin-bottom: var(--space-xl); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-md); font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.05em;">
+        <div style="display: flex; gap: var(--space-lg);">
+          <div>
+            <span style="color: var(--color-midtone);">STATUS:</span> ONLINE
+          </div>
+          <div>
+            <span style="color: var(--color-midtone);">ENV:</span> PROD
+          </div>
+        </div>
+        
+        <div style="font-weight: bold;">
+          <span style="color: var(--color-accent);">//</span> ENG: <a href="https://reimannlabs.com/" style="text-decoration: none; border-bottom: 2px solid;">REIMANN LABS</a>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Vector 3 -->
+    <h2 style="margin-bottom: 1rem;">Vector 3: The "ASCII Stamp"</h2>
+    <div style="margin-bottom: 4rem; padding: 2rem; border: 1px dotted var(--color-midtone); background: var(--color-base);">
+      <footer style="padding-top: var(--space-xl); padding-bottom: var(--space-xl); margin-top: var(--space-lg); text-align: center; border-top: 0.1em solid var(--color-midtone);">
+        <pre style="line-height: 1.2; color: var(--color-midtone); font-size: clamp(0.4rem, 1vw + 0.3rem, 0.7rem); margin-bottom: var(--space-lg); user-select: none;">
+  _____    _   _                   _____      _                            
+ |  ___|  | | | |                 |  __ \    (_)                           
+ | |__    | |_| |__   __ _ _ __   | |__) |___ _ _ __ ___   __ _ _ __  _ __ 
+ |  __|   | __| '_ \ / _` | '_ \  |  _  // _ \ | '_ ` _ \ / _` | '_ \| '_ \
+ | |___   | |_| | | | (_| | | | | | | \ \  __/ | | | | | | (_| | | | | | | |
+ \____/    \__|_| |_|\__,_|_| |_| |_|  \_\___|_|_| |_| |_|\__,_|_| |_|_| |_|
+        </pre>
+        
+        <div style="font-size: 0.9em;">
+          <p>Built and maintained by <a href="https://reimannlabs.com/">Reimann Labs</a>.</p>
+          <p style="color: var(--color-midtone); margin-top: var(--space-sm); font-size: 0.8em;">
+            © {year} Ethan Reimann
+          </p>
+        </div>
+      </footer>
+    </div>
+
+  </section>
+</AtelierLayout>
