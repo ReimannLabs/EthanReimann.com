@@ -1,0 +1,404 @@
+---
+import AtelierLayout from '../../layouts/AtelierLayout.astro';
+
+const albums = [
+  { title: "I'm The Problem", artist: 'Morgan Wallen' },
+  { title: 'From A Room: Volume 2', artist: 'Chris Stapleton' },
+  { title: 'Chief', artist: 'Eric Church' },
+  { title: 'Leather', artist: 'Cody Johnson' },
+  { title: 'From Elvis in Memphis', artist: 'Elvis Presley' },
+  { title: 'What Are We Waiting For?', artist: 'For King & Country' },
+  { title: 'Jars of Clay', artist: 'Jars of Clay' },
+  { title: 'Summertime Blues', artist: 'Zach Bryan' },
+  { title: 'Restless Mind Sam', artist: 'Sam Barber' },
+  { title: 'Million Eyes', artist: 'Sam Barber' },
+  { title: 'Hamilton', artist: 'Original Broadway Cast' },
+  { title: 'Dizzy Up The Girl', artist: 'The Goo Goo Dolls' },
+];
+
+const books = [
+  { title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', active: true },
+  { title: 'The Brothers Karamazov', author: 'Fyodor Dostoevsky' },
+  { title: 'The Giver', author: 'Lois Lowry' },
+  { title: 'We Who Wrestle with God', author: 'Jordan Peterson' },
+  { title: 'Welcome to the Universe', author: 'Neil DeGrasse Tyson, Et al.' },
+  { title: 'Ghost Town Living', author: 'Brent Underwood' },
+  { title: 'Too Big to Fail', author: 'Andrew Sorkin' },
+  { title: 'The Order of Time', author: 'Carlo Rovelli' },
+];
+
+const extracurriculars = [
+  {
+    title: 'Theatre / Performing Arts',
+    detail: 'Since 9th grade',
+    icon: '\u{1F3AD}',
+  },
+  {
+    title: 'Student Government',
+    detail: 'Vice President 2025\u20132026 \u00B7 3+ years experience',
+    icon: '\u{1F3DB}',
+  },
+  {
+    title: 'Voice Student',
+    detail: 'Studying under Barbara Lattimer',
+    icon: '\u{1F3A4}',
+  },
+  {
+    title: '4-H',
+    detail: 'Member since 1st grade \u00B7 Current president of 4-H group',
+    icon: '\u{1F331}',
+  },
+];
+---
+
+<AtelierLayout title="Samling | Ethan Reimann" description="A collection of the things that make up Ethan Reimann." activeNav="samling">
+  <style is:global>
+    /* ── Samling Page ── */
+    .samling-page { padding: 3rem 0; }
+
+    .samling-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .samling-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: clamp(1.8rem, 3vw + 0.5rem, 2.8rem);
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+    }
+    .samling-stamp {
+      display: inline-block;
+      border: 2.5px solid var(--warm);
+      color: var(--warm);
+      padding: 0.25em 0.7em;
+      font-size: 0.58rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      position: relative;
+      line-height: 1.4;
+      transform: rotate(-2.5deg);
+    }
+    .samling-stamp::after {
+      content: '';
+      position: absolute;
+      inset: 2.5px;
+      border: 1px solid var(--warm);
+    }
+    .samling-subtitle {
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-style: italic;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 2px solid var(--ink);
+    }
+
+    /* ── Section ── */
+    .sam-section { margin-bottom: 3rem; }
+    .sam-section:last-child { margin-bottom: 0; }
+    .sam-section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 0.8rem;
+      margin-bottom: 0.3rem;
+    }
+    .sam-section-num {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: var(--border);
+      line-height: 1;
+    }
+    .sam-section-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--ink);
+    }
+    .sam-section-desc {
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1.5px dashed var(--border);
+    }
+
+    /* ── Album grid ── */
+    .sam-album-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0.5rem;
+    }
+    @media (max-width: 480px) {
+      .sam-album-grid { grid-template-columns: 1fr; }
+    }
+    .sam-album {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.8em;
+      padding: 0.5em 0.7em;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      transition: border-color 0.2s;
+    }
+    .sam-album:hover { border-color: var(--warm); }
+    .sam-album-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--ink);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .sam-album-artist {
+      font-size: 0.72rem;
+      color: var(--muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ── Book list ── */
+    .sam-book-list { max-width: 550px; }
+    .sam-book {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.8em;
+      padding: 0.5em 0;
+      border-bottom: 1px dashed var(--border);
+      font-size: 0.88rem;
+    }
+    .sam-book:last-child { border-bottom: none; }
+    .sam-book-title { color: var(--ink); font-weight: 500; }
+    .sam-book-author { color: var(--muted); font-size: 0.78rem; white-space: nowrap; }
+    .sam-badge {
+      font-size: 0.55rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #fff;
+      background: var(--warm);
+      padding: 0.2em 0.6em;
+      border-radius: 2px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ── Extracurricular cards ── */
+    .sam-extra-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 0.6rem;
+    }
+    @media (max-width: 480px) {
+      .sam-extra-grid { grid-template-columns: 1fr; }
+    }
+    .sam-extra-card {
+      border: 2px solid var(--ink);
+      border-radius: 8px;
+      padding: 1.15rem 1.25rem;
+      background: var(--surface);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .sam-extra-card:hover {
+      border-color: var(--warm);
+      box-shadow: 0 2px 12px rgba(180, 83, 9, 0.08);
+    }
+    .sam-extra-icon {
+      font-size: 1.4rem;
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+    .sam-extra-name {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--ink);
+      margin-bottom: 0.2rem;
+    }
+    .sam-extra-detail {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── Music release card ── */
+    .sam-music-card {
+      border: 2px solid var(--ink);
+      border-radius: 8px;
+      padding: 1.5rem;
+      background: var(--surface);
+      max-width: 480px;
+      position: relative;
+    }
+    .sam-music-badge {
+      display: inline-block;
+      font-size: 0.5rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #fff;
+      background: #2563eb;
+      padding: 0.25em 0.65em;
+      border-radius: 2px;
+      margin-bottom: 0.6rem;
+    }
+    .sam-music-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--ink);
+      margin-bottom: 0.3rem;
+    }
+    .sam-music-detail {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── About site ── */
+    .sam-site-info {
+      border: 1.5px dashed var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.4rem;
+      max-width: 480px;
+    }
+    .sam-site-row {
+      display: flex;
+      gap: 1rem;
+      padding: 0.4em 0;
+      border-bottom: 1px dashed var(--border);
+      font-size: 0.85rem;
+    }
+    .sam-site-row:last-child { border-bottom: none; }
+    .sam-site-key {
+      font-weight: 700;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--warm);
+      min-width: 70px;
+      flex-shrink: 0;
+      padding-top: 0.15em;
+    }
+    .sam-site-val { color: var(--ink); }
+    .sam-site-val a {
+      color: var(--warm);
+      text-decoration: none;
+    }
+    .sam-site-val a:hover { text-decoration: underline; }
+  </style>
+
+  <section class="samling-page f f2">
+    <div class="samling-header">
+      <h1 class="samling-title">Samling</h1>
+      <span class="samling-stamp">Collection</span>
+    </div>
+    <p class="samling-subtitle">Swedish for "collection" — a gathering of the things that define, inspire, and make up who I am.</p>
+
+    <!-- ── 01 Favorite Music ── -->
+    <div class="sam-section f f3">
+      <div class="sam-section-header">
+        <span class="sam-section-num">01</span>
+        <h2 class="sam-section-title">Favorite Albums</h2>
+      </div>
+      <p class="sam-section-desc">What's currently on rotation. A mix of country, rock, faith, and musical theatre.</p>
+
+      <div class="sam-album-grid">
+        {albums.map((a) => (
+          <div class="sam-album">
+            <span class="sam-album-title">{a.title}</span>
+            <span class="sam-album-artist">{a.artist}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- ── 02 Recent Books ── -->
+    <div class="sam-section f f4">
+      <div class="sam-section-header">
+        <span class="sam-section-num">02</span>
+        <h2 class="sam-section-title">Recent Books</h2>
+      </div>
+      <p class="sam-section-desc">What I've been reading and what's on the nightstand.</p>
+
+      <div class="sam-book-list">
+        {books.map((b) => (
+          <div class="sam-book">
+            <span class="sam-book-title">{b.title}</span>
+            {b.active ? <span class="sam-badge">Reading Now</span> : <span class="sam-book-author">{b.author}</span>}
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- ── 03 My Music ── -->
+    <div class="sam-section f f5">
+      <div class="sam-section-header">
+        <span class="sam-section-num">03</span>
+        <h2 class="sam-section-title">My Music</h2>
+      </div>
+      <p class="sam-section-desc">Original music I'm working on and releasing.</p>
+
+      <div class="sam-music-card">
+        <span class="sam-music-badge">Upcoming Release</span>
+        <h3 class="sam-music-title">"Let You Go"</h3>
+        <p class="sam-music-detail">
+          Expected April/May 2026. A very acoustic track inspired by Sam Barber and Elvis.
+          My first single — exploring songwriting, mixing, and production from scratch.
+        </p>
+      </div>
+    </div>
+
+    <!-- ── 04 Extracurriculars ── -->
+    <div class="sam-section f f6">
+      <div class="sam-section-header">
+        <span class="sam-section-num">04</span>
+        <h2 class="sam-section-title">Extracurriculars</h2>
+      </div>
+      <p class="sam-section-desc">What I'm involved in outside of the classroom.</p>
+
+      <div class="sam-extra-grid">
+        {extracurriculars.map((e) => (
+          <div class="sam-extra-card">
+            <span class="sam-extra-icon">{e.icon}</span>
+            <h3 class="sam-extra-name">{e.title}</h3>
+            <p class="sam-extra-detail">{e.detail}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- ── 05 About This Site ── -->
+    <div class="sam-section f f7">
+      <div class="sam-section-header">
+        <span class="sam-section-num">05</span>
+        <h2 class="sam-section-title">About This Site</h2>
+      </div>
+      <p class="sam-section-desc">The boring technical bits.</p>
+
+      <div class="sam-site-info">
+        <div class="sam-site-row">
+          <span class="sam-site-key">Built With</span>
+          <span class="sam-site-val"><a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a></span>
+        </div>
+        <div class="sam-site-row">
+          <span class="sam-site-key">Hosted On</span>
+          <span class="sam-site-val"><a href="https://vercel.com" target="_blank" rel="noopener noreferrer">Vercel</a></span>
+        </div>
+        <div class="sam-site-row">
+          <span class="sam-site-key">Managed By</span>
+          <span class="sam-site-val"><a href="https://reimannlabs.com" target="_blank" rel="noopener noreferrer">Reimann Labs</a></span>
+        </div>
+      </div>
+    </div>
+  </section>
+</AtelierLayout>

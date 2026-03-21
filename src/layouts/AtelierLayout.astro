@@ -2,7 +2,7 @@
 interface Props {
   title?: string;
   description?: string;
-  activeNav?: 'photography' | 'projects' | 'blog';
+  activeNav?: 'photography' | 'projects' | 'blog' | 'samling';
 }
 
 const {
@@ -107,6 +107,7 @@ const {
           <li><a href="/photography/" class={activeNav === 'photography' ? 'nav-active' : ''}>Photography</a></li>
           <li><a href="/projects/" class={activeNav === 'projects' ? 'nav-active' : ''}>Projects</a></li>
           <li><a href="/blog/" class={activeNav === 'blog' ? 'nav-active' : ''}>Blog</a></li>
+          <li><a href="/samling/" class={activeNav === 'samling' ? 'nav-active' : ''}>Samling</a></li>
         </ul>
       </nav>
     </header>
