@@ -218,6 +218,12 @@ const sortedPosts = blogPosts.sort((a, b) => b.data.date.valueOf() - a.data.date
       justify-content: center;
       align-items: center;
       text-align: center;
+      padding: 1rem;
+    }
+    .stat-center > div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     .stat-num {
       font-family: 'Fraunces', serif;
@@ -480,13 +486,13 @@ const sortedPosts = blogPosts.sort((a, b) => b.data.date.valueOf() - a.data.date
         <span class="photo-label"><span class="tag">Theatre</span></span>
       </div>
 
-      <div class="tile tile-pad s-warm stat-center g-stat1 f f4">
+      <div class="tile s-warm stat-center g-stat1 f f4">
         <div>
           <span class="stat-num" style="color:#fff;">16</span>
           <p class="stat-sub">years old</p>
         </div>
       </div>
-      <div class="tile tile-pad s-ink stat-center g-stat2 f f4">
+      <div class="tile s-ink stat-center g-stat2 f f4">
         <div>
           <span class="stat-num">10th</span>
           <p class="stat-sub">Grade</p>
