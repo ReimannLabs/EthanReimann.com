@@ -176,14 +176,16 @@ const totalPhotos = folders.reduce((a, f) => a + f.count, 0);
       display: block;
     }
 
-    /* ── Photo grid (inside album) ── */
+    /* ── Photo grid (inside album) — CSS columns masonry ── */
     .pg-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 0.6rem;
+      column-count: 4;
+      column-gap: 0.6rem;
+    }
+    @media (max-width: 768px) {
+      .pg-grid { column-count: 3; }
     }
     @media (max-width: 480px) {
-      .pg-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+      .pg-grid { column-count: 2; }
     }
     .pg-item {
       cursor: pointer;
@@ -191,6 +193,11 @@ const totalPhotos = folders.reduce((a, f) => a + f.count, 0);
       border-radius: 8px;
       overflow: hidden;
       transition: border-color 0.2s, box-shadow 0.2s;
+      break-inside: avoid;
+      margin-bottom: 0.6rem;
+      display: inline-block;
+      width: 100%;
+      position: relative;
     }
     .pg-item:hover {
       border-color: var(--warm);
@@ -198,19 +205,30 @@ const totalPhotos = folders.reduce((a, f) => a + f.count, 0);
     }
     .pg-thumb {
       width: 100%;
-      aspect-ratio: 1;
-      object-fit: cover;
+      height: auto;
       display: block;
     }
+    .pg-name-wrap {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.8rem 0.55rem 0.45rem;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        var(--pg-fade, rgba(0,0,0,0.55)) 100%
+      );
+      pointer-events: none;
+    }
     .pg-name {
-      font-size: 0.68rem;
-      color: var(--muted);
-      padding: 0.4rem 0.5rem;
-      text-align: center;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: #fff;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      border-top: 1px dashed var(--border);
     }
 
     /* ── Lightbox ── */
@@ -289,6 +307,28 @@ const totalPhotos = folders.reduce((a, f) => a + f.count, 0);
       font-style: italic;
     }
     .pg-hidden { display: none !important; }
+
+    /* ── Copyright disclaimer ── */
+    .photo-copyright {
+      margin-top: 2.5rem;
+      padding: 1rem 1.25rem;
+      border: 1.5px dashed var(--border);
+      border-radius: 8px;
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.6;
+      text-align: center;
+    }
+    .photo-copyright strong {
+      color: var(--ink);
+      font-weight: 700;
+    }
+    .photo-copyright a {
+      color: var(--warm);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .photo-copyright a:hover { text-decoration: none; }
   </style>
 
   <section class="photo-page f f2">
@@ -318,14 +358,21 @@ const totalPhotos = folders.reduce((a, f) => a + f.count, 0);
       <div class="pg-grid pg-hidden" id={`grid-${folder.id}`} data-folder-grid={folder.id}>
         {folder.photos.map((photo, i) => (
           <div class="pg-item" data-lightbox={folder.id} data-index={i} data-full={photo.fullSrc}>
-            <Image class="pg-thumb" src={photo.src} alt={photo.alt} width={300} quality={75} />
-            <div class="pg-name">{photo.name}</div>
+            <Image class="pg-thumb" src={photo.src} alt={photo.alt} width={400} quality={80} />
+            <div class="pg-name-wrap">
+              <div class="pg-name">{photo.name}</div>
+            </div>
           </div>
         ))}
       </div>
     ))}
 
     <div class="pg-empty pg-hidden" id="emptyState">No photos in this album yet.</div>
+
+    <div class="photo-copyright">
+      <strong>&copy; Ethan Reimann.</strong> All photographs on this page are my original work and protected by copyright.
+      Please <a href="mailto:ethan@reimannlabs.com">contact me</a> before using, reproducing, or distributing any of these images.
+    </div>
   </section>
 
   <!-- Lightbox -->
@@ -439,6 +486,55 @@ const totalPhotos = folders.reduce((a, f) => a + f.count, 0);
         const el = item as HTMLElement;
         openLightbox(el.dataset.lightbox!, parseInt(el.dataset.index || '0', 10));
       });
+    });
+
+    // ── Color sampling for gradient overlays ──
+    function sampleBottomColor(img: HTMLImageElement): string {
+      const canvas = document.createElement('canvas');
+      const size = 32; // small sample is enough
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d', { willReadFrequently: true });
+      if (!ctx) return 'rgba(0,0,0,0.6)';
+
+      // Draw only the bottom ~25% of the image into our tiny canvas
+      const srcY = img.naturalHeight * 0.75;
+      const srcH = img.naturalHeight * 0.25;
+      ctx.drawImage(img, 0, srcY, img.naturalWidth, srcH, 0, 0, size, size);
+
+      const data = ctx.getImageData(0, 0, size, size).data;
+      let r = 0, g = 0, b = 0, count = 0;
+      for (let i = 0; i < data.length; i += 4) {
+        r += data[i];
+        g += data[i + 1];
+        b += data[i + 2];
+        count++;
+      }
+      r = Math.round(r / count);
+      g = Math.round(g / count);
+      b = Math.round(b / count);
+      return `rgba(${r},${g},${b},0.85)`;
+    }
+
+    document.querySelectorAll<HTMLElement>('.pg-item').forEach((item) => {
+      const img = item.querySelector<HTMLImageElement>('.pg-thumb');
+      if (!img) return;
+
+      function applyColor() {
+        if (img!.naturalWidth === 0) return; // not decoded yet
+        try {
+          const color = sampleBottomColor(img!);
+          item.style.setProperty('--pg-fade', color);
+        } catch (_) {
+          // CORS or other canvas error — keep default dark fallback
+        }
+      }
+
+      if (img.complete && img.naturalWidth > 0) {
+        applyColor();
+      } else {
+        img.addEventListener('load', applyColor);
+      }
     });
   </script>
 </AtelierLayout>

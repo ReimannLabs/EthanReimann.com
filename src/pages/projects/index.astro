@@ -215,9 +215,9 @@ const sections = [
     }
     .proj-status-alpha { background: var(--warm); }
     .proj-status-beta { background: var(--ink); }
-    .proj-status-open\ beta { background: #16a34a; }
-    .proj-status-early\ dev { background: var(--muted); }
-    .proj-status-in\ progress { background: #2563eb; }
+    .proj-status-open-beta { background: #16a34a; }
+    .proj-status-early-dev { background: var(--muted); }
+    .proj-status-in-progress { background: #2563eb; }
     .proj-card-desc {
       color: var(--muted);
       font-size: 0.85rem;
@@ -275,7 +275,7 @@ const sections = [
               <div class="proj-card-top">
                 <h3 class="proj-card-name">{project.title}</h3>
                 {project.status && (
-                  <span class={`proj-status proj-status-${project.status.toLowerCase()}`}>{project.status}</span>
+                  <span class={`proj-status proj-status-${project.status.toLowerCase().replace(/\s+/g, '-')}`}>{project.status}</span>
                 )}
               </div>
               <p class="proj-card-desc">{project.description}</p>
