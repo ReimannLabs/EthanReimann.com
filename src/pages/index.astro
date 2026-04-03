@@ -540,7 +540,7 @@ const sortedPosts = blogPosts.sort((a, b) => b.data.date.valueOf() - a.data.date
               <span class="blog-num">{String(i + 1).padStart(2, '0')}</span>
               <a href={`/blog/${post.id}/`}>{post.data.title}</a>
               <time datetime={post.data.date.toISOString()}>
-                {post.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                {post.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}
               </time>
             </div>
           ))}
