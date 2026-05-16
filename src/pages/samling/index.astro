@@ -2,18 +2,17 @@
 import AtelierLayout from '../../layouts/AtelierLayout.astro';
 
 const albums = [
-  { title: "I'm The Problem", artist: 'Morgan Wallen' },
-  { title: 'From A Room: Volume 2', artist: 'Chris Stapleton' },
-  { title: 'Chief', artist: 'Eric Church' },
-  { title: 'Leather', artist: 'Cody Johnson' },
-  { title: 'From Elvis in Memphis', artist: 'Elvis Presley' },
-  { title: 'What Are We Waiting For?', artist: 'For King & Country' },
-  { title: 'Jars of Clay', artist: 'Jars of Clay' },
-  { title: 'Summertime Blues', artist: 'Zach Bryan' },
   { title: 'Restless Mind', artist: 'Sam Barber' },
+  { title: 'Music for the Soul', artist: 'Sam Barber' },
+  { title: 'Borken View', artist: 'Sam Barber' },
   { title: 'Million Eyes', artist: 'Sam Barber' },
+  { title: 'Strange Trails', artist: 'Lord Huron' },
+  { title: 'The Cosmic Selector Vol 1', artist: 'Lord Huron' },
   { title: 'Hamilton', artist: 'Original Broadway Cast' },
-  { title: 'Dizzy Up The Girl', artist: 'The Goo Goo Dolls' },
+  { title: 'Appaloosa Bones', artist: 'Gregory Alan Isakov' },
+  { title: 'ABBA Gold', artist: 'ABBA' },
+  { title: 'The Stranger', artist: 'Billy Joel' },
+  { title: 'So many others' },
 ];
 
 const books = [
@@ -322,7 +321,7 @@ const extracurriculars = [
         {albums.map((a) => (
           <div class="sam-album">
             <span class="sam-album-title">{a.title}</span>
-            <span class="sam-album-artist">{a.artist}</span>
+            {a.artist && <span class="sam-album-artist">{a.artist}</span>}
           </div>
         ))}
       </div>

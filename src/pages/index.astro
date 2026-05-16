@@ -25,14 +25,17 @@ const books = [
 ];
 
 const albums = [
-  { title: "I'm The Problem", artist: 'Morgan Wallen' },
-  { title: 'From A Room: Volume 2', artist: 'Chris Stapleton' },
-  { title: 'Chief', artist: 'Eric Church' },
-  { title: 'Leather', artist: 'Cody Johnson' },
-  { title: 'From Elvis in Memphis', artist: 'Elvis Presley' },
-  { title: 'What Are We Waiting For?', artist: 'For King & Country' },
-  { title: 'Jars of Clay', artist: 'Jars of Clay' },
-  { title: 'Summertime Blues', artist: 'Zach Bryan' },
+  { title: 'Restless Mind', artist: 'Sam Barber' },
+  { title: 'Music for the Soul', artist: 'Sam Barber' },
+  { title: 'Borken View', artist: 'Sam Barber' },
+  { title: 'Million Eyes', artist: 'Sam Barber' },
+  { title: 'Strange Trails', artist: 'Lord Huron' },
+  { title: 'The Cosmic Selector Vol 1', artist: 'Lord Huron' },
+  { title: 'Hamilton', artist: 'Original Broadway Cast' },
+  { title: 'Appaloosa Bones', artist: 'Gregory Alan Isakov' },
+  { title: 'ABBA Gold', artist: 'ABBA' },
+  { title: 'The Stranger', artist: 'Billy Joel' },
+  { title: 'So many others' },
 ];
 
 const blogPosts = await getCollection('blog', ({ data }) => !data.draft);
@@ -417,9 +420,6 @@ const sortedPosts = blogPosts.sort((a, b) => b.data.date.valueOf() - a.data.date
             right here. This site is home base for all of it.
           </p>
         </div>
-        <div class="hero-stamp-wrap">
-          <span class="stamp stamp-warm stamp-tilt">Est. 2009</span>
-        </div>
       </div>
 
       <div class="tile s-photo g-portrait f f2">
@@ -568,7 +568,7 @@ const sortedPosts = blogPosts.sort((a, b) => b.data.date.valueOf() - a.data.date
             {albums.map((a) => (
               <div class="list-item">
                 <span class="list-title">{a.title}</span>
-                <span class="list-meta">{a.artist}</span>
+                {a.artist && <span class="list-meta">{a.artist}</span>}
               </div>
             ))}
           </div>
