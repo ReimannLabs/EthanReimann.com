@@ -27,6 +27,11 @@ const chickens = loadFolder(
   'Chicken'
 );
 
+const portraits = loadFolder(
+  import.meta.glob<{ default: ImageMetadata }>('../../images/portraits/*.{JPEG,JPG,jpeg,jpg,png,webp}', { eager: true }),
+  'Portrait'
+);
+
 const other = loadFolder(
   import.meta.glob<{ default: ImageMetadata }>('../../images/other/*.{JPEG,JPG,jpeg,jpg,png,webp}', { eager: true }),
   'Other'
@@ -47,6 +52,11 @@ const folders = [
     id: 'chickens',
     name: 'Chickens',
     photos: chickens.map((p) => ({ src: p.src, alt: p.alt, name: p.name + '.jpg', fullSrc: p.src.src })),
+  },
+  {
+    id: 'portraits',
+    name: 'Portraits',
+    photos: portraits.map((p) => ({ src: p.src, alt: p.alt, name: p.name + '.jpg', fullSrc: p.src.src })),
   },
   {
     id: 'other',
