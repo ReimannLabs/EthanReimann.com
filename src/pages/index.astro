@@ -15,6 +15,7 @@ import cameraDarkmirror from '../images/ethan_camera_darkmirror.JPG';
 
 const books = [
   { title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', active: true },
+  { title: 'The Martian', author: 'Andy Weir' },
   { title: 'The Brothers Karamazov', author: 'Fyodor Dostoevsky' },
   { title: 'The Giver', author: 'Lois Lowry' },
   { title: 'We Who Wrestle with God', author: 'Jordan Peterson' },
@@ -38,6 +39,23 @@ const albums = [
   { title: 'So many others' },
 ];
 
+const aquinasQuotes = [
+  'To one who has faith, no explanation is necessary. To one without faith, no explanation is possible.',
+  'There is nothing on this earth more to be prized than true friendship.',
+  'The things that we love tell us what we are.',
+  'Wonder is the desire of knowledge.',
+  'Love follows knowledge.',
+  'To love is to will the good of the other.',
+  'Faith has to do with things that are not seen, and hope with things that are not in hand.',
+  'Better to illuminate than merely to shine; to deliver to others contemplated truths than merely to contemplate.',
+];
+
+const fieldNoteQuote = aquinasQuotes[Math.floor(Math.random() * aquinasQuotes.length)];
+const gridCells = Array.from({ length: 96 }, (_, i) => ({
+  delay: `${((i * 0.37) % 9).toFixed(2)}s`,
+  duration: `${(5.5 + ((i * 0.19) % 3)).toFixed(2)}s`,
+}));
+
 const blogPosts = await getCollection('blog', ({ data }) => !data.draft);
 const sortedPosts = blogPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
@@ -45,9 +63,85 @@ const sortedPosts = blogPosts.sort((a, b) => b.data.date.valueOf() - a.data.date
 <AtelierLayout>
   <style>
     /* ── Expand beyond .page container ────────── */
+    :global(body.home-grid-on) {
+      background: #fff;
+    }
+
+    .homepage-background-grid {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-auto-rows: clamp(72px, 8vw, 120px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+      background: #fff;
+      overflow: hidden;
+    }
+    :global(body.home-grid-on) .homepage-background-grid { opacity: 1; }
+    .homepage-background-grid span {
+      background: #fff;
+      box-shadow: inset 0 0 0 1px rgba(28, 25, 23, 0.045);
+      animation: gridCellFade var(--cell-duration) ease-in-out var(--cell-delay) infinite alternate;
+    }
+    @keyframes gridCellFade {
+      0%, 24% { background: #fff; }
+      58% { background: #f0f0ee; }
+      100% { background: #fff; }
+    }
+
+    .home-grid-toggle {
+      position: fixed;
+      right: clamp(0.9rem, 2vw, 1.5rem);
+      bottom: clamp(0.9rem, 2vw, 1.5rem);
+      z-index: 40;
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      background: rgba(250, 250, 248, 0.88);
+      color: var(--ink);
+      padding: 0.6rem 0.85rem;
+      font-family: 'Karla', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(28, 25, 23, 0.1);
+      backdrop-filter: blur(10px);
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+    }
+    .home-grid-toggle:hover,
+    .home-grid-toggle:focus-visible {
+      background: var(--ink);
+      color: #fff;
+      transform: translateY(-2px);
+      outline: none;
+    }
+    .home-grid-toggle[aria-pressed='true'] {
+      background: var(--warm);
+      border-color: var(--warm);
+      color: #fff;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .homepage-background-grid span { animation: none; }
+      .homepage-background-grid span:nth-child(3n) { background: #f0f0ee; }
+    }
+
+    @media (max-width: 700px) {
+      .homepage-background-grid {
+        grid-template-columns: repeat(5, 1fr);
+        grid-auto-rows: 20vw;
+      }
+    }
+
     .grid-wrapper {
       margin: 0 -2rem;
       padding: 0 0.75rem;
+      position: relative;
+      z-index: 1;
     }
     @media (min-width: 960px) {
       .grid-wrapper { margin: 0 -4rem; padding: 0; }
@@ -349,6 +443,49 @@ const sortedPosts = blogPosts.sort((a, b) => b.data.date.valueOf() - a.data.date
     }
     .manifesto-footer { margin-top: 1.2rem; }
 
+    /* ═══ FIELD NOTE ═══ */
+    .field-note {
+      background:
+        linear-gradient(135deg, rgba(180, 83, 9, 0.08), transparent 45%),
+        #f5f0e8;
+    }
+    .field-note-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.1rem;
+    }
+    .field-note-kicker {
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--warm);
+    }
+    .field-note-id {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 2.2rem;
+      line-height: 1;
+      color: rgba(180, 83, 9, 0.18);
+    }
+    .field-note-quote {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.15rem, 2vw, 1.75rem);
+      font-style: italic;
+      line-height: 1.25;
+      letter-spacing: -0.015em;
+      max-width: 760px;
+    }
+    .field-note-source {
+      margin-top: 1rem;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+    .field-note-source::before { content: '— '; }
+
     /* ═══ GRID PLACEMENT ═══ */
     .g-hero     { grid-column: 1 / 9;   grid-row: 1 / 5; }
     .g-portrait { grid-column: 9 / 13;  grid-row: 1 / 5; min-height: 360px; }
@@ -366,6 +503,7 @@ const sortedPosts = blogPosts.sort((a, b) => b.data.date.valueOf() - a.data.date
     .g-blog  { grid-column: 1 / 7;  grid-row: 12 / 15; }
     .g-books { grid-column: 7 / 13; grid-row: 12 / 15; }
     .g-albums { grid-column: 1 / 13; grid-row: 15 / 17; }
+    .g-field { grid-column: 1 / 13; grid-row: 17 / 19; }
 
     /* ═══ MOBILE ═══ */
     @media (max-width: 700px) {
@@ -379,7 +517,7 @@ const sortedPosts = blogPosts.sort((a, b) => b.data.date.valueOf() - a.data.date
       }
       .g-hero, .g-portrait,
       .g-bio, .g-manifesto,
-      .g-blog, .g-books, .g-albums {
+      .g-blog, .g-books, .g-albums, .g-field {
         grid-column: 1 / -1;
         grid-row: auto;
         min-height: unset;
@@ -400,6 +538,16 @@ const sortedPosts = blogPosts.sort((a, b) => b.data.date.valueOf() - a.data.date
       }
     }
   </style>
+
+  <div class="homepage-background-grid" aria-hidden="true">
+    {gridCells.map((cell) => (
+      <span style={`--cell-delay: ${cell.delay}; --cell-duration: ${cell.duration};`}></span>
+    ))}
+  </div>
+
+  <button class="home-grid-toggle" type="button" aria-pressed="false" data-home-grid-toggle>
+    Grid: off
+  </button>
 
   <div class="grid-wrapper">
     <div class="grid">
@@ -575,6 +723,29 @@ const sortedPosts = blogPosts.sort((a, b) => b.data.date.valueOf() - a.data.date
         </div>
       </div>
 
+      <!-- ═══ FIELD NOTE ═══ -->
+      <div class="tile tile-pad field-note g-field f f8">
+        <div>
+          <div class="field-note-top">
+            <p class="field-note-kicker">Field Note · St. Thomas Aquinas</p>
+          </div>
+          <blockquote class="field-note-quote">
+            “{fieldNoteQuote}”
+          </blockquote>
+          <p class="field-note-source">Thomas Aquinas</p>
+        </div>
+      </div>
+
     </div>
   </div>
+
+  <script is:inline>
+    const gridToggle = document.querySelector('[data-home-grid-toggle]');
+
+    gridToggle?.addEventListener('click', () => {
+      const isActive = document.body.classList.toggle('home-grid-on');
+      gridToggle.setAttribute('aria-pressed', String(isActive));
+      gridToggle.textContent = isActive ? 'Grid: on' : 'Grid: off';
+    });
+  </script>
 </AtelierLayout>
