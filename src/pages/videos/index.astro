@@ -1,0 +1,185 @@
+---
+import AtelierLayout from '../../layouts/AtelierLayout.astro';
+
+const featuredVideo = {
+  title: "Let's Try This Again - Channel Update",
+  youtubeId: '0ynO6-HuK-c',
+  watchUrl: 'https://www.youtube.com/watch?v=0ynO6-HuK-c',
+  publishedLabel: 'May 22, 2026',
+};
+---
+
+<AtelierLayout
+  title="Videos | Ethan Reimann"
+  description="Watch videos from Ethan Reimann."
+  activeNav="videos"
+>
+  <style is:global>
+    .videos-page {
+      padding: 2.5rem 0 3rem;
+    }
+
+    .videos-header {
+      display: grid;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.4rem;
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .videos-stamp {
+      width: fit-content;
+      display: inline-block;
+      border: 2px solid var(--warm);
+      color: var(--warm);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      line-height: 1.2;
+      padding: 0.36rem 0.72rem;
+      transform: rotate(-2deg);
+    }
+
+    .videos-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 2.8vw + 1rem, 3.2rem);
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      line-height: 0.95;
+    }
+
+    .videos-subtitle {
+      color: var(--muted);
+      max-width: 62ch;
+      font-size: 0.92rem;
+    }
+
+    .video-frame {
+      position: relative;
+      margin: 0.8rem clamp(0.2rem, 1vw, 1rem) 0;
+      padding: clamp(0.7rem, 1.8vw, 1.05rem);
+    }
+
+    .video-frame::before {
+      content: '';
+      position: absolute;
+      inset: -0.55rem;
+      border-radius: 14px;
+      background:
+        repeating-linear-gradient(
+          -35deg,
+          rgba(28, 25, 23, 0.07) 0,
+          rgba(28, 25, 23, 0.07) 1px,
+          transparent 1px,
+          transparent 12px
+        );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .video-card {
+      position: relative;
+      z-index: 1;
+      border: 2px solid var(--ink);
+      border-radius: 10px;
+      background:
+        linear-gradient(160deg, rgba(180, 83, 9, 0.06), rgba(255, 255, 255, 0.95) 50%),
+        var(--surface);
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(28, 25, 23, 0.08);
+    }
+
+    .video-embed {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #121212;
+    }
+
+    .video-embed iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-meta {
+      display: grid;
+      gap: 0.7rem;
+      padding: 1.1rem 1.15rem 1.3rem;
+    }
+
+    .video-badge {
+      font-size: 0.66rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .video-name {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.2rem, 1vw + 0.95rem, 1.6rem);
+      line-height: 1.1;
+    }
+
+    .video-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      width: fit-content;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--ink);
+      border-radius: 999px;
+      padding: 0.45rem 0.85rem;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .video-cta:hover {
+      background: var(--warm);
+      transform: translateY(-1px);
+    }
+
+  </style>
+
+  <main class="videos-page f f2">
+    <section class="videos-header">
+      <span class="videos-stamp">Video Library</span>
+      <h1 class="videos-title">Videos</h1>
+      <p class="videos-subtitle">
+        Watch videos and updates from Ethan Reimann.
+      </p>
+    </section>
+
+    <section class="video-frame f f3">
+      <article class="video-card">
+        <div class="video-embed">
+          <iframe
+            src={`https://www.youtube-nocookie.com/embed/${featuredVideo.youtubeId}`}
+            title={featuredVideo.title}
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
+        </div>
+
+        <div class="video-meta">
+          <span class="video-badge">Uploaded {featuredVideo.publishedLabel}</span>
+          <h2 class="video-name">{featuredVideo.title}</h2>
+          <a class="video-cta" href={featuredVideo.watchUrl} target="_blank" rel="noopener noreferrer">
+            Watch on YouTube
+          </a>
+        </div>
+      </article>
+    </section>
+
+  </main>
+</AtelierLayout>

@@ -4,7 +4,7 @@ export const prerender = true;
 
 const SITE_URL = 'https://ethanreimann.com';
 
-const staticPages = ['/', '/blog/', '/photography/', '/projects/', '/samling/'];
+const staticPages = ['/', '/blog/', '/photography/', '/videos/', '/projects/', '/samling/'];
 
 function formatDate(date: Date) {
   return date.toISOString().split('T')[0];

@@ -2,7 +2,7 @@
 interface Props {
   title?: string;
   description?: string;
-  activeNav?: 'photography' | 'projects' | 'blog' | 'samling';
+  activeNav?: 'photography' | 'projects' | 'blog' | 'samling' | 'videos';
 }
 
 const {
@@ -322,6 +322,7 @@ const {
         <nav aria-label="Primary">
           <ul class="header-nav">
             <li><a href="/photography/" class={activeNav === 'photography' ? 'nav-active' : ''}>Photography</a></li>
+            <li><a href="/videos/" class={activeNav === 'videos' ? 'nav-active' : ''}>Videos</a></li>
             <li><a href="/projects/" class={activeNav === 'projects' ? 'nav-active' : ''}>Projects</a></li>
             <li><a href="/blog/" class={activeNav === 'blog' ? 'nav-active' : ''}>Blog</a></li>
             <li><a href="/samling/" class={activeNav === 'samling' ? 'nav-active' : ''}>Samling</a></li>
@@ -331,6 +332,7 @@ const {
       <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile">
         <div class="mobile-nav-inner">
           <a href="/photography/" class={activeNav === 'photography' ? 'nav-active' : ''}>Photography</a>
+          <a href="/videos/" class={activeNav === 'videos' ? 'nav-active' : ''}>Videos</a>
           <a href="/projects/" class={activeNav === 'projects' ? 'nav-active' : ''}>Projects</a>
           <a href="/blog/" class={activeNav === 'blog' ? 'nav-active' : ''}>Blog</a>
           <a href="/samling/" class={activeNav === 'samling' ? 'nav-active' : ''}>Samling</a>
