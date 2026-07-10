@@ -9,7 +9,7 @@ Anyone who has known me for more than 2ish years knows that for the longest time
 
 Now I'd say it is still my homebase genre. I mean, it is what I grew up on after all, but in the recent, maybe 8ish months, I have greatly expanded my listening preferences.
 
-As of right now, the main artist I spend my time listening to is Sam Barber. In fact, I just performed Indigo with my girlfriend at my high school variety show (which went amazing). His music is so simple yet deeply emotional, and his lyrics evoke the same set of emotions as the music. I have a similar notion for Lord Huron as well.
+As of right now, the main artist I spend my time listening to is Sam Barber. In fact, I just performed Indigo at my high school variety show (which went amazing). His music is so simple yet deeply emotional, and his lyrics evoke the same set of emotions as the music. I have a similar notion for Lord Huron as well.
 
 The music of Lord Huron is interesting for me, because it sounds like, specifically Lone Pine, California. For some context, my family and I went on a trip to California in late 2025, and as part of the trip, we passed through Lone Pine to visit the ghost town of Cerro Gordo. Now, on this trip, I didn't even know Lord Huron existed, but just months later, my brain started to assign the sound of their music to that area. Why? I couldn't tell you. All I know is that most Lord Huron songs sound like Lone Pine. Regardless, their albums have been on rotation on my morning drives to school since mid-April.
 
