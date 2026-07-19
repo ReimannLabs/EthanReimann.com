@@ -39,18 +39,7 @@ const albums = [
   { title: 'So many others' },
 ];
 
-const aquinasQuotes = [
-  'To one who has faith, no explanation is necessary. To one without faith, no explanation is possible.',
-  'There is nothing on this earth more to be prized than true friendship.',
-  'The things that we love tell us what we are.',
-  'Wonder is the desire of knowledge.',
-  'Love follows knowledge.',
-  'To love is to will the good of the other.',
-  'Faith has to do with things that are not seen, and hope with things that are not in hand.',
-  'Better to illuminate than merely to shine; to deliver to others contemplated truths than merely to contemplate.',
-];
-
-const fieldNoteQuote = aquinasQuotes[Math.floor(Math.random() * aquinasQuotes.length)];
+const fieldNoteQuote = 'The things that we love tell us what we are.';
 const gridCells = Array.from({ length: 96 }, (_, i) => ({
   delay: `${((i * 0.37) % 9).toFixed(2)}s`,
   duration: `${(5.5 + ((i * 0.19) % 3)).toFixed(2)}s`,
