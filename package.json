@@ -9,8 +9,11 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/markdoc": "^0.15.11",
     "@astrojs/react": "^4.4.2",
     "@base-ui/react": "^1.2.0",
+    "@keystatic/astro": "^5.2.0",
+    "@keystatic/core": "^0.5.51",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vercel/analytics": "^2.0.1",
