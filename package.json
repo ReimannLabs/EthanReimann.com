@@ -9,17 +9,23 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/markdoc": "^0.15.11",
-    "@astrojs/react": "^4.4.2",
-    "@base-ui/react": "^1.2.0",
+    "@astrojs/markdoc": "^2.0.5",
+    "@astrojs/react": "^6.0.1",
+    "@base-ui/react": "^1.6.0",
     "@keystatic/astro": "^5.2.0",
-    "@keystatic/core": "^0.5.51",
+    "@keystatic/core": "^0.6.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vercel/analytics": "^2.0.1",
-    "astro": "^5.17.1",
-    "motion": "^12.34.0",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "astro": "^7.1.4",
+    "motion": "^12.43.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "overrides": {
+    "minimatch": "^10.2.6",
+    "brace-expansion": "^5.0.8",
+    "esbuild": "^0.28.1",
+    "sharp": "^0.35.3"
   }
 }
