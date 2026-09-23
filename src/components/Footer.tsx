@@ -8,7 +8,7 @@ export default function Footer() {
       textAlign: 'right',
     }}>
       <p>
-        Powered By{' '}
+        Copyright © 2026 – Powered By{' '}
         <a href="https://reimannlabs.com/">Reimann Labs</a>
       </p>
     </footer>
